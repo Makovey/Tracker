@@ -9,19 +9,35 @@
 /* Begin PBXBuildFile section */
 		5E7841802B4A92F500062777 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78417F2B4A92F500062777 /* AppDelegate.swift */; };
 		5E7841822B4A92F500062777 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841812B4A92F500062777 /* SceneDelegate.swift */; };
-		5E7841842B4A92F500062777 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841832B4A92F500062777 /* ViewController.swift */; };
 		5E7841892B4A92FA00062777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E7841882B4A92FA00062777 /* Assets.xcassets */; };
 		5E78418C2B4A92FA00062777 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E78418A2B4A92FA00062777 /* LaunchScreen.storyboard */; };
+		5E7841952B4A991200062777 /* AssetsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841942B4A991200062777 /* AssetsHelper.swift */; };
+		5E78419F2B4A99D000062777 /* TrackersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78419A2B4A99D000062777 /* TrackersPresenter.swift */; };
+		5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78419B2B4A99D000062777 /* TrackersRouter.swift */; };
+		5E7841A12B4A99D000062777 /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78419C2B4A99D000062777 /* TrackersViewController.swift */; };
+		5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78419D2B4A99D000062777 /* TrackersAssembly.swift */; };
+		5E7841A92B4A9C9200062777 /* HabitsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841A42B4A9C9200062777 /* HabitsPresenter.swift */; };
+		5E7841AA2B4A9C9200062777 /* HabitsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841A52B4A9C9200062777 /* HabitsRouter.swift */; };
+		5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841A62B4A9C9200062777 /* HabitsViewController.swift */; };
+		5E7841AC2B4A9C9200062777 /* HabitsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841A72B4A9C9200062777 /* HabitsAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5E78417C2B4A92F500062777 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E78417F2B4A92F500062777 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E7841812B4A92F500062777 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5E7841832B4A92F500062777 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5E7841882B4A92FA00062777 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5E78418B2B4A92FA00062777 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5E78418D2B4A92FA00062777 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E7841942B4A991200062777 /* AssetsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsHelper.swift; sourceTree = "<group>"; };
+		5E78419A2B4A99D000062777 /* TrackersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersPresenter.swift; sourceTree = "<group>"; };
+		5E78419B2B4A99D000062777 /* TrackersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersRouter.swift; sourceTree = "<group>"; };
+		5E78419C2B4A99D000062777 /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
+		5E78419D2B4A99D000062777 /* TrackersAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAssembly.swift; sourceTree = "<group>"; };
+		5E7841A42B4A9C9200062777 /* HabitsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsPresenter.swift; sourceTree = "<group>"; };
+		5E7841A52B4A9C9200062777 /* HabitsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsRouter.swift; sourceTree = "<group>"; };
+		5E7841A62B4A9C9200062777 /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
+		5E7841A72B4A9C9200062777 /* HabitsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +70,54 @@
 		5E78417E2B4A92F500062777 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				5E7841962B4A995C00062777 /* Presentation */,
+				5E7841932B4A98FE00062777 /* Extensions */,
 				5E78417F2B4A92F500062777 /* AppDelegate.swift */,
 				5E7841812B4A92F500062777 /* SceneDelegate.swift */,
-				5E7841832B4A92F500062777 /* ViewController.swift */,
 				5E7841882B4A92FA00062777 /* Assets.xcassets */,
 				5E78418A2B4A92FA00062777 /* LaunchScreen.storyboard */,
 				5E78418D2B4A92FA00062777 /* Info.plist */,
 			);
 			path = Tracker;
+			sourceTree = "<group>";
+		};
+		5E7841932B4A98FE00062777 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5E7841942B4A991200062777 /* AssetsHelper.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5E7841962B4A995C00062777 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5E7841982B4A99B900062777 /* Trackers */,
+				5E7841972B4A996A00062777 /* Habits */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		5E7841972B4A996A00062777 /* Habits */ = {
+			isa = PBXGroup;
+			children = (
+				5E7841A72B4A9C9200062777 /* HabitsAssembly.swift */,
+				5E7841A62B4A9C9200062777 /* HabitsViewController.swift */,
+				5E7841A42B4A9C9200062777 /* HabitsPresenter.swift */,
+				5E7841A52B4A9C9200062777 /* HabitsRouter.swift */,
+			);
+			path = Habits;
+			sourceTree = "<group>";
+		};
+		5E7841982B4A99B900062777 /* Trackers */ = {
+			isa = PBXGroup;
+			children = (
+				5E78419D2B4A99D000062777 /* TrackersAssembly.swift */,
+				5E78419C2B4A99D000062777 /* TrackersViewController.swift */,
+				5E78419A2B4A99D000062777 /* TrackersPresenter.swift */,
+				5E78419B2B4A99D000062777 /* TrackersRouter.swift */,
+			);
+			path = Trackers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,9 +190,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E7841842B4A92F500062777 /* ViewController.swift in Sources */,
+				5E7841952B4A991200062777 /* AssetsHelper.swift in Sources */,
+				5E7841A92B4A9C9200062777 /* HabitsPresenter.swift in Sources */,
+				5E7841A12B4A99D000062777 /* TrackersViewController.swift in Sources */,
+				5E7841AA2B4A9C9200062777 /* HabitsRouter.swift in Sources */,
 				5E7841802B4A92F500062777 /* AppDelegate.swift in Sources */,
 				5E7841822B4A92F500062777 /* SceneDelegate.swift in Sources */,
+				5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */,
+				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
+				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
+				5E7841AC2B4A9C9200062777 /* HabitsAssembly.swift in Sources */,
+				5E78419F2B4A99D000062777 /* TrackersPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
