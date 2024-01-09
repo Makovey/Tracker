@@ -34,7 +34,7 @@ final class HabitsViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
-        view.backgroundColor = .orange
+        view.backgroundColor = .gray
     }
 }
 

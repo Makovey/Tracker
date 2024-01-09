@@ -10,9 +10,55 @@ import UIKit
 protocol ITrackersView: AnyObject { }
 
 final class TrackersViewController: UIViewController {
+    
     // Dependencies
 
     private let presenter: ITrackersPresenter
+    
+    // MARK: - UI
+        
+    private lazy var addButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addTapped)
+        )
+        
+        button.tintColor = .black
+        
+        return button
+    }()
+    
+    private lazy var searchInput: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Поиск" // TODO: Localization
+        
+        return searchController
+    }()
+    
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        collectionView.backgroundView = emptyStateView
+        
+        return collectionView.forAutolayout()
+    }()
+    
+    private lazy var emptyStateView: UIStackView = {
+        let imageView = UIImageView(image: .emptyImage)
+        imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
+        
+        let label = UILabel()
+        label.text = "Что будем отслеживать?"
+        label.font = .systemFont(ofSize: 12)
+
+        let stackView = UIStackView(arrangedSubviews: [imageView, label])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = .init(integerLiteral: 8)
+        
+        return stackView.forAutolayout()
+    }()
 
     // MARK: - Initialization
 
@@ -27,6 +73,8 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+
         setupUI()
         presenter.viewDidLoad()
     }
@@ -34,10 +82,33 @@ final class TrackersViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
-        view.backgroundColor = .green
+        navigationItem.leftBarButtonItem = addButton
+        navigationItem.searchController = searchInput
+        
+        collectionView.placedOn(view)
+        collectionView.pin(to: view)
+        
+        NSLayoutConstraint.activate([
+            emptyStateView.centerX.constraint(equalTo: view.centerX),
+            emptyStateView.centerY.constraint(equalTo: view.centerY)
+        ])
+    }
+    
+    @objc
+    private func addTapped() {
+        // TODO: implement
     }
 }
 
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView { }
+
+// MARK: - UISearchResultsUpdating
+
+extension TrackersViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        print(text)
+    }
+}

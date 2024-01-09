@@ -11,4 +11,5 @@ extension UIColor {
 }
 
 extension UIImage {
+    static let emptyImage = UIImage(named: "EmptyTrackerImage") ?? .init()
 }
