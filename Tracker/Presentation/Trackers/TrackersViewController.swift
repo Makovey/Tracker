@@ -10,6 +10,9 @@ import UIKit
 protocol ITrackersView: AnyObject { }
 
 final class TrackersViewController: UIViewController {
+    private enum Constant {
+        static let baseInset: CGFloat = 16.0
+    }
     
     // Dependencies
 
@@ -38,8 +41,10 @@ final class TrackersViewController: UIViewController {
     }()
     
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-        collectionView.backgroundView = emptyStateView
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         return collectionView.forAutolayout()
     }()
@@ -86,17 +91,35 @@ final class TrackersViewController: UIViewController {
         navigationItem.searchController = searchInput
         
         collectionView.placedOn(view)
-        collectionView.pin(to: view)
-        
+        collectionView.pin(to: view, inset: Constant.baseInset)
+    }
+    
+    private func showEmptyState() {
+        collectionView.backgroundView = emptyStateView
+
         NSLayoutConstraint.activate([
             emptyStateView.centerX.constraint(equalTo: view.centerX),
             emptyStateView.centerY.constraint(equalTo: view.centerY)
         ])
     }
     
+    private func hideEmptyState() {
+        collectionView.backgroundView = nil
+    }
+    
     @objc
     private func addTapped() {
         // TODO: implement
+    }
+    
+    private func makeBlue(indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.contentView.backgroundColor = .blue
+    }
+        
+    private func makeOrange(indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.contentView.backgroundColor = .orange
     }
 }
 
