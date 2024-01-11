@@ -17,6 +17,8 @@ final class TrackersViewController: UIViewController {
     // Dependencies
 
     private let presenter: ITrackersPresenter
+    private var categories = [TrackerCategory]()
+    private var completedTrackers = [TrackerRecord]()
     
     // MARK: - UI
         
@@ -42,8 +44,6 @@ final class TrackersViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         return collectionView.forAutolayout()
@@ -63,6 +63,15 @@ final class TrackersViewController: UIViewController {
         stackView.spacing = .init(integerLiteral: 8)
         
         return stackView.forAutolayout()
+    }()
+    
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+
+        return datePicker
     }()
 
     // MARK: - Initialization
@@ -89,6 +98,7 @@ final class TrackersViewController: UIViewController {
     private func setupUI() {
         navigationItem.leftBarButtonItem = addButton
         navigationItem.searchController = searchInput
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         
         collectionView.placedOn(view)
         collectionView.pin(to: view, inset: Constant.baseInset)
@@ -110,6 +120,11 @@ final class TrackersViewController: UIViewController {
     @objc
     private func addTapped() {
         // TODO: implement
+    }
+    
+    @objc
+    func datePickerValueChanged(_ sender: UIDatePicker) {
+        print(sender.date)
     }
     
     private func makeBlue(indexPath: IndexPath) {

@@ -22,6 +22,9 @@
 		5E7841AC2B4A9C9200062777 /* HabitsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841A72B4A9C9200062777 /* HabitsAssembly.swift */; };
 		5E7841AE2B4A9E8200062777 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841AD2B4A9E8200062777 /* TabBarController.swift */; };
 		5E7841B02B4AA93A00062777 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841AF2B4AA93A00062777 /* UIView+Ext.swift */; };
+		5E7841B52B4E9C6500062777 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B42B4E9C6500062777 /* Tracker.swift */; };
+		5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */; };
+		5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B82B4E9C7500062777 /* TrackerRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		5E7841A72B4A9C9200062777 /* HabitsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsAssembly.swift; sourceTree = "<group>"; };
 		5E7841AD2B4A9E8200062777 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5E7841AF2B4AA93A00062777 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		5E7841B42B4E9C6500062777 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
+		5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
+		5E7841B82B4E9C7500062777 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,7 @@
 		5E78417E2B4A92F500062777 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				5E7841B32B4E9C3800062777 /* Models */,
 				5E7841962B4A995C00062777 /* Presentation */,
 				5E7841932B4A98FE00062777 /* Extensions */,
 				5E78417F2B4A92F500062777 /* AppDelegate.swift */,
@@ -124,6 +131,16 @@
 				5E78419B2B4A99D000062777 /* TrackersRouter.swift */,
 			);
 			path = Trackers;
+			sourceTree = "<group>";
+		};
+		5E7841B32B4E9C3800062777 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5E7841B42B4E9C6500062777 /* Tracker.swift */,
+				5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */,
+				5E7841B82B4E9C7500062777 /* TrackerRecord.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,8 +219,11 @@
 				5E7841AA2B4A9C9200062777 /* HabitsRouter.swift in Sources */,
 				5E7841802B4A92F500062777 /* AppDelegate.swift in Sources */,
 				5E7841822B4A92F500062777 /* SceneDelegate.swift in Sources */,
+				5E7841B52B4E9C6500062777 /* Tracker.swift in Sources */,
 				5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */,
 				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
+				5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */,
+				5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */,
 				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
 				5E7841B02B4AA93A00062777 /* UIView+Ext.swift in Sources */,
 				5E7841AE2B4A9E8200062777 /* TabBarController.swift in Sources */,
