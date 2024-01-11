@@ -17,7 +17,7 @@ final class HabitsPresenter {
     private let router: IHabitsRouter
     weak var view: IHabitsView?
 
-    // MARK: - Initialization
+    // MARK: - Lifecycle
 
     init(router: IHabitsRouter) {
         self.router = router

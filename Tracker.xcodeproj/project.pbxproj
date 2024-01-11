@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */; };
+		5E56AE972B500996007A2D97 /* TrackersSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */; };
 		5E7841802B4A92F500062777 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78417F2B4A92F500062777 /* AppDelegate.swift */; };
 		5E7841822B4A92F500062777 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841812B4A92F500062777 /* SceneDelegate.swift */; };
 		5E7841892B4A92FA00062777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E7841882B4A92FA00062777 /* Assets.xcassets */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersCell.swift; sourceTree = "<group>"; };
+		5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersSupplementaryView.swift; sourceTree = "<group>"; };
 		5E78417C2B4A92F500062777 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E78417F2B4A92F500062777 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E7841812B4A92F500062777 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +65,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E56AE912B4FF6D0007A2D97 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */,
+				5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		5E7841732B4A92F500062777 = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +138,7 @@
 		5E7841982B4A99B900062777 /* Trackers */ = {
 			isa = PBXGroup;
 			children = (
+				5E56AE912B4FF6D0007A2D97 /* Cells */,
 				5E78419D2B4A99D000062777 /* TrackersAssembly.swift */,
 				5E78419C2B4A99D000062777 /* TrackersViewController.swift */,
 				5E78419A2B4A99D000062777 /* TrackersPresenter.swift */,
@@ -223,6 +237,8 @@
 				5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */,
 				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
 				5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */,
+				5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */,
+				5E56AE972B500996007A2D97 /* TrackersSupplementaryView.swift in Sources */,
 				5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */,
 				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
 				5E7841B02B4AA93A00062777 /* UIView+Ext.swift in Sources */,

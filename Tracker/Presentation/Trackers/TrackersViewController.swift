@@ -12,6 +12,7 @@ protocol ITrackersView: AnyObject { }
 final class TrackersViewController: UIViewController {
     private enum Constant {
         static let baseInset: CGFloat = 16.0
+        static let dayInSeconds: TimeInterval = 86400
     }
     
     // Dependencies
@@ -44,7 +45,14 @@ final class TrackersViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(TrackersCell.self, forCellWithReuseIdentifier: TrackersCell.identifier)
+        collectionView.register(
+            TrackersSupplementaryView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TrackersSupplementaryView.identifier
+        )
         
         return collectionView.forAutolayout()
     }()
@@ -74,7 +82,7 @@ final class TrackersViewController: UIViewController {
         return datePicker
     }()
 
-    // MARK: - Initialization
+    // MARK: - Lifecycle
 
     init(presenter: ITrackersPresenter) {
         self.presenter = presenter
@@ -89,11 +97,27 @@ final class TrackersViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
 
+        addMockData()
         setupUI()
         presenter.viewDidLoad()
     }
 
     // MARK: - Private
+    private func addMockData() {
+        categories = [
+            .init(header: "Отдых", trackers: [
+                .init(id: .init(), name: "Погулять", color: .green, emoji: "🚶", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)]),
+                .init(id: .init(), name: "Покааться на велосипеде", color: .blue, emoji: "🚴", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds)]),
+                .init(id: .init(), name: "Почитать книгу", color: .brown, emoji: "📙", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)])
+            ]),
+            .init(header: "Работа", trackers: [
+                .init(id: .init(), name: "Закрыть задачу", color: .red, emoji: "👷", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 2)])
+            ]),
+            .init(header: "Поездка", trackers: [
+                .init(id: .init(), name: "Забронировать отель", color: .cyan, emoji: "🏢", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 3)])
+            ])
+        ]
+    }
 
     private func setupUI() {
         navigationItem.leftBarButtonItem = addButton
@@ -101,20 +125,26 @@ final class TrackersViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         
         collectionView.placedOn(view)
-        collectionView.pin(to: view, inset: Constant.baseInset)
+        
+        NSLayoutConstraint.activate([
+            collectionView.top.constraint(equalTo: view.safeTop),
+            collectionView.left.constraint(equalTo: view.left, constant: Constant.baseInset),
+            collectionView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
+            collectionView.bottom.constraint(equalTo: view.safeBottom)
+        ])
     }
     
     private func showEmptyState() {
-        collectionView.backgroundView = emptyStateView
+        emptyStateView.placedOn(collectionView)
 
         NSLayoutConstraint.activate([
-            emptyStateView.centerX.constraint(equalTo: view.centerX),
-            emptyStateView.centerY.constraint(equalTo: view.centerY)
+            emptyStateView.centerX.constraint(equalTo: collectionView.centerX),
+            emptyStateView.centerY.constraint(equalTo: collectionView.centerY)
         ])
     }
     
     private func hideEmptyState() {
-        collectionView.backgroundView = nil
+        emptyStateView.removeFromSuperview()
     }
     
     @objc
@@ -125,16 +155,6 @@ final class TrackersViewController: UIViewController {
     @objc
     func datePickerValueChanged(_ sender: UIDatePicker) {
         print(sender.date)
-    }
-    
-    private func makeBlue(indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.contentView.backgroundColor = .blue
-    }
-        
-    private func makeOrange(indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.contentView.backgroundColor = .orange
     }
 }
 
@@ -150,3 +170,72 @@ extension TrackersViewController: UISearchResultsUpdating {
         print(text)
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.bounds.width / 2, height: 90)
+    }
+    
+    func collectionView(_: UICollectionView, layout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt: Int) -> CGFloat {
+        0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath
+        ) as? TrackersSupplementaryView else { return UICollectionReusableView() }
+        
+        let modelForSection = categories[indexPath.section]
+        header.configure(for: modelForSection)
+        
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let indexPath = IndexPath(row: 0, section: section)
+//        let header = collectionView.dequeueReusableSupplementaryView(
+//            ofKind: UICollectionView.elementKindSectionHeader,
+//            withReuseIdentifier: TrackersSupplementaryView.identifier,
+//            for: indexPath
+//        )
+//        self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        
+//        return header.systemLayoutSizeFitting(
+//            .init(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
+//            withHorizontalFittingPriority: .fittingSizeLevel,
+//            verticalFittingPriority: .fittingSizeLevel
+//        )
+        
+        return .init(width: collectionView.frame.width, height: 30)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension TrackersViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if categories.isEmpty { showEmptyState() }
+
+        return categories.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        categories[section].trackers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TrackersCell.identifier,
+            for: indexPath
+        ) as? TrackersCell else { return UICollectionViewCell() }
+        
+        let modelForCell = categories[indexPath.section].trackers[indexPath.row]
+        cell.configure(for: modelForCell)
+        
+        return cell
+    }
+}
+

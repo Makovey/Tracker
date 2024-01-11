@@ -14,7 +14,7 @@ final class HabitsViewController: UIViewController {
 
     private let presenter: IHabitsPresenter
 
-    // MARK: - Initialization
+    // MARK: - Lifecycle
 
     init(presenter: IHabitsPresenter) {
         self.presenter = presenter

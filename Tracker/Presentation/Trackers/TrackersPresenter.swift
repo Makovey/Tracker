@@ -17,7 +17,7 @@ final class TrackersPresenter {
     private let router: ITrackersRouter
     weak var view: ITrackersView?
 
-    // MARK: - Initialization
+    // MARK: - Lifecycle
 
     init(router: ITrackersRouter) {
         self.router = router
