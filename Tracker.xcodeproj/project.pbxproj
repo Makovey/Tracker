@@ -27,6 +27,7 @@
 		5E7841B52B4E9C6500062777 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B42B4E9C6500062777 /* Tracker.swift */; };
 		5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */; };
 		5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B82B4E9C7500062777 /* TrackerRecord.swift */; };
+		5EF1A4792B56C93E00699BFD /* TrackersLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		5E7841B42B4E9C6500062777 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		5E7841B82B4E9C7500062777 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
+		5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersLayoutProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			children = (
 				5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */,
 				5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */,
+				5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				5E7841822B4A92F500062777 /* SceneDelegate.swift in Sources */,
 				5E7841B52B4E9C6500062777 /* Tracker.swift in Sources */,
 				5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */,
+				5EF1A4792B56C93E00699BFD /* TrackersLayoutProvider.swift in Sources */,
 				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
 				5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */,
 				5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */,
@@ -266,7 +270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -329,7 +333,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

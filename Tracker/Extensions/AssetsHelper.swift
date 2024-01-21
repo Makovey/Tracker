@@ -8,6 +8,12 @@
 import UIKit
 
 extension UIColor {
+    static let greenCard = UIColor(named: "GreenCard") ?? .init()
+    static let orangeCard = UIColor(named: "OrangeCard") ?? .init()
+    static let redCard = UIColor(named: "RedCard") ?? .init()
+    static let lightBlueCard = UIColor(named: "LightBlueCard") ?? .init()
+    static let lightGreenCard = UIColor(named: "LightGreenCard") ?? .init()
+    static let cardBorder = UIColor(named: "CardBorder") ?? . init()
 }
 
 extension UIImage {

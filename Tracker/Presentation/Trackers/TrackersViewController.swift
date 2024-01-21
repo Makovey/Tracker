@@ -11,13 +11,14 @@ protocol ITrackersView: AnyObject { }
 
 final class TrackersViewController: UIViewController {
     private enum Constant {
-        static let baseInset: CGFloat = 16.0
         static let dayInSeconds: TimeInterval = 86400
     }
     
-    // Dependencies
+    // MARK: - Properties
 
     private let presenter: ITrackersPresenter
+    private let layoutProvider: ILayoutProvider
+
     private var categories = [TrackerCategory]()
     private var completedTrackers = [TrackerRecord]()
     
@@ -44,7 +45,7 @@ final class TrackersViewController: UIViewController {
     }()
     
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider.layout())
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(TrackersCell.self, forCellWithReuseIdentifier: TrackersCell.identifier)
@@ -84,8 +85,12 @@ final class TrackersViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(presenter: ITrackersPresenter) {
+    init(
+        presenter: ITrackersPresenter,
+        layoutProvider: ILayoutProvider
+    ) {
         self.presenter = presenter
+        self.layoutProvider = layoutProvider
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -106,15 +111,15 @@ final class TrackersViewController: UIViewController {
     private func addMockData() {
         categories = [
             .init(header: "Отдых", trackers: [
-                .init(id: .init(), name: "Погулять", color: .green, emoji: "🚶", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)]),
-                .init(id: .init(), name: "Покааться на велосипеде", color: .blue, emoji: "🚴", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds)]),
-                .init(id: .init(), name: "Почитать книгу", color: .brown, emoji: "📙", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)])
+                .init(id: .init(), name: "Погулять", color: .greenCard, emoji: "🚶", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)]),
+                .init(id: .init(), name: "Покататься на велосипеде", color: .orangeCard, emoji: "🚴", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds)]),
+                .init(id: .init(), name: "Почитать книгу", color: .redCard, emoji: "📙", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)])
             ]),
             .init(header: "Работа", trackers: [
-                .init(id: .init(), name: "Закрыть задачу", color: .red, emoji: "👷", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 2)])
+                .init(id: .init(), name: "Закрыть задачу", color: .lightBlueCard, emoji: "👷", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 2)])
             ]),
             .init(header: "Поездка", trackers: [
-                .init(id: .init(), name: "Забронировать отель", color: .cyan, emoji: "🏢", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 3)])
+                .init(id: .init(), name: "Забронировать отель", color: .lightGreenCard, emoji: "🏢", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 3)])
             ])
         ]
     }
@@ -125,11 +130,11 @@ final class TrackersViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         
         collectionView.placedOn(view)
-        
+                
         NSLayoutConstraint.activate([
-            collectionView.top.constraint(equalTo: view.safeTop),
-            collectionView.left.constraint(equalTo: view.left, constant: Constant.baseInset),
-            collectionView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
+            collectionView.top.constraint(equalTo: view.safeTop, constant: 12),
+            collectionView.left.constraint(equalTo: view.left),
+            collectionView.right.constraint(equalTo: view.right),
             collectionView.bottom.constraint(equalTo: view.safeBottom)
         ])
     }
@@ -173,15 +178,7 @@ extension TrackersViewController: UISearchResultsUpdating {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension TrackersViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width / 2, height: 90)
-    }
-    
-    func collectionView(_: UICollectionView, layout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt: Int) -> CGFloat {
-        0
-    }
-    
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
@@ -192,24 +189,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         header.configure(for: modelForSection)
         
         return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-//        let header = collectionView.dequeueReusableSupplementaryView(
-//            ofKind: UICollectionView.elementKindSectionHeader,
-//            withReuseIdentifier: TrackersSupplementaryView.identifier,
-//            for: indexPath
-//        )
-//        self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-        
-//        return header.systemLayoutSizeFitting(
-//            .init(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
-//            withHorizontalFittingPriority: .fittingSizeLevel,
-//            verticalFittingPriority: .fittingSizeLevel
-//        )
-        
-        return .init(width: collectionView.frame.width, height: 30)
     }
 }
 

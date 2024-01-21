@@ -9,13 +9,18 @@ import Foundation
 import UIKit
 
 final class TrackersSupplementaryView: UICollectionReusableView {
+    private enum Constant {
+        static let baseFontSize: CGFloat = 19
+        static let baseInset: CGFloat = 12
+    }
+    
     static let identifier = "TrackersSupplementaryView"
     
     // MARK: - UI
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 19, weight: .bold)
+        label.font = .systemFont(ofSize: Constant.baseFontSize, weight: .bold)
         
         return label.forAutolayout()
     }()
@@ -26,7 +31,13 @@ final class TrackersSupplementaryView: UICollectionReusableView {
         super.init(frame: frame)
         
         label.placedOn(self)
-        label.pin(to: self, inset: 2)
+
+        NSLayoutConstraint.activate([
+            label.top.constraint(equalTo: top),
+            label.left.constraint(equalTo: self.left, constant: Constant.baseInset),
+            label.right.constraint(equalTo: self.right, constant: -Constant.baseInset),
+            label.bottom.constraint(equalTo: bottom)
+        ])
     }
     
     required init?(coder: NSCoder) { nil }
