@@ -28,7 +28,7 @@ final class TrackersViewController: UIViewController {
         let button = UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,
-            action: #selector(addTapped)
+            action: #selector(addTrackerButtonTapped)
         )
         
         button.tintColor = .black
@@ -104,7 +104,6 @@ final class TrackersViewController: UIViewController {
 
         addMockData()
         setupUI()
-        presenter.viewDidLoad()
     }
 
     // MARK: - Private
@@ -153,8 +152,8 @@ final class TrackersViewController: UIViewController {
     }
     
     @objc
-    private func addTapped() {
-        // TODO: implement
+    private func addTrackerButtonTapped() {
+        presenter.addTrackerButtonTapped()
     }
     
     @objc

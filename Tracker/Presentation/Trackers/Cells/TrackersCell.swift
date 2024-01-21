@@ -79,7 +79,7 @@ final class TrackersCell: UICollectionViewCell {
         titleLabel.text = model.name
         dateLabel.text = "\(model.schedule.count) дней" // TODO: Localization
         addButton.backgroundColor = model.color
-        emojiView.configure(emoji: model.emoji)
+        emojiView.set(emoji: model.emoji)
     }
     
     // MARK: Private

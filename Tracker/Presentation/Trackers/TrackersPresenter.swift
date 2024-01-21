@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ITrackersPresenter {
-    func viewDidLoad()
+    func addTrackerButtonTapped()
 }
 
 final class TrackersPresenter {
@@ -31,5 +31,7 @@ final class TrackersPresenter {
 // MARK: - ITrackerPresenter
 
 extension TrackersPresenter: ITrackersPresenter {
-    func viewDidLoad() { }
+    func addTrackerButtonTapped() {
+        router.openTrackersBuilderScreen()
+    }
 }

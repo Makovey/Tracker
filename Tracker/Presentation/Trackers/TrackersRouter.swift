@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ITrackersRouter { }
+protocol ITrackersRouter { 
+    func openTrackersBuilderScreen()
+}
 
 final class TrackersRouter: ITrackersRouter {
     // Dependencies
@@ -15,6 +17,11 @@ final class TrackersRouter: ITrackersRouter {
     weak var viewController: UIViewController?
 
     // MARK: - Public
+    
+    func openTrackersBuilderScreen() {
+        let destination = TrackersBuilderAssembly.assemble()
+        viewController?.present(destination, animated: true)
+    }
 
     // MARK: - Private
 }

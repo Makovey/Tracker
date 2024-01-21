@@ -32,7 +32,7 @@ final class EmojiView: UIView {
     
     // MARK: - Public
     
-    func configure(emoji: String) {
+    func set(emoji: String) {
         setupUI()
         emojiLabel.text = emoji
     }
