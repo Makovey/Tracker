@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */; };
 		5E56AE972B500996007A2D97 /* TrackersSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */; };
+		5E5F26B62B5D8D0600237047 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5F26B52B5D8D0600237047 /* EmojiView.swift */; };
 		5E7841802B4A92F500062777 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E78417F2B4A92F500062777 /* AppDelegate.swift */; };
 		5E7841822B4A92F500062777 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841812B4A92F500062777 /* SceneDelegate.swift */; };
 		5E7841892B4A92FA00062777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E7841882B4A92FA00062777 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersCell.swift; sourceTree = "<group>"; };
 		5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersSupplementaryView.swift; sourceTree = "<group>"; };
+		5E5F26B52B5D8D0600237047 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		5E78417C2B4A92F500062777 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E78417F2B4A92F500062777 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E7841812B4A92F500062777 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		5E56AE912B4FF6D0007A2D97 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				5E5F26B52B5D8D0600237047 /* EmojiView.swift */,
 				5E56AE922B4FF6DE007A2D97 /* TrackersCell.swift */,
 				5E56AE962B500996007A2D97 /* TrackersSupplementaryView.swift */,
 				5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */,
@@ -239,6 +242,7 @@
 				5E7841B52B4E9C6500062777 /* Tracker.swift in Sources */,
 				5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */,
 				5EF1A4792B56C93E00699BFD /* TrackersLayoutProvider.swift in Sources */,
+				5E5F26B62B5D8D0600237047 /* EmojiView.swift in Sources */,
 				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
 				5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */,
 				5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */,

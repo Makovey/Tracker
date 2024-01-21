@@ -14,6 +14,7 @@ final class TrackersCell: UICollectionViewCell {
         static let addButtonSize: CGFloat = 34
         static let baseFontSize: CGFloat = 12
         static let baseInset: CGFloat = 12
+        static let emojiSize: CGFloat = 24
     }
 
     static let identifier = "TrackersCell"
@@ -38,6 +39,10 @@ final class TrackersCell: UICollectionViewCell {
         return label.forAutolayout()
     }()
     
+    private lazy var emojiView: EmojiView = {
+        .init().forAutolayout()
+    }()
+    
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: Constant.baseFontSize)
@@ -48,13 +53,11 @@ final class TrackersCell: UICollectionViewCell {
     
     private lazy var addButton: UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = Constant.addButtonSize / 2
-        
-        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20))
-        let image = UIImage(systemName: "plus", withConfiguration: config)
-        
-        button.setImage(image, for: .normal)
         button.tintColor = .systemBackground
+        button.layer.cornerRadius = Constant.addButtonSize / 2
+        button.clipsToBounds = true
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
 
         return button.forAutolayout()
     }()
@@ -76,6 +79,7 @@ final class TrackersCell: UICollectionViewCell {
         titleLabel.text = model.name
         dateLabel.text = "\(model.schedule.count) дней" // TODO: Localization
         addButton.backgroundColor = model.color
+        emojiView.configure(emoji: model.emoji)
     }
     
     // MARK: Private
@@ -98,6 +102,14 @@ final class TrackersCell: UICollectionViewCell {
             titleLabel.bottom.constraint(equalTo: backgroundCardView.bottom, constant: -Constant.baseInset)
         ])
         
+        emojiView.placedOn(backgroundCardView)
+        NSLayoutConstraint.activate([
+            emojiView.top.constraint(equalTo: backgroundCardView.top, constant: Constant.baseInset),
+            emojiView.left.constraint(equalTo: backgroundCardView.left, constant: Constant.baseInset),
+            emojiView.width.constraint(equalToConstant: Constant.emojiSize),
+            emojiView.height.constraint(equalToConstant: Constant.emojiSize)
+        ])
+        
         dateLabel.placedOn(contentView)
         NSLayoutConstraint.activate([
             dateLabel.top.constraint(equalTo: backgroundCardView.bottom, constant: 16),
@@ -111,5 +123,10 @@ final class TrackersCell: UICollectionViewCell {
             addButton.height.constraint(equalToConstant: Constant.addButtonSize),
             addButton.width.constraint(equalToConstant: Constant.addButtonSize),
         ])
+    }
+    
+    @objc
+    private func addButtonTapped() {
+        print(#function)
     }
 }
