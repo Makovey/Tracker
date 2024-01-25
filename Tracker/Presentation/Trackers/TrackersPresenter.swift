@@ -14,12 +14,12 @@ protocol ITrackersPresenter {
 final class TrackersPresenter {
     // Dependencies
 
-    private let router: ITrackersRouter
-    weak var view: ITrackersView?
+    private let router: any ITrackersRouter
+    weak var view: (any ITrackersView)?
 
     // MARK: - Lifecycle
 
-    init(router: ITrackersRouter) {
+    init(router: some ITrackersRouter) {
         self.router = router
     }
     
@@ -32,6 +32,6 @@ final class TrackersPresenter {
 
 extension TrackersPresenter: ITrackersPresenter {
     func addTrackerButtonTapped() {
-        router.openTrackersBuilderScreen()
+        router.openEventsSelectorScreen()
     }
 }

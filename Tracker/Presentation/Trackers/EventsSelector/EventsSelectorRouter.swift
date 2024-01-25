@@ -1,5 +1,5 @@
 //
-//  TrackersBuilderRouter.swift
+//  EventsSelectorRouter.swift
 //  Tracker
 //
 //  Created by MAKOVEY Vladislav on 21.01.2024.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol ITrackersBuilderRouter { }
+protocol IEventsSelectorRouter { }
 
-final class TrackersBuilderRouter: ITrackersBuilderRouter {
+final class EventsSelectorRouter: IEventsSelectorRouter {
     // MARK: - Properties
     
     weak var viewController: UIViewController?
 
     // MARK: - Public
-
+    
     // MARK: - Private
 }

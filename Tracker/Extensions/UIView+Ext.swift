@@ -45,4 +45,11 @@ extension UIView {
             self.bottom.constraint(equalTo: parent.bottom, constant: -inset)
         ])
     }
+    
+    func pinToCenter(of view: UIView) {
+        NSLayoutConstraint.activate([
+            self.centerX.constraint(equalTo: view.centerX),
+            self.centerY.constraint(equalTo: view.centerY)
+        ])
+    }
 }

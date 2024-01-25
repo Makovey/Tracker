@@ -14,12 +14,12 @@ protocol IHabitsPresenter {
 final class HabitsPresenter {
     // Dependencies
 
-    private let router: IHabitsRouter
-    weak var view: IHabitsView?
+    private let router: any IHabitsRouter
+    weak var view: (any IHabitsView)?
 
     // MARK: - Lifecycle
 
-    init(router: IHabitsRouter) {
+    init(router: some IHabitsRouter) {
         self.router = router
     }
 

@@ -13,7 +13,12 @@ extension UIColor {
     static let redCard = UIColor(named: "RedCard") ?? .init()
     static let lightBlueCard = UIColor(named: "LightBlueCard") ?? .init()
     static let lightGreenCard = UIColor(named: "LightGreenCard") ?? .init()
-    static let cardBorder = UIColor(named: "CardBorder") ?? . init()
+    static let cardBorder = UIColor(named: "CardBorder") ?? .init()
+    
+    static let enabledButton = UIColor(named: "EnabledState") ?? .init()
+    static let disabledButton = UIColor(named: "DisabledState") ?? .init()
+    static let canceledButton = UIColor(named: "CanceledState") ?? .init()
+    static let optionButton = UIColor(named: "OptionState") ?? .init()
 }
 
 extension UIImage {

@@ -12,11 +12,11 @@ protocol IHabitsView: AnyObject { }
 final class HabitsViewController: UIViewController {
     // Dependencies
 
-    private let presenter: IHabitsPresenter
+    private let presenter: any IHabitsPresenter
 
     // MARK: - Lifecycle
 
-    init(presenter: IHabitsPresenter) {
+    init(presenter: some IHabitsPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }

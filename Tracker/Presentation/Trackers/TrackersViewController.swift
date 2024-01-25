@@ -16,8 +16,8 @@ final class TrackersViewController: UIViewController {
     
     // MARK: - Properties
 
-    private let presenter: ITrackersPresenter
-    private let layoutProvider: ILayoutProvider
+    private let presenter: any ITrackersPresenter
+    private let layoutProvider: any ILayoutProvider
 
     private var categories = [TrackerCategory]()
     private var completedTrackers = [TrackerRecord]()
@@ -86,8 +86,8 @@ final class TrackersViewController: UIViewController {
     // MARK: - Lifecycle
 
     init(
-        presenter: ITrackersPresenter,
-        layoutProvider: ILayoutProvider
+        presenter: some ITrackersPresenter,
+        layoutProvider: some ILayoutProvider
     ) {
         self.presenter = presenter
         self.layoutProvider = layoutProvider
@@ -107,21 +107,6 @@ final class TrackersViewController: UIViewController {
     }
 
     // MARK: - Private
-    private func addMockData() {
-        categories = [
-            .init(header: "Отдых", trackers: [
-                .init(id: .init(), name: "Погулять", color: .greenCard, emoji: "🚶", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)]),
-                .init(id: .init(), name: "Покататься на велосипеде", color: .orangeCard, emoji: "🚴", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds)]),
-                .init(id: .init(), name: "Почитать книгу", color: .redCard, emoji: "📙", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)])
-            ]),
-            .init(header: "Работа", trackers: [
-                .init(id: .init(), name: "Закрыть задачу", color: .lightBlueCard, emoji: "👷", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 2)])
-            ]),
-            .init(header: "Поездка", trackers: [
-                .init(id: .init(), name: "Забронировать отель", color: .lightGreenCard, emoji: "🏢", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 3)])
-            ])
-        ]
-    }
 
     private func setupUI() {
         navigationItem.leftBarButtonItem = addButton
@@ -217,3 +202,22 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - Mock/Debug data
+
+extension TrackersViewController {
+    private func addMockData() {
+        categories = [
+            .init(header: "Отдых", trackers: [
+                .init(id: .init(), name: "Погулять", color: .greenCard, emoji: "🚶", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)]),
+                .init(id: .init(), name: "Покататься на велосипеде", color: .orangeCard, emoji: "🚴", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds)]),
+                .init(id: .init(), name: "Почитать книгу", color: .redCard, emoji: "📙", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)])
+            ]),
+            .init(header: "Работа", trackers: [
+                .init(id: .init(), name: "Закрыть задачу", color: .lightBlueCard, emoji: "👷", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 2)])
+            ]),
+            .init(header: "Поездка", trackers: [
+                .init(id: .init(), name: "Забронировать отель", color: .lightGreenCard, emoji: "🏢", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 3)])
+            ])
+        ]
+    }
+}
