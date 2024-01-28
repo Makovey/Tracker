@@ -62,7 +62,7 @@ final class EventsSelectorViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        title = "Новая привычка" // TODO: Localization
+        title = "Создание трекера" // TODO: Localization
 
         stackView
             .placedOn(view)

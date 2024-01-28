@@ -31,7 +31,7 @@ final class TrackersViewController: UIViewController {
             action: #selector(addTrackerButtonTapped)
         )
         
-        button.tintColor = .black
+        button.tintColor = .label
         
         return button
     }()

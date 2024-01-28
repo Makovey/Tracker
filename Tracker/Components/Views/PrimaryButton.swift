@@ -43,7 +43,7 @@ final class PrimaryButton: UIButton {
     
     func disable() {
         self.isUserInteractionEnabled = false
-        backgroundColor = .disabledButton
+        backgroundColor = .primaryGray
         setTitleColor(.white, for: .normal)
     }
     

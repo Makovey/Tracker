@@ -16,11 +16,14 @@ extension UIColor {
     static let cardBorder = UIColor(named: "CardBorder") ?? .init()
     
     static let enabledButton = UIColor(named: "EnabledState") ?? .init()
-    static let disabledButton = UIColor(named: "DisabledState") ?? .init()
     static let canceledButton = UIColor(named: "CanceledState") ?? .init()
     static let optionButton = UIColor(named: "OptionState") ?? .init()
+
+    static let primaryGray = UIColor(named: "PrimaryGray") ?? .init()
+    static let primaryElementBackground = UIColor(named: "PrimaryElementBackground") ?? .init()
 }
 
 extension UIImage {
     static let emptyImage = UIImage(named: "EmptyTrackerImage") ?? .init()
+    static let chevron = UIImage(named: "Chevron") ?? .init()
 }
