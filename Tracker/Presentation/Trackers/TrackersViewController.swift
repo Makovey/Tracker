@@ -7,6 +7,9 @@
 
 import UIKit
 
+typealias Snapshot = NSDiffableDataSourceSnapshot<String, Tracker>
+typealias DataSource = UICollectionViewDiffableDataSource<String, Tracker>
+
 protocol ITrackersView: AnyObject { }
 
 final class TrackersViewController: UIViewController {
@@ -21,6 +24,20 @@ final class TrackersViewController: UIViewController {
 
     private var categories = [TrackerCategory]()
     private var completedTrackers = [TrackerRecord]()
+    
+    private lazy var dataSource: DataSource = {
+        let dataSource = DataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
+            guard let self else { fatalError("TrackersViewController is nil") }
+            return self.cellProvider(collectionView: collectionView, indexPath: indexPath, tracker: tracker)
+        }
+
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let self else { fatalError("TrackersViewController is nil") }
+            return self.supplementaryViewProvider(collection: collectionView, kind: kind, indexPath: indexPath)
+        }
+
+        return dataSource
+    }()
     
     // MARK: - UI
         
@@ -46,8 +63,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider.layout())
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        
         collectionView.register(TrackersCell.self, forCellWithReuseIdentifier: TrackersCell.identifier)
         collectionView.register(
             TrackersSupplementaryView.self,
@@ -104,6 +120,7 @@ final class TrackersViewController: UIViewController {
 
         addMockData()
         setupUI()
+        setupInitialState()
     }
 
     // MARK: - Private
@@ -123,6 +140,12 @@ final class TrackersViewController: UIViewController {
         ])
     }
     
+    private func setupInitialState() {
+        collectionView.dataSource = dataSource
+    
+        reloadSnapshot()
+    }
+    
     private func showEmptyState() {
         emptyStateView.placedOn(collectionView)
 
@@ -130,6 +153,50 @@ final class TrackersViewController: UIViewController {
             emptyStateView.centerX.constraint(equalTo: collectionView.centerX),
             emptyStateView.centerY.constraint(equalTo: collectionView.centerY)
         ])
+    }
+
+    private func reloadSnapshot() {
+        var snapshot = Snapshot()
+        snapshot.deleteAllItems()
+        
+        categories.forEach {
+            snapshot.appendSections([$0.header])
+            snapshot.appendItems($0.trackers)
+        }
+
+        dataSource.apply(snapshot)
+    }
+    
+    private func cellProvider(
+        collectionView: UICollectionView,
+        indexPath: IndexPath,
+        tracker: Tracker
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TrackersCell.identifier,
+            for: indexPath
+        ) as? TrackersCell else { return UICollectionViewCell() }
+
+        let modelForCell = tracker
+        cell.configure(for: modelForCell)
+
+        return cell
+    }
+    
+    private func supplementaryViewProvider(
+        collection: UICollectionView,
+        kind: String,
+        indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath
+        ) as? TrackersSupplementaryView else { return UICollectionReusableView() }
+        
+        let modelForSection = self.categories[indexPath.section]
+        header.configure(for: modelForSection)
+        
+        return header
     }
     
     private func hideEmptyState() {
@@ -157,48 +224,6 @@ extension TrackersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
         print(text)
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension TrackersViewController: UICollectionViewDelegateFlowLayout {    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath
-        ) as? TrackersSupplementaryView else { return UICollectionReusableView() }
-        
-        let modelForSection = categories[indexPath.section]
-        header.configure(for: modelForSection)
-        
-        return header
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension TrackersViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if categories.isEmpty { showEmptyState() }
-
-        return categories.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        categories[section].trackers.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TrackersCell.identifier,
-            for: indexPath
-        ) as? TrackersCell else { return UICollectionViewCell() }
-        
-        let modelForCell = categories[indexPath.section].trackers[indexPath.row]
-        cell.configure(for: modelForCell)
-        
-        return cell
     }
 }
 

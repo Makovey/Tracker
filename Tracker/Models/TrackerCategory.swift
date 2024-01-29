@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct TrackerCategory {
+struct TrackerCategory: Hashable {
     let header: String
     let trackers: [Tracker]
+    
+    static func == (lhs: TrackerCategory, rhs: TrackerCategory) -> Bool {
+        lhs.header == rhs.header
+    }
 }
