@@ -38,6 +38,12 @@
 		5ED092C62B627698000E29AE /* EventsBuilderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED092C12B627698000E29AE /* EventsBuilderViewController.swift */; };
 		5ED092C72B627698000E29AE /* EventsBuilderAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED092C22B627698000E29AE /* EventsBuilderAssembly.swift */; };
 		5EDD0ED82B654944007A6DCF /* PrimaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0ED72B654944007A6DCF /* PrimaryCell.swift */; };
+		5EDD0EED2B67FF47007A6DCF /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0EEC2B67FF47007A6DCF /* EventType.swift */; };
+		5EDD0EF42B67FFA5007A6DCF /* EventsSchedulePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0EEF2B67FFA5007A6DCF /* EventsSchedulePresenter.swift */; };
+		5EDD0EF52B67FFA5007A6DCF /* EventsScheduleRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0EF02B67FFA5007A6DCF /* EventsScheduleRouter.swift */; };
+		5EDD0EF62B67FFA5007A6DCF /* EventsScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0EF12B67FFA5007A6DCF /* EventsScheduleViewController.swift */; };
+		5EDD0EF72B67FFA5007A6DCF /* EventsScheduleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0EF22B67FFA5007A6DCF /* EventsScheduleAssembly.swift */; };
+		5EDD0EFB2B682BC9007A6DCF /* WeekDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD0EFA2B682BC9007A6DCF /* WeekDayCell.swift */; };
 		5EF1A4792B56C93E00699BFD /* TrackersLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +81,12 @@
 		5ED092C12B627698000E29AE /* EventsBuilderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsBuilderViewController.swift; sourceTree = "<group>"; };
 		5ED092C22B627698000E29AE /* EventsBuilderAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsBuilderAssembly.swift; sourceTree = "<group>"; };
 		5EDD0ED72B654944007A6DCF /* PrimaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryCell.swift; sourceTree = "<group>"; };
+		5EDD0EEC2B67FF47007A6DCF /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
+		5EDD0EEF2B67FFA5007A6DCF /* EventsSchedulePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSchedulePresenter.swift; sourceTree = "<group>"; };
+		5EDD0EF02B67FFA5007A6DCF /* EventsScheduleRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsScheduleRouter.swift; sourceTree = "<group>"; };
+		5EDD0EF12B67FFA5007A6DCF /* EventsScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsScheduleViewController.swift; sourceTree = "<group>"; };
+		5EDD0EF22B67FFA5007A6DCF /* EventsScheduleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsScheduleAssembly.swift; sourceTree = "<group>"; };
+		5EDD0EFA2B682BC9007A6DCF /* WeekDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayCell.swift; sourceTree = "<group>"; };
 		5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersLayoutProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +126,7 @@
 			children = (
 				5EDD0ED92B663F0A007A6DCF /* EventsSelector */,
 				5ED092BD2B627681000E29AE /* EventsBuilder */,
+				5EDD0EF82B67FFA8007A6DCF /* EventsSchedule */,
 			);
 			path = EventsBuilder;
 			sourceTree = "<group>";
@@ -210,6 +223,7 @@
 				5ED092C12B627698000E29AE /* EventsBuilderViewController.swift */,
 				5ED092BF2B627698000E29AE /* EventsBuilderPresenter.swift */,
 				5ED092C02B627698000E29AE /* EventsBuilderRouter.swift */,
+				5EDD0EEC2B67FF47007A6DCF /* EventType.swift */,
 			);
 			path = EventsBuilder;
 			sourceTree = "<group>";
@@ -239,6 +253,26 @@
 				5E5F26BA2B5DB2F800237047 /* EventsSelectorRouter.swift */,
 			);
 			path = EventsSelector;
+			sourceTree = "<group>";
+		};
+		5EDD0EF82B67FFA8007A6DCF /* EventsSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				5EDD0EF92B682BAB007A6DCF /* Cells */,
+				5EDD0EF22B67FFA5007A6DCF /* EventsScheduleAssembly.swift */,
+				5EDD0EF12B67FFA5007A6DCF /* EventsScheduleViewController.swift */,
+				5EDD0EEF2B67FFA5007A6DCF /* EventsSchedulePresenter.swift */,
+				5EDD0EF02B67FFA5007A6DCF /* EventsScheduleRouter.swift */,
+			);
+			path = EventsSchedule;
+			sourceTree = "<group>";
+		};
+		5EDD0EF92B682BAB007A6DCF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5EDD0EFA2B682BC9007A6DCF /* WeekDayCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,8 +346,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E7841952B4A991200062777 /* AssetsHelper.swift in Sources */,
+				5EDD0EED2B67FF47007A6DCF /* EventType.swift in Sources */,
+				5EDD0EFB2B682BC9007A6DCF /* WeekDayCell.swift in Sources */,
 				5E7841A92B4A9C9200062777 /* HabitsPresenter.swift in Sources */,
 				5E7841A12B4A99D000062777 /* TrackersViewController.swift in Sources */,
+				5EDD0EF42B67FFA5007A6DCF /* EventsSchedulePresenter.swift in Sources */,
 				5E5F26BF2B5DB2F800237047 /* EventsSelectorRouter.swift in Sources */,
 				5ED092C52B627698000E29AE /* EventsBuilderRouter.swift in Sources */,
 				5E7841AA2B4A9C9200062777 /* HabitsRouter.swift in Sources */,
@@ -326,16 +363,19 @@
 				5E5F26BE2B5DB2F800237047 /* EventsSelectorPresenter.swift in Sources */,
 				5E1987002B60164500A4538D /* PrimaryButton.swift in Sources */,
 				5E5F26C02B5DB2F800237047 /* EventsSelectorViewController.swift in Sources */,
+				5EDD0EF62B67FFA5007A6DCF /* EventsScheduleViewController.swift in Sources */,
 				5E2BD6B42B627463008A57EB /* EventsSelectorAssembly.swift in Sources */,
 				5E5F26B62B5D8D0600237047 /* EmojiView.swift in Sources */,
 				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
 				5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */,
 				5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */,
+				5EDD0EF52B67FFA5007A6DCF /* EventsScheduleRouter.swift in Sources */,
 				5E56AE972B500996007A2D97 /* TrackersSupplementaryView.swift in Sources */,
 				5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */,
 				5ED092C42B627698000E29AE /* EventsBuilderPresenter.swift in Sources */,
 				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
 				5E7841B02B4AA93A00062777 /* UIView+Ext.swift in Sources */,
+				5EDD0EF72B67FFA5007A6DCF /* EventsScheduleAssembly.swift in Sources */,
 				5E7841AE2B4A9E8200062777 /* TabBarController.swift in Sources */,
 				5ED092C72B627698000E29AE /* EventsBuilderAssembly.swift in Sources */,
 				5E7841AC2B4A9C9200062777 /* HabitsAssembly.swift in Sources */,

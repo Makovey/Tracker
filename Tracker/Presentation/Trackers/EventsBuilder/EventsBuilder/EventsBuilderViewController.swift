@@ -25,8 +25,8 @@ final class EventsBuilderViewController: UIViewController {
     // MARK: - Properties
 
     private let presenter: any IEventsBuilderPresenter
-    private let mode: EventMode
-    private let navigationItems: [NavigationItem] = [.category, .schedule]
+    private let mode: EventType
+    private var navigationItems: [NavigationItem] = [.category]
     
     // MARK: - UI
     
@@ -71,12 +71,28 @@ final class EventsBuilderViewController: UIViewController {
         
         return tableView.forAutolayout()
     }()
+    
+    private lazy var stackView: UIStackView = {
+        let cancelButton = PrimaryButton(style: .canceled, text: "Отменить") // TODO: Localization
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        
+        let createButton = PrimaryButton(style: .disabled, text: "Создать") // TODO: Localization
+        createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
+        
+        let stackView = UIStackView(arrangedSubviews: [cancelButton, createButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+        
+        return stackView.forAutolayout()
+    }()
+    
 
     // MARK: - Lifecycle
 
     init(
         presenter: some IEventsBuilderPresenter,
-        mode: EventMode
+        mode: EventType
     ) {
         self.presenter = presenter
         self.mode = mode
@@ -93,7 +109,6 @@ final class EventsBuilderViewController: UIViewController {
         setupUI()
     }
 
-
     // MARK: - Private
 
     private func setupUI() {
@@ -103,6 +118,7 @@ final class EventsBuilderViewController: UIViewController {
         switch mode {
         case .habit:
             title = "Новая привычка" // TODO: Localization
+            navigationItems.append(.schedule)
         case .event:
             title = "Новое нерегулярное событие" // TODO: Localization
         }
@@ -122,6 +138,24 @@ final class EventsBuilderViewController: UIViewController {
             tableView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
             tableView.height.constraint(equalToConstant: Constant.cellsHeight * CGFloat(navigationItems.count))
         ])
+        
+        stackView.placedOn(view)
+        NSLayoutConstraint.activate([
+            stackView.left.constraint(equalTo: view.left, constant: 20),
+            stackView.right.constraint(equalTo: view.right, constant: -20),
+            stackView.bottom.constraint(equalTo: view.safeBottom),
+            stackView.height.constraint(equalToConstant: 60)
+        ])
+    }
+    
+    @objc
+    private func cancelButtonTapped() {
+        presenter.cancelButtonTapped()
+    }
+    
+    @objc
+    private func createButtonTapped() {
+        presenter.createButtonTapped()
     }
 }
 
@@ -131,7 +165,18 @@ extension EventsBuilderViewController: IEventsBuilderView { }
 
 // MARK: - UITableViewDelegate
 
-extension EventsBuilderViewController: UITableViewDelegate {}
+extension EventsBuilderViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let navigationItem = navigationItems[indexPath.row]
+        
+        switch navigationItem {
+        case .category:
+            print(#function)
+        case .schedule:
+            presenter.scheduleTapped()
+        }
+    }
+}
 
 // MARK: - UITableViewDataSource
 
@@ -145,6 +190,10 @@ extension EventsBuilderViewController: UITableViewDataSource {
             withIdentifier: PrimaryCell.identifier,
             for: indexPath
         ) as? PrimaryCell else { return UITableViewCell() }
+        
+        if indexPath.row == navigationItems.count - 1 {
+            cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        }
         
         let title: String
         
@@ -161,6 +210,6 @@ extension EventsBuilderViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        75
+        Constant.cellsHeight
     }
 }

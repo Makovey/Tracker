@@ -8,7 +8,9 @@
 import Foundation
 
 protocol IEventsBuilderPresenter {
-    func viewDidLoad()
+    func cancelButtonTapped()
+    func createButtonTapped()
+    func scheduleTapped()
 }
 
 final class EventsBuilderPresenter {
@@ -31,5 +33,15 @@ final class EventsBuilderPresenter {
 // MARK: - IEventsBuilderPresenter
 
 extension EventsBuilderPresenter: IEventsBuilderPresenter {
-    func viewDidLoad() { }
+    func cancelButtonTapped() {
+        router.dismissModule()
+    }
+    
+    func createButtonTapped() {
+        print(#function)
+    }
+    
+    func scheduleTapped() {
+        router.openScheduleScreen()
+    }
 }

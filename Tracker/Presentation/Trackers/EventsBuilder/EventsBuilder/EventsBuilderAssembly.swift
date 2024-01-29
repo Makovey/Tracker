@@ -11,8 +11,8 @@ final class EventsBuilderAssembly {
     // MARK: - Public
     
     static func assemble(
-        with mode: EventMode,
-        navigationController: UINavigationController
+        with mode: EventType,
+        navigationController: UIViewController?
     ) -> UIViewController {
         let router = EventsBuilderRouter()
         let presenter = EventsBuilderPresenter(router: router)
@@ -23,9 +23,4 @@ final class EventsBuilderAssembly {
 
         return view
     }
-}
-
-enum EventMode {
-    case habit
-    case event
 }

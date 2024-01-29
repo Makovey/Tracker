@@ -12,7 +12,7 @@ protocol ITrackersRouter {
 }
 
 final class TrackersRouter: ITrackersRouter {
-    // Dependencies
+    // MARK: - Properties
 
     weak var viewController: UIViewController?
 

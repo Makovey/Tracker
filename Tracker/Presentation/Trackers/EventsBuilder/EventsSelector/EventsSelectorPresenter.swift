@@ -33,10 +33,10 @@ final class EventsSelectorPresenter {
 
 extension EventsSelectorPresenter: IEventsSelectorPresenter {
     func habitButtonTapped() {
-        router.habitButtonTapped()
+        router.openEventBuilderScreenWithHabit()
     }
     
     func irregularEventsButtonTapped() {
-        router.irregularEventsButtonTapped()
+        router.openEventBuilderScreenWithIrregularEvent()
     }
 }

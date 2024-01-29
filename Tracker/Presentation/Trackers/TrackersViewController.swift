@@ -131,7 +131,6 @@ final class TrackersViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         
         collectionView.placedOn(view)
-                
         NSLayoutConstraint.activate([
             collectionView.top.constraint(equalTo: view.safeTop, constant: 12),
             collectionView.left.constraint(equalTo: view.left),
@@ -157,7 +156,6 @@ final class TrackersViewController: UIViewController {
 
     private func reloadSnapshot() {
         var snapshot = Snapshot()
-        snapshot.deleteAllItems()
         
         categories.forEach {
             snapshot.appendSections([$0.header])

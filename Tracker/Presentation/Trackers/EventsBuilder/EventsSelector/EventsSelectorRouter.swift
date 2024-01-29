@@ -8,8 +8,8 @@
 import UIKit
 
 protocol IEventsSelectorRouter { 
-    func habitButtonTapped()
-    func irregularEventsButtonTapped()
+    func openEventBuilderScreenWithHabit()
+    func openEventBuilderScreenWithIrregularEvent()
 }
 
 final class EventsSelectorRouter: IEventsSelectorRouter {
@@ -19,21 +19,21 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
 
     // MARK: - Public
     
-    func habitButtonTapped() {
+    func openEventBuilderScreenWithHabit() {
         guard let navigationController = viewController?.navigationController else {
             fatalError("NavigationController is missing")
         }
 
-        let destination = EventsBuilderAssembly.assemble(with: .habit, navigationController: navigationController)
+        let destination = EventsBuilderAssembly.assemble(with: .habit, navigationController: viewController)
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func irregularEventsButtonTapped() {
+    func openEventBuilderScreenWithIrregularEvent() {
         guard let navigationController = viewController?.navigationController else {
             fatalError("NavigationController is missing")
         }
 
-        let destination = EventsBuilderAssembly.assemble(with: .event, navigationController: navigationController)
+        let destination = EventsBuilderAssembly.assemble(with: .event, navigationController: viewController)
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
 }

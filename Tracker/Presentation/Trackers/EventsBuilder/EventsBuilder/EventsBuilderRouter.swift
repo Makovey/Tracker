@@ -7,14 +7,29 @@
 
 import UIKit
 
-protocol IEventsBuilderRouter { }
+protocol IEventsBuilderRouter { 
+    func dismissModule()
+    func openScheduleScreen()
+}
 
 final class EventsBuilderRouter: IEventsBuilderRouter {
+
     // MARK: - Properties
     
     weak var viewController: UIViewController?
 
     // MARK: - Public
+    
+    func dismissModule() {
+        viewController?.dismiss(animated: true)
+    }
+    
+    func openScheduleScreen() {
+        guard let navigationController = viewController?.navigationController else {
+            fatalError("NavigationController is missing")
+        }
 
-    // MARK: - Private
+        let destination = EventsScheduleAssembly.assemble(navigationController: viewController)
+        viewController?.navigationController?.pushViewController(destination, animated: true)
+    }
 }
