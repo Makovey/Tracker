@@ -16,7 +16,7 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
 
     // MARK: - Properties
     
-    weak var viewController: UIViewController?
+    weak var viewController: UINavigationController?
 
     // MARK: - Public
     
@@ -25,11 +25,7 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
     }
     
     func openScheduleScreen() {
-        guard let navigationController = viewController?.navigationController else {
-            fatalError("NavigationController is missing")
-        }
-
         let destination = EventsScheduleAssembly.assemble(navigationController: viewController)
-        viewController?.navigationController?.pushViewController(destination, animated: true)
+        viewController?.pushViewController(destination, animated: true)
     }
 }

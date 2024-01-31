@@ -12,7 +12,7 @@ final class EventsBuilderAssembly {
     
     static func assemble(
         with mode: EventType,
-        navigationController: UIViewController?
+        navigationController: UINavigationController?
     ) -> UIViewController {
         let router = EventsBuilderRouter()
         let presenter = EventsBuilderPresenter(router: router)

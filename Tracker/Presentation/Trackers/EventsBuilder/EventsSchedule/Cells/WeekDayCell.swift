@@ -8,12 +8,17 @@
 import Foundation
 import UIKit
 
+protocol IWeekDayCellDelegate: AnyObject {
+    func dayChosen()
+}
+
 final class WeekDayCell: UITableViewCell {
     private enum Constant {
         static let baseInset: CGFloat = 16
         static let baseFontSize: CGFloat = 17
     }
 
+    weak var delegate: IWeekDayCellDelegate?
     static let identifier = "WeekDayCell"
     
     // MARK: - UI
@@ -29,6 +34,7 @@ final class WeekDayCell: UITableViewCell {
     private lazy var switcher: UISwitch = {
         let switcher = UISwitch()
         switcher.onTintColor = .optionButton
+        switcher.addTarget(self, action: #selector(switcherValueChanged), for: .valueChanged)
         
         return switcher.forAutolayout()
     }()
@@ -65,5 +71,10 @@ final class WeekDayCell: UITableViewCell {
             switcher.centerY.constraint(equalTo: contentView.centerY),
             switcher.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset)
         ])
+    }
+    
+    @objc
+    private func switcherValueChanged(switch: UISwitch) {
+        delegate?.dayChosen()
     }
 }

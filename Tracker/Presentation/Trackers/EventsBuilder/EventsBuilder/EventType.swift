@@ -8,6 +8,5 @@
 import Foundation
 
 enum EventType {
-    case habit
-    case event
+    case habit, event
 }

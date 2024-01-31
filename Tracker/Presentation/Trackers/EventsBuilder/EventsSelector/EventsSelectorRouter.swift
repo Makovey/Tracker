@@ -24,7 +24,7 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
             fatalError("NavigationController is missing")
         }
 
-        let destination = EventsBuilderAssembly.assemble(with: .habit, navigationController: viewController)
+        let destination = EventsBuilderAssembly.assemble(with: .habit, navigationController: navigationController)
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
@@ -33,7 +33,7 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
             fatalError("NavigationController is missing")
         }
 
-        let destination = EventsBuilderAssembly.assemble(with: .event, navigationController: viewController)
+        let destination = EventsBuilderAssembly.assemble(with: .event, navigationController: navigationController)
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
 }

@@ -204,6 +204,7 @@ extension EventsBuilderViewController: UITableViewDataSource {
             title = "Расписание" // TODO: Localization
         }
         
+        cell.selectionStyle = .none
         cell.configure(title: title)
         
         return cell

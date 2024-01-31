@@ -7,10 +7,12 @@
 
 import Foundation
 
-protocol IEventsSchedulePresenter { }
+protocol IEventsSchedulePresenter {
+    func doneButtonTapped()
+}
 
 final class EventsSchedulePresenter {
-    // MARK: = Properties
+    // MARK: - Properties
 
     private let router: IEventsScheduleRouter
     weak var view: IEventsScheduleView?
@@ -29,4 +31,7 @@ final class EventsSchedulePresenter {
 // MARK: - IEventsSchedulePresenter
 
 extension EventsSchedulePresenter: IEventsSchedulePresenter {
+    func doneButtonTapped() {
+        router.popScreen()
+    }
 }

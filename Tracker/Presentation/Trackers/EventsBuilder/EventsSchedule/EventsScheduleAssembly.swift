@@ -10,7 +10,9 @@ import UIKit
 final class EventsScheduleAssembly {
     // MARK: - Public
     
-    static func assemble(navigationController: UIViewController?) -> UIViewController {
+    static func assemble(
+        navigationController: UINavigationController?
+    ) -> UIViewController {
         let router = EventsScheduleRouter()
         let presenter = EventsSchedulePresenter(router: router)
         let view = EventsScheduleViewController(presenter: presenter)

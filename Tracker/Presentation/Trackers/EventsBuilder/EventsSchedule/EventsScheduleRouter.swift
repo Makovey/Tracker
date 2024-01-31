@@ -7,14 +7,19 @@
 
 import UIKit
 
-protocol IEventsScheduleRouter { }
+protocol IEventsScheduleRouter {
+    func popScreen()
+}
 
 final class EventsScheduleRouter: IEventsScheduleRouter {
 
     // MARK: - Properties
     
-    weak var viewController: UIViewController?
+    weak var viewController: UINavigationController?
 
     // MARK: - Public
 
+    func popScreen() {
+        viewController?.popViewController(animated: true)
+    }
 }

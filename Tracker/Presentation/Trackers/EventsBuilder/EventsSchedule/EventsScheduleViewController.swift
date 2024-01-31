@@ -18,7 +18,8 @@ final class EventsScheduleViewController: UIViewController {
     
     // MARK: = Properties
 
-    private let presenter: IEventsSchedulePresenter
+    private let weekDays = WeekDay.allCases
+    private let presenter: any IEventsSchedulePresenter
     
     // MARK: - UI
     
@@ -27,6 +28,7 @@ final class EventsScheduleViewController: UIViewController {
         tableView.layer.cornerRadius = Constant.baseCornerRadius
         tableView.isScrollEnabled = false
 
+        tableView.separatorColor = .red
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = .init(
             top: .zero,
@@ -51,7 +53,7 @@ final class EventsScheduleViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(presenter: IEventsSchedulePresenter) {
+    init(presenter: some IEventsSchedulePresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -79,7 +81,7 @@ final class EventsScheduleViewController: UIViewController {
             tableView.top.constraint(equalTo: view.safeTop, constant: Constant.baseInset),
             tableView.left.constraint(equalTo: view.left, constant: Constant.baseInset),
             tableView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
-            tableView.height.constraint(equalToConstant: Constant.cellsHeight * CGFloat(7))
+            tableView.height.constraint(equalToConstant: Constant.cellsHeight * CGFloat(weekDays.count))
         ])
         
         doneButton.placedOn(view)
@@ -93,7 +95,7 @@ final class EventsScheduleViewController: UIViewController {
     
     @objc
     private func doneButtonTapped() {
-        // pop
+        presenter.doneButtonTapped()
     }
 }
 
@@ -105,7 +107,7 @@ extension EventsScheduleViewController: IEventsScheduleView { }
 
 extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        7
+        weekDays.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,16 +116,24 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
             for: indexPath
         ) as? WeekDayCell else { return UITableViewCell() }
         
-        if indexPath.row == .zero || indexPath.row == 7 - 1 {
+        if indexPath.row == weekDays.count - 1 {
             cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         }
         
-        cell.configure(title: "title")
+        cell.delegate = self
+        cell.selectionStyle = .none
+        cell.configure(title: weekDays[indexPath.row].label)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constant.cellsHeight
+    }
+}
+
+extension EventsScheduleViewController: IWeekDayCellDelegate {
+    func dayChosen() {
+        print(#function)
     }
 }
