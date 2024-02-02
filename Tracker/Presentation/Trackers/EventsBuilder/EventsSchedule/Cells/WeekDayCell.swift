@@ -33,7 +33,7 @@ final class WeekDayCell: UITableViewCell {
     
     private lazy var switcher: UISwitch = {
         let switcher = UISwitch()
-        switcher.onTintColor = .optionButton
+        switcher.onTintColor = .optionState
         switcher.addTarget(self, action: #selector(switcherValueChanged), for: .valueChanged)
         
         return switcher.forAutolayout()

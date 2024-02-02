@@ -22,9 +22,13 @@ final class TrackersViewController: UIViewController {
     private let presenter: any ITrackersPresenter
     private let layoutProvider: any ILayoutProvider
 
-    private var categories = [TrackerCategory]()
+    private var fullCategoryList = [TrackerCategory]()
+    private var visibleCategoryList = [TrackerCategory]() {
+        didSet { reloadSnapshot() }
+    }
     private var completedTrackers = [TrackerRecord]()
-    
+    private var chosenDate = Date()
+        
     private lazy var dataSource: DataSource = {
         let dataSource = DataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
             guard let self else { fatalError("TrackersViewController is nil") }
@@ -79,7 +83,7 @@ final class TrackersViewController: UIViewController {
         imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
         
         let label = UILabel()
-        label.text = "Что будем отслеживать?"
+        label.text = "Что будем отслеживать?" // TODO: Localization
         label.font = .systemFont(ofSize: 12)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, label])
@@ -96,7 +100,7 @@ final class TrackersViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .compact
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
 
-        return datePicker
+        return datePicker.forAutolayout()
     }()
 
     // MARK: - Lifecycle
@@ -128,6 +132,9 @@ final class TrackersViewController: UIViewController {
     private func setupUI() {
         navigationItem.leftBarButtonItem = addButton
         navigationItem.searchController = searchInput
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        datePicker.width.constraint(equalToConstant: 100).isActive = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         
         collectionView.placedOn(view)
@@ -142,7 +149,7 @@ final class TrackersViewController: UIViewController {
     private func setupInitialState() {
         collectionView.dataSource = dataSource
     
-        reloadSnapshot()
+        updateCategoriesForChosenDate()
     }
     
     private func showEmptyState() {
@@ -157,11 +164,12 @@ final class TrackersViewController: UIViewController {
     private func reloadSnapshot() {
         var snapshot = Snapshot()
         
-        categories.forEach {
+        visibleCategoryList.forEach {
             snapshot.appendSections([$0.header])
-            snapshot.appendItems($0.trackers)
+            snapshot.appendItems($0.trackers, toSection: $0.header)
         }
 
+        snapshot.numberOfItems == .zero ? showEmptyState() : hideEmptyState()
         dataSource.apply(snapshot)
     }
     
@@ -174,11 +182,29 @@ final class TrackersViewController: UIViewController {
             withReuseIdentifier: TrackersCell.identifier,
             for: indexPath
         ) as? TrackersCell else { return UICollectionViewCell() }
+        
+        let isEditingAvailable = Calendar.current.compare(chosenDate, to: Date(), toGranularity: .day) != .orderedDescending
+        
+        let isCompletedForToday = completedTrackers
+            .filter { isTrackerCompletedForToday(record: $0, id: tracker.id) }
+            .count != 0
 
-        let modelForCell = tracker
-        cell.configure(for: modelForCell)
+        let model = TrackersCell.Model(
+            tracker: tracker,
+            isCompletedForToday: isCompletedForToday,
+            completedTimes: completedTrackers.filter { $0.id == tracker.id }.count,
+            isEditingAvailable: isEditingAvailable
+        )
+        
+        cell.configure(with: model)
+        cell.delegate = self
 
         return cell
+    }
+    
+    private func isTrackerCompletedForToday(record: TrackerRecord, id: UUID) -> Bool {
+        guard record.id == id else { return false }
+        return Calendar.current.compare(chosenDate, to: record.endDate, toGranularity: .day) == .orderedSame
     }
     
     private func supplementaryViewProvider(
@@ -191,7 +217,7 @@ final class TrackersViewController: UIViewController {
             withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath
         ) as? TrackersSupplementaryView else { return UICollectionReusableView() }
         
-        let modelForSection = self.categories[indexPath.section]
+        let modelForSection = self.visibleCategoryList[indexPath.section]
         header.configure(for: modelForSection)
         
         return header
@@ -201,6 +227,26 @@ final class TrackersViewController: UIViewController {
         emptyStateView.removeFromSuperview()
     }
     
+    private func updateCategoriesForChosenDate() {
+        let filteredWeekday = Calendar.current.component(.weekday, from: chosenDate)
+        
+        visibleCategoryList.removeAll()
+        visibleCategoryList = fullCategoryList.compactMap {
+            let trackers = $0.trackers.filter {
+                $0.schedule.contains {
+                    $0.dayInt == filteredWeekday
+                }
+            }
+
+            guard !trackers.isEmpty else { return nil }
+
+            return .init(
+                header: $0.header,
+                trackers: trackers
+            )
+        }
+    }
+    
     @objc
     private func addTrackerButtonTapped() {
         presenter.addTrackerButtonTapped()
@@ -208,7 +254,8 @@ final class TrackersViewController: UIViewController {
     
     @objc
     func datePickerValueChanged(_ sender: UIDatePicker) {
-        print(sender.date)
+        chosenDate = sender.date
+        updateCategoriesForChosenDate()
     }
 }
 
@@ -221,7 +268,20 @@ extension TrackersViewController: ITrackersView { }
 extension TrackersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
-        print(text)
+        print("\(#function) with text \(text)")
+    }
+}
+
+// MARK: - ITrackersCellDelegate
+
+extension TrackersViewController: ITrackersCellDelegate {
+    func doneButtonTapped(with id: UUID, state: Bool) {
+        let trackerRecord = TrackerRecord(id: id, endDate: chosenDate)
+        if state {
+            completedTrackers.append(trackerRecord)
+        } else {
+            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
+        }
     }
 }
 
@@ -229,17 +289,37 @@ extension TrackersViewController: UISearchResultsUpdating {
 
 extension TrackersViewController {
     private func addMockData() {
-        categories = [
+        fullCategoryList = [
             .init(header: "Отдых", trackers: [
-                .init(id: .init(), name: "Погулять", color: .greenCard, emoji: "🚶", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)]),
-                .init(id: .init(), name: "Покататься на велосипеде", color: .orangeCard, emoji: "🚴", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds)]),
-                .init(id: .init(), name: "Почитать книгу", color: .redCard, emoji: "📙", schedule: [.init(), .init(timeIntervalSinceNow: Constant.dayInSeconds)])
+                .init(
+                    name: "Погулять",
+                    color: .primaryGreen,
+                    emoji: "🚶",
+                    schedule: [.sunday, .thursday]),
+                .init(
+                    name: "Покататься на велосипеде",
+                    color: .primaryOrange,
+                    emoji: "🚴",
+                    schedule: [.saturday]),
+                .init(
+                    name: "Почитать книгу",
+                    color: .primaryRed,
+                    emoji: "📙",
+                    schedule: [.friday, .wednesday])
             ]),
             .init(header: "Работа", trackers: [
-                .init(id: .init(), name: "Закрыть задачу", color: .lightBlueCard, emoji: "👷", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 2)])
+                .init(
+                    name: "Закрыть задачу",
+                    color: .primaryLightBlue,
+                    emoji: "👷",
+                    schedule: [.monday])
             ]),
             .init(header: "Поездка", trackers: [
-                .init(id: .init(), name: "Забронировать отель", color: .lightGreenCard, emoji: "🏢", schedule: [.init(timeIntervalSinceNow: Constant.dayInSeconds * 3)])
+                .init(
+                    name: "Забронировать отель",
+                    color: .primaryLightGreen,
+                    emoji: "🏢",
+                    schedule: [.wednesday])
             ])
         ]
     }

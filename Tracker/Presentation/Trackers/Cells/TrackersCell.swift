@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol ITrackersCellDelegate: AnyObject {
+    func doneButtonTapped(with id: UUID, state: Bool)
+}
+
 final class TrackersCell: UICollectionViewCell {
     private enum Constant {
         static let backgroundCardHeight: CGFloat = 90
@@ -16,15 +20,31 @@ final class TrackersCell: UICollectionViewCell {
         static let baseInset: CGFloat = 12
         static let emojiSize: CGFloat = 24
     }
-
+    
+    struct Model {
+        let tracker: Tracker
+        let isCompletedForToday: Bool
+        let completedTimes: Int
+        let isEditingAvailable: Bool
+    }
+    
+    weak var delegate: (any ITrackersCellDelegate)?
     static let identifier = "TrackersCell"
+    
+    private var isButtonTapped = false
+    private var id = UUID()
+    private var completedDaysCounter = 0 {
+        didSet {
+            dateLabel.text = "\(completedDaysCounter) дней" // TODO: Localization
+        }
+    }
     
     // MARK: UI
     
     private lazy var backgroundCardView: UIView = {
         let background = UIView()
         background.layer.borderWidth = 1
-        background.layer.borderColor = UIColor.cardBorder.cgColor
+        background.layer.borderColor = UIColor.transparent.cgColor
         background.layer.masksToBounds = true
         
         return background.forAutolayout()
@@ -35,7 +55,7 @@ final class TrackersCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: Constant.baseFontSize)
         label.textColor = .systemBackground
         label.numberOfLines = 2
-
+        
         return label.forAutolayout()
     }()
     
@@ -58,7 +78,7 @@ final class TrackersCell: UICollectionViewCell {
         button.clipsToBounds = true
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-
+        
         return button.forAutolayout()
     }()
     
@@ -74,12 +94,18 @@ final class TrackersCell: UICollectionViewCell {
     
     // MARK: - Public
     
-    func configure(for model: Tracker) {
-        backgroundCardView.backgroundColor = model.color
-        titleLabel.text = model.name
-        dateLabel.text = "\(model.schedule.count) дней" // TODO: Localization
-        addButton.backgroundColor = model.color
-        emojiView.set(emoji: model.emoji)
+    func configure(with model: Model) {
+        updateUI(model: model)
+        
+        completedDaysCounter = model.completedTimes
+        id = model.tracker.id
+        
+        if model.isEditingAvailable {
+            addButton.isEnabled = true
+        }
+        else { 
+            addButton.isEnabled = false
+        }
     }
     
     // MARK: Private
@@ -125,8 +151,37 @@ final class TrackersCell: UICollectionViewCell {
         ])
     }
     
+    private func updateUI(model: Model) {
+        backgroundCardView.backgroundColor = model.tracker.color
+        titleLabel.text = model.tracker.name
+        addButton.backgroundColor = model.tracker.color
+        emojiView.set(emoji: model.tracker.emoji)
+        
+        model.isCompletedForToday ? makeTappedButtonState() : makeNormalButtonState()
+    }
+    
+    private func makeNormalButtonState() {
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        addButton.layer.opacity = 1.0
+        isButtonTapped = false
+    }
+    
+    private func makeTappedButtonState() {
+        addButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        addButton.layer.opacity = 0.3
+        isButtonTapped = true
+    }
+    
     @objc
     private func addButtonTapped() {
-        print(#function)
+        if isButtonTapped {
+            makeNormalButtonState()
+            completedDaysCounter -= 1
+        } else {
+            makeTappedButtonState()
+            completedDaysCounter += 1
+        }
+        
+        delegate?.doneButtonTapped(with: id, state: isButtonTapped)
     }
 }

@@ -8,16 +8,16 @@
 import UIKit
 
 extension UIColor {
-    static let greenCard = UIColor(named: "GreenCard") ?? .init()
-    static let orangeCard = UIColor(named: "OrangeCard") ?? .init()
-    static let redCard = UIColor(named: "RedCard") ?? .init()
-    static let lightBlueCard = UIColor(named: "LightBlueCard") ?? .init()
-    static let lightGreenCard = UIColor(named: "LightGreenCard") ?? .init()
-    static let cardBorder = UIColor(named: "CardBorder") ?? .init()
+    static let primaryGreen = UIColor(named: "PrimaryGreen") ?? .init()
+    static let primaryOrange = UIColor(named: "PrimaryOrange") ?? .init()
+    static let primaryRed = UIColor(named: "PrimaryRed") ?? .init()
+    static let primaryLightBlue = UIColor(named: "PrimaryLightBlue") ?? .init()
+    static let primaryLightGreen = UIColor(named: "PrimaryLightGreen") ?? .init()
+    static let transparent = UIColor(named: "Transparent") ?? .init()
     
-    static let enabledButton = UIColor(named: "EnabledState") ?? .init()
-    static let canceledButton = UIColor(named: "CanceledState") ?? .init()
-    static let optionButton = UIColor(named: "OptionState") ?? .init()
+    static let enabledState = UIColor(named: "EnabledState") ?? .init()
+    static let canceledState = UIColor(named: "CanceledState") ?? .init()
+    static let optionState = UIColor(named: "OptionState") ?? .init()
 
     static let primaryGray = UIColor(named: "PrimaryGray") ?? .init()
     static let primaryElementBackground = UIColor(named: "PrimaryElementBackground") ?? .init()

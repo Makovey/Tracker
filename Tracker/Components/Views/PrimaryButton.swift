@@ -37,7 +37,7 @@ final class PrimaryButton: UIButton {
     
     func enable() {
         self.isUserInteractionEnabled = true
-        backgroundColor = .enabledButton
+        backgroundColor = .enabledState
         setTitleColor(.systemBackground, for: .normal)
     }
     
@@ -62,12 +62,12 @@ final class PrimaryButton: UIButton {
             disable()
         case .canceled:
             layer.borderWidth = 1.0
-            layer.borderColor = UIColor.canceledButton.cgColor
+            layer.borderColor = UIColor.canceledState.cgColor
             
             backgroundColor = .systemBackground
-            setTitleColor(.canceledButton, for: .normal)
+            setTitleColor(.canceledState, for: .normal)
         case .option:
-            backgroundColor = .optionButton
+            backgroundColor = .optionState
         }
     }
     
