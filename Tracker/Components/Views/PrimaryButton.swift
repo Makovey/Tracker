@@ -36,13 +36,13 @@ final class PrimaryButton: UIButton {
     // MARK: - Public
     
     func enable() {
-        self.isUserInteractionEnabled = true
+        self.isEnabled = true
         backgroundColor = .enabledState
         setTitleColor(.systemBackground, for: .normal)
     }
     
     func disable() {
-        self.isUserInteractionEnabled = false
+        self.isEnabled = false
         backgroundColor = .primaryGray
         setTitleColor(.white, for: .normal)
     }

@@ -14,12 +14,12 @@ protocol IEventsSchedulePresenter {
 final class EventsSchedulePresenter {
     // MARK: - Properties
 
-    private let router: IEventsScheduleRouter
-    weak var view: IEventsScheduleView?
+    private let router: any IEventsScheduleRouter
+    weak var view: (any IEventsScheduleView)?
 
     // MARK: - Initialization
 
-    init(router: IEventsScheduleRouter) {
+    init(router: some IEventsScheduleRouter) {
         self.router = router
     }
 

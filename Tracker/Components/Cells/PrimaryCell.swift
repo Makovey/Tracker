@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 
 final class PrimaryCell: UITableViewCell {
+    enum Accessory {
+        case chevron, checkmark
+    }
+
     private enum Constant {
         static let baseInset: CGFloat = 16
         static let baseFontSize: CGFloat = 17
@@ -34,8 +38,8 @@ final class PrimaryCell: UITableViewCell {
         return label.forAutolayout()
     }()
     
-    private lazy var chevron: UIImageView = {
-        let imageView = UIImageView(image: .chevron)
+    private lazy var accessoryImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.tintColor = .primaryGray
         imageView.contentMode = .scaleAspectFit
         
@@ -62,12 +66,33 @@ final class PrimaryCell: UITableViewCell {
     
     // MARK: - Public
     
-    func configure(title: String, subTitle: String? = nil) {
+    func configure(
+        title: String,
+        subTitle: String? = nil,
+        accessory: Accessory
+    ) {
         if let subTitle {
             setupWithSubtitle(title: title, subTitle: subTitle)
         } else {
             setupWithTitle(title: title)
         }
+        
+        switch accessory {
+        case .chevron:
+            accessoryImageView.image = .chevron
+        case .checkmark:
+            accessoryImageView.isHidden = true
+            accessoryImageView.image = UIImage(systemName: "checkmark")
+            accessoryImageView.tintColor = .optionState
+        }
+    }
+    
+    func didSelect() {
+        accessoryImageView.isHidden = false
+    }
+    
+    func didDeselect() {
+        accessoryImageView.isHidden = true
     }
     
     // MARK: - Private
@@ -75,12 +100,12 @@ final class PrimaryCell: UITableViewCell {
     private func setupUI() {
         backgroundColor = .primaryElementBackground
         
-        chevron.placedOn(contentView)
+        accessoryImageView.placedOn(contentView)
         NSLayoutConstraint.activate([
-            chevron.centerY.constraint(equalTo: contentView.centerY),
-            chevron.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset),
-            chevron.width.constraint(equalToConstant: 24),
-            chevron.height.constraint(equalToConstant: 24)
+            accessoryImageView.centerY.constraint(equalTo: contentView.centerY),
+            accessoryImageView.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset),
+            accessoryImageView.width.constraint(equalToConstant: 24),
+            accessoryImageView.height.constraint(equalToConstant: 24)
         ])
     }
     
@@ -91,7 +116,7 @@ final class PrimaryCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.centerY.constraint(equalTo: contentView.centerY),
             titleLabel.left.constraint(equalTo: contentView.left, constant: Constant.baseInset),
-            titleLabel.right.constraint(equalTo: chevron.left, constant: -1)
+            titleLabel.right.constraint(equalTo: accessoryImageView.left, constant: -1)
         ])
     }
     
@@ -103,7 +128,7 @@ final class PrimaryCell: UITableViewCell {
         NSLayoutConstraint.activate([
             stackView.top.constraint(equalTo: contentView.top, constant: 14),
             stackView.left.constraint(equalTo: contentView.left, constant: Constant.baseInset),
-            stackView.right.constraint(equalTo: chevron.left, constant: -1),
+            stackView.right.constraint(equalTo: accessoryImageView.left, constant: -1),
             stackView.bottom.constraint(equalTo: contentView.bottom, constant: -14),
         ])
     }

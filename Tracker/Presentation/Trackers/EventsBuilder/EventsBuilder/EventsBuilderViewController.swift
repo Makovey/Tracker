@@ -24,6 +24,24 @@ final class EventsBuilderViewController: UIViewController {
 
     // MARK: - Properties
 
+    private var trackerName: String? {
+        didSet { checkAvailability() } // TODO: presenter.checkAvailability() ?
+    }
+    
+    private var categoryName: String? {
+        didSet { checkAvailability() }
+    }
+    
+    private var schedule: Set<WeekDay>? {
+        didSet { checkAvailability() }
+    }
+
+    private var isNewTrackerFilled: Bool {
+        trackerName?.isEmpty == false &&
+        categoryName?.isEmpty == false &&
+        schedule != nil
+    }
+    
     private let presenter: any IEventsBuilderPresenter
     private let mode: EventType
     private var navigationItems: [NavigationItem] = [.category]
@@ -48,6 +66,7 @@ final class EventsBuilderViewController: UIViewController {
 
         textField.leftView = paddingView
         textField.leftViewMode = .always
+        textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
         
         return textField.forAutolayout()
     }()
@@ -72,13 +91,21 @@ final class EventsBuilderViewController: UIViewController {
         return tableView.forAutolayout()
     }()
     
-    private lazy var stackView: UIStackView = {
+    private lazy var cancelButton: PrimaryButton = {
         let cancelButton = PrimaryButton(style: .canceled, text: "Отменить") // TODO: Localization
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
+        return cancelButton
+    }()
+    
+    private lazy var createButton: PrimaryButton = {
         let createButton = PrimaryButton(style: .disabled, text: "Создать") // TODO: Localization
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         
+        return createButton
+    }()
+    
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [cancelButton, createButton])
         stackView.axis = .horizontal
         stackView.spacing = 8
@@ -149,6 +176,11 @@ final class EventsBuilderViewController: UIViewController {
     }
     
     @objc
+    private func textFieldValueChanged(_ sender: UITextField) {
+        trackerName = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    @objc
     private func cancelButtonTapped() {
         presenter.cancelButtonTapped()
     }
@@ -156,6 +188,18 @@ final class EventsBuilderViewController: UIViewController {
     @objc
     private func createButtonTapped() {
         presenter.createButtonTapped()
+    }
+    
+    private func checkAvailability() {
+        if isNewTrackerFilled {
+            UIView.animate(withDuration: 0.3) {
+                self.createButton.enable()
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.createButton.disable()
+            }
+        }
     }
 }
 
@@ -171,7 +215,7 @@ extension EventsBuilderViewController: UITableViewDelegate {
         
         switch navigationItem {
         case .category:
-            print(#function)
+            presenter.categoryTapped()
         case .schedule:
             presenter.scheduleTapped()
         }
@@ -205,7 +249,7 @@ extension EventsBuilderViewController: UITableViewDataSource {
         }
         
         cell.selectionStyle = .none
-        cell.configure(title: title)
+        cell.configure(title: title, accessory: .chevron)
         
         return cell
     }

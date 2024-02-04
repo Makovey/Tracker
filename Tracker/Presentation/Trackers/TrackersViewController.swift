@@ -7,8 +7,8 @@
 
 import UIKit
 
-typealias Snapshot = NSDiffableDataSourceSnapshot<String, Tracker>
-typealias DataSource = UICollectionViewDiffableDataSource<String, Tracker>
+typealias TrackersSnapshot = NSDiffableDataSourceSnapshot<String, Tracker>
+typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracker>
 
 protocol ITrackersView: AnyObject { }
 
@@ -29,8 +29,8 @@ final class TrackersViewController: UIViewController {
     private var completedTrackers = [TrackerRecord]()
     private var chosenDate = Date()
         
-    private lazy var dataSource: DataSource = {
-        let dataSource = DataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
+    private lazy var dataSource: TrackersDataSource = {
+        let dataSource = TrackersDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
             guard let self else { fatalError("TrackersViewController is nil") }
             return self.cellProvider(collectionView: collectionView, indexPath: indexPath, tracker: tracker)
         }
@@ -160,9 +160,13 @@ final class TrackersViewController: UIViewController {
             emptyStateView.centerY.constraint(equalTo: collectionView.centerY)
         ])
     }
+    
+    private func hideEmptyState() {
+        emptyStateView.removeFromSuperview()
+    }
 
     private func reloadSnapshot() {
-        var snapshot = Snapshot()
+        var snapshot = TrackersSnapshot()
         
         visibleCategoryList.forEach {
             snapshot.appendSections([$0.header])
@@ -221,10 +225,6 @@ final class TrackersViewController: UIViewController {
         header.configure(for: modelForSection)
         
         return header
-    }
-    
-    private func hideEmptyState() {
-        emptyStateView.removeFromSuperview()
     }
     
     private func updateCategoriesForChosenDate() {

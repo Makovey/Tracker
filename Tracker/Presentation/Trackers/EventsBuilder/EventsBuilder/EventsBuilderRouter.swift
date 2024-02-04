@@ -9,6 +9,7 @@ import UIKit
 
 protocol IEventsBuilderRouter { 
     func dismissModule()
+    func openCategoryScreen()
     func openScheduleScreen()
 }
 
@@ -26,6 +27,11 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
     
     func openScheduleScreen() {
         let destination = EventsScheduleAssembly.assemble(navigationController: viewController)
+        viewController?.pushViewController(destination, animated: true)
+    }
+    
+    func openCategoryScreen() {
+        let destination = CategorySelectorAssembly.assemble(navigationController: viewController)
         viewController?.pushViewController(destination, animated: true)
     }
 }

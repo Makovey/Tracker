@@ -16,7 +16,7 @@ final class EventsScheduleViewController: UIViewController {
         static let cellsHeight: CGFloat = 75
     }
     
-    // MARK: = Properties
+    // MARK: - Properties
 
     private let weekDays = WeekDay.allCases
     private let presenter: any IEventsSchedulePresenter
@@ -28,7 +28,6 @@ final class EventsScheduleViewController: UIViewController {
         tableView.layer.cornerRadius = Constant.baseCornerRadius
         tableView.isScrollEnabled = false
 
-        tableView.separatorColor = .red
         tableView.separatorStyle = .singleLine
         tableView.separatorInset = .init(
             top: .zero,
