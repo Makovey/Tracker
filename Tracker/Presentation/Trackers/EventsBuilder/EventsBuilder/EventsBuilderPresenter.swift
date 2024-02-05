@@ -35,7 +35,7 @@ final class EventsBuilderPresenter {
 
 extension EventsBuilderPresenter: IEventsBuilderPresenter {
     func categoryTapped() {
-        router.openCategoryScreen()
+        router.openCategoryScreen(categoryModuleOutput: self)
     }
     
     func cancelButtonTapped() {
@@ -47,6 +47,22 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
     }
     
     func scheduleTapped() {
-        router.openScheduleScreen()
+        router.openScheduleScreen(scheduleModuleOutput: self)
+    }
+}
+
+// MARK: - ICategorySelectorOutput
+
+extension EventsBuilderPresenter: ICategorySelectorOutput {
+    func categorySelected(_ category: String) {
+        view?.updateCategoryField(with: category)
+    }
+}
+
+// MARK: - IEventsScheduleOutput
+
+extension EventsBuilderPresenter: IEventsScheduleOutput {
+    func scheduleSelected(_ schedule: Set<WeekDay>) {
+        view?.updateScheduleField(with: schedule)
     }
 }

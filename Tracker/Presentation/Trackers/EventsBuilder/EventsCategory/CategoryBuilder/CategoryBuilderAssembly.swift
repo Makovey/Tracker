@@ -12,7 +12,7 @@ final class CategoryBuilderAssembly {
     
     static func assemble(
         navigationController: UINavigationController?,
-        output: ICategoryBuilderOutput
+        output: some ICategoryBuilderOutput
     ) -> UIViewController {
         let router = CategoryBuilderRouter()
         let presenter = CategoryBuilderPresenter(router: router)

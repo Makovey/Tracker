@@ -7,7 +7,10 @@
 
 import UIKit
 
-protocol IEventsBuilderView: AnyObject { }
+protocol IEventsBuilderView: AnyObject {
+    func updateCategoryField(with category: String)
+    func updateScheduleField(with schedule: Set<WeekDay>)
+}
 
 final class EventsBuilderViewController: UIViewController {
     private enum Constant {
@@ -205,7 +208,17 @@ final class EventsBuilderViewController: UIViewController {
 
 // MARK: - IEventsBuilderView
 
-extension EventsBuilderViewController: IEventsBuilderView { }
+extension EventsBuilderViewController: IEventsBuilderView {
+    func updateCategoryField(with category: String) {
+        categoryName = category
+        tableView.reloadData()
+    }
+    
+    func updateScheduleField(with schedule: Set<WeekDay>) {
+        self.schedule = schedule
+        tableView.reloadData()
+    }
+}
 
 // MARK: - UITableViewDelegate
 
@@ -244,12 +257,27 @@ extension EventsBuilderViewController: UITableViewDataSource {
         switch navigationItems[indexPath.row] {
         case .category:
             title = "Категория" // TODO: Localization
+            cell.configure(
+                title: title,
+                subTitle: categoryName,
+                accessory: .chevron
+            )
         case .schedule:
             title = "Расписание" // TODO: Localization
+            
+            let scheduleString = schedule?
+                .sorted(by: { $0.rawValue < $1.rawValue })
+                .compactMap({ $0.shortLabel })
+                .joined(separator: ", ")
+            
+            cell.configure(
+                title: title,
+                subTitle: scheduleString,
+                accessory: .chevron
+            )
         }
         
         cell.selectionStyle = .none
-        cell.configure(title: title, accessory: .chevron)
         
         return cell
     }

@@ -11,7 +11,8 @@ final class CategorySelectorAssembly {
     // MARK: - Public
     
     static func assemble(
-        navigationController: UINavigationController?
+        navigationController: UINavigationController?,
+        output: some ICategorySelectorOutput
     ) -> UIViewController {
         let router = CategorySelectorRouter()
         let presenter = CategorySelectorPresenter(router: router)
@@ -19,6 +20,7 @@ final class CategorySelectorAssembly {
 
         router.viewController = navigationController
         presenter.view = view
+        presenter.output = output
 
         return view
     }

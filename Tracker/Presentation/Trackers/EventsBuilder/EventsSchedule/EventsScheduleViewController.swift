@@ -20,6 +20,7 @@ final class EventsScheduleViewController: UIViewController {
 
     private let weekDays = WeekDay.allCases
     private let presenter: any IEventsSchedulePresenter
+    private var selectedDays =  Set<WeekDay>()
     
     // MARK: - UI
     
@@ -94,7 +95,7 @@ final class EventsScheduleViewController: UIViewController {
     
     @objc
     private func doneButtonTapped() {
-        presenter.doneButtonTapped()
+        presenter.doneButtonTapped(selectedDays: selectedDays)
     }
 }
 
@@ -121,7 +122,7 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
         
         cell.delegate = self
         cell.selectionStyle = .none
-        cell.configure(title: weekDays[indexPath.row].label)
+        cell.configure(weekDay: weekDays[indexPath.row])
         
         return cell
     }
@@ -132,7 +133,8 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
 }
 
 extension EventsScheduleViewController: IWeekDayCellDelegate {
-    func dayChosen() {
-        print(#function)
+    func dayChosen(isOn: Bool, day: WeekDay) {
+        if isOn { selectedDays.insert(day) }
+        else { selectedDays.remove(day) }
     }
 }

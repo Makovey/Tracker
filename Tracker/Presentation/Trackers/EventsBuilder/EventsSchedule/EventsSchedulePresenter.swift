@@ -7,8 +7,12 @@
 
 import Foundation
 
+protocol IEventsScheduleOutput: AnyObject {
+    func scheduleSelected(_ schedule: Set<WeekDay>)
+}
+
 protocol IEventsSchedulePresenter {
-    func doneButtonTapped()
+    func doneButtonTapped(selectedDays: Set<WeekDay>)
 }
 
 final class EventsSchedulePresenter {
@@ -16,6 +20,7 @@ final class EventsSchedulePresenter {
 
     private let router: any IEventsScheduleRouter
     weak var view: (any IEventsScheduleView)?
+    weak var output: (any IEventsScheduleOutput)?
 
     // MARK: - Initialization
 
@@ -31,7 +36,8 @@ final class EventsSchedulePresenter {
 // MARK: - IEventsSchedulePresenter
 
 extension EventsSchedulePresenter: IEventsSchedulePresenter {
-    func doneButtonTapped() {
+    func doneButtonTapped(selectedDays: Set<WeekDay>) {
+        output?.scheduleSelected(selectedDays)
         router.popScreen()
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol IWeekDayCellDelegate: AnyObject {
-    func dayChosen()
+    func dayChosen(isOn: Bool, day: WeekDay)
 }
 
 final class WeekDayCell: UITableViewCell {
@@ -17,9 +17,11 @@ final class WeekDayCell: UITableViewCell {
         static let baseInset: CGFloat = 16
         static let baseFontSize: CGFloat = 17
     }
+    
+    static let identifier = "WeekDayCell"
 
     weak var delegate: IWeekDayCellDelegate?
-    static let identifier = "WeekDayCell"
+    private var weekDay: WeekDay?
     
     // MARK: - UI
     
@@ -51,8 +53,10 @@ final class WeekDayCell: UITableViewCell {
     
     // MARK: - Public
     
-    func configure(title: String) {
-        titleLabel.text = title
+    func configure(weekDay: WeekDay) {
+        self.weekDay = weekDay
+        
+        titleLabel.text = self.weekDay?.label
     }
     
     // MARK: - Private
@@ -75,6 +79,7 @@ final class WeekDayCell: UITableViewCell {
     
     @objc
     private func switcherValueChanged(switch: UISwitch) {
-        delegate?.dayChosen()
+        guard let weekDay else { return }
+        delegate?.dayChosen(isOn: switcher.isOn, day: weekDay)
     }
 }

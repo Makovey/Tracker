@@ -11,7 +11,8 @@ final class EventsScheduleAssembly {
     // MARK: - Public
     
     static func assemble(
-        navigationController: UINavigationController?
+        navigationController: UINavigationController?,
+        output: some IEventsScheduleOutput
     ) -> UIViewController {
         let router = EventsScheduleRouter()
         let presenter = EventsSchedulePresenter(router: router)
@@ -19,6 +20,7 @@ final class EventsScheduleAssembly {
 
         router.viewController = navigationController
         presenter.view = view
+        presenter.output = output
 
         return view
     }

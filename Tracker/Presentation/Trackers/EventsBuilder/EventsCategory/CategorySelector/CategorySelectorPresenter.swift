@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol ICategorySelectorOutput: AnyObject {
+    func categorySelected(_ category: String)
+}
+
 protocol ICategorySelectorPresenter {
     func addCategoryButtonTapped(existedCategory: [String])
     func categorySelected(_ category: String)
@@ -16,6 +20,7 @@ final class CategorySelectorPresenter {
     // MARK: - Properties
     
     private let router: any ICategorySelectorRouter
+    weak var output: (any ICategorySelectorOutput)?
     weak var view: (any ICategorySelectorView)?
 
     // MARK: - Lifecycle
@@ -33,6 +38,7 @@ final class CategorySelectorPresenter {
 
 extension CategorySelectorPresenter: ICategorySelectorPresenter {
     func categorySelected(_ category: String) {
+        output?.categorySelected(category)
         router.popScreen()
     }
     
