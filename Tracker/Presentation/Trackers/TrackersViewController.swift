@@ -267,7 +267,18 @@ final class TrackersViewController: UIViewController {
 
 extension TrackersViewController: ITrackersView {
     func addNewCategory(tracker: TrackerCategory) {
-        fullCategoryList.append(tracker)
+        if fullCategoryList.contains(where: { $0.header == tracker.header }) {
+            fullCategoryList = fullCategoryList.compactMap {
+                if $0.header == tracker.header {
+                    var tempTrackers = $0.trackers
+                    tempTrackers.append(contentsOf: tracker.trackers)
+                    return .init(header: $0.header, trackers: tempTrackers)
+                }
+                return .init(header: $0.header, trackers: $0.trackers)
+            }
+        } else {
+            fullCategoryList.append(tracker)
+        }
         updateCategoriesForChosenDate()
     }
 }

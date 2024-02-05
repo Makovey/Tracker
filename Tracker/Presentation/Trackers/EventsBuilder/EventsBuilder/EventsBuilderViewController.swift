@@ -40,9 +40,15 @@ final class EventsBuilderViewController: UIViewController {
     }
 
     private var isNewTrackerFilled: Bool {
-        trackerName?.isEmpty == false &&
-        categoryName?.isEmpty == false &&
-        schedule != nil
+        switch mode {
+        case .habit:
+            trackerName?.isEmpty == false &&
+            categoryName?.isEmpty == false &&
+            schedule?.isEmpty == false
+        case .event:
+            trackerName?.isEmpty == false &&
+            categoryName?.isEmpty == false
+        }
     }
     
     private let presenter: any IEventsBuilderPresenter
