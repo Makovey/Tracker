@@ -10,7 +10,9 @@ import UIKit
 typealias TrackersSnapshot = NSDiffableDataSourceSnapshot<String, Tracker>
 typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracker>
 
-protocol ITrackersView: AnyObject { }
+protocol ITrackersView: AnyObject {
+    func addNewCategory(tracker: TrackerCategory)
+}
 
 final class TrackersViewController: UIViewController {
     private enum Constant {
@@ -233,7 +235,9 @@ final class TrackersViewController: UIViewController {
         visibleCategoryList.removeAll()
         visibleCategoryList = fullCategoryList.compactMap {
             let trackers = $0.trackers.filter {
-                $0.schedule.contains {
+                guard let schedule = $0.schedule else { return true }
+
+                return schedule.contains {
                     $0.dayInt == filteredWeekday
                 }
             }
@@ -261,7 +265,12 @@ final class TrackersViewController: UIViewController {
 
 // MARK: - ITrackerView
 
-extension TrackersViewController: ITrackersView { }
+extension TrackersViewController: ITrackersView {
+    func addNewCategory(tracker: TrackerCategory) {
+        fullCategoryList.append(tracker)
+        updateCategoriesForChosenDate()
+    }
+}
 
 // MARK: - UISearchResultsUpdating
 

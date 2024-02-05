@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ITrackersRouter { 
-    func openEventsSelectorScreen()
+    func openEventsSelectorScreen(builderOutput: some IEventsBuilderOutput)
 }
 
 final class TrackersRouter: ITrackersRouter {
@@ -18,8 +18,8 @@ final class TrackersRouter: ITrackersRouter {
 
     // MARK: - Public
     
-    func openEventsSelectorScreen() {
-        let destination = UINavigationController(rootViewController: EventsSelectorAssembly.assemble())
+    func openEventsSelectorScreen(builderOutput: some IEventsBuilderOutput) {
+        let destination = UINavigationController(rootViewController: EventsSelectorAssembly.assemble(builderOutput: builderOutput))
         viewController?.present(destination, animated: true)
     }
 

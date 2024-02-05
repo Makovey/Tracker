@@ -7,9 +7,13 @@
 
 import Foundation
 
+protocol IEventsBuilderOutput: AnyObject {
+    func setNewTracker(tracker: TrackerCategory)
+}
+
 protocol IEventsBuilderPresenter {
     func cancelButtonTapped()
-    func createButtonTapped()
+    func createButtonTapped(with tracker: TrackerCategory)
     func categoryTapped()
     func scheduleTapped()
 }
@@ -19,6 +23,8 @@ final class EventsBuilderPresenter {
     
     private let router: any IEventsBuilderRouter
     weak var view: (any IEventsBuilderView)?
+    weak var output: (any IEventsBuilderOutput)?
+    private var selectedDays = Set<WeekDay>()
 
     // MARK: - Lifecycle
 
@@ -42,12 +48,16 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
         router.dismissModule()
     }
     
-    func createButtonTapped() {
-        print(#function)
+    func createButtonTapped(with tracker: TrackerCategory) {
+        output?.setNewTracker(tracker: tracker)
+        router.dismissModule()
     }
     
     func scheduleTapped() {
-        router.openScheduleScreen(scheduleModuleOutput: self)
+        router.openScheduleScreen(
+            scheduleModuleOutput: self,
+            selectedDays: selectedDays
+        )
     }
 }
 
@@ -63,6 +73,7 @@ extension EventsBuilderPresenter: ICategorySelectorOutput {
 
 extension EventsBuilderPresenter: IEventsScheduleOutput {
     func scheduleSelected(_ schedule: Set<WeekDay>) {
+        selectedDays = schedule
         view?.updateScheduleField(with: schedule)
     }
 }

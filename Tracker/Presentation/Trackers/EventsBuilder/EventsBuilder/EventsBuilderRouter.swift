@@ -10,7 +10,10 @@ import UIKit
 protocol IEventsBuilderRouter { 
     func dismissModule()
     func openCategoryScreen(categoryModuleOutput: some ICategorySelectorOutput)
-    func openScheduleScreen(scheduleModuleOutput: some IEventsScheduleOutput)
+    func openScheduleScreen(
+        scheduleModuleOutput: some IEventsScheduleOutput,
+        selectedDays: Set<WeekDay>
+    )
 }
 
 final class EventsBuilderRouter: IEventsBuilderRouter {
@@ -25,19 +28,23 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
         viewController?.dismiss(animated: true)
     }
     
-    func openScheduleScreen(scheduleModuleOutput: some IEventsScheduleOutput) {
-        let destination = EventsScheduleAssembly.assemble(
-            navigationController: viewController,
-            output: scheduleModuleOutput
-        )
-        viewController?.pushViewController(destination, animated: true)
-    }
-    
     func openCategoryScreen(categoryModuleOutput: some ICategorySelectorOutput) {
         let destination = CategorySelectorAssembly.assemble(
             navigationController: viewController,
             output: categoryModuleOutput
         )
+        viewController?.pushViewController(destination, animated: true)
+    }
+    
+    func openScheduleScreen(
+        scheduleModuleOutput: some IEventsScheduleOutput,
+        selectedDays: Set<WeekDay>
+    ) {
+        let destination = EventsScheduleAssembly.assemble(
+            navigationController: viewController,
+            output: scheduleModuleOutput
+        )
+        (destination as? IEventsScheduleInput)?.setSelectedDays(selectedDays: selectedDays)
         viewController?.pushViewController(destination, animated: true)
     }
 }

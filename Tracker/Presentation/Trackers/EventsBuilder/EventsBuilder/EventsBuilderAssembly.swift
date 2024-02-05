@@ -12,7 +12,8 @@ final class EventsBuilderAssembly {
     
     static func assemble(
         with mode: EventType,
-        navigationController: UINavigationController?
+        navigationController: UINavigationController?,
+        output: some IEventsBuilderOutput
     ) -> UIViewController {
         let router = EventsBuilderRouter()
         let presenter = EventsBuilderPresenter(router: router)
@@ -20,6 +21,7 @@ final class EventsBuilderAssembly {
 
         router.viewController = navigationController
         presenter.view = view
+        presenter.output = output
 
         return view
     }

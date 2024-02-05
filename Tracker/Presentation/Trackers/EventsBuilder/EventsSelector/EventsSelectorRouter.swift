@@ -16,6 +16,11 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
     // MARK: - Properties
     
     weak var viewController: UIViewController?
+    let output: any IEventsBuilderOutput
+    
+    init(output: some IEventsBuilderOutput) {
+        self.output = output
+    }
 
     // MARK: - Public
     
@@ -24,7 +29,11 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
             fatalError("NavigationController is missing")
         }
 
-        let destination = EventsBuilderAssembly.assemble(with: .habit, navigationController: navigationController)
+        let destination = EventsBuilderAssembly.assemble(
+            with: .habit,
+            navigationController: navigationController,
+            output: output
+        )
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
@@ -33,7 +42,11 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
             fatalError("NavigationController is missing")
         }
 
-        let destination = EventsBuilderAssembly.assemble(with: .event, navigationController: navigationController)
+        let destination = EventsBuilderAssembly.assemble(
+            with: .event,
+            navigationController: navigationController,
+            output: output
+        )
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
 }

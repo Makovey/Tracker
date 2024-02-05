@@ -190,7 +190,13 @@ final class EventsBuilderViewController: UIViewController {
     
     @objc
     private func createButtonTapped() {
-        presenter.createButtonTapped()
+        guard let trackerName, let categoryName else { return }
+        let newTracker = TrackerCategory(
+            header: categoryName,
+            trackers: [.init(name: trackerName, color: .blue, emoji: "🤷‍♂️", schedule: schedule)]
+        )
+        
+        presenter.createButtonTapped(with: newTracker)
     }
     
     private func checkAvailability() {

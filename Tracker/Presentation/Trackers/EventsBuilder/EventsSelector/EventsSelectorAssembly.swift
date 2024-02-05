@@ -10,8 +10,8 @@ import UIKit
 final class EventsSelectorAssembly {
     // MARK: - Public
     
-    static func assemble() -> UIViewController {
-        let router = EventsSelectorRouter()
+    static func assemble(builderOutput: some IEventsBuilderOutput) -> UIViewController {
+        let router = EventsSelectorRouter(output: builderOutput)
         let presenter = EventsSelectorPresenter(router: router)
         let view = EventsSelectorViewController(presenter: presenter)
 

@@ -53,10 +53,11 @@ final class WeekDayCell: UITableViewCell {
     
     // MARK: - Public
     
-    func configure(weekDay: WeekDay) {
+    func configure(weekDay: WeekDay, isDayAlreadySelected: Bool) {
         self.weekDay = weekDay
         
         titleLabel.text = self.weekDay?.label
+        switcher.isOn = isDayAlreadySelected
     }
     
     // MARK: - Private

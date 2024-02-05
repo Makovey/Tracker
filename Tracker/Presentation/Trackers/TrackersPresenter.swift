@@ -32,6 +32,14 @@ final class TrackersPresenter {
 
 extension TrackersPresenter: ITrackersPresenter {
     func addTrackerButtonTapped() {
-        router.openEventsSelectorScreen()
+        router.openEventsSelectorScreen(builderOutput: self)
+    }
+}
+
+// MARK: - IEventsBuilderOutput
+
+extension TrackersPresenter: IEventsBuilderOutput {
+    func setNewTracker(tracker: TrackerCategory) {
+        view?.addNewCategory(tracker: tracker)
     }
 }

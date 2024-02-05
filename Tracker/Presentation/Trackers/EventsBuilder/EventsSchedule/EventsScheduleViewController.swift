@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol IEventsScheduleInput {
+    func setSelectedDays(selectedDays: Set<WeekDay>)
+}
+
 protocol IEventsScheduleView: AnyObject { }
 
 final class EventsScheduleViewController: UIViewController {
@@ -120,9 +124,15 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
             cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         }
         
+        let weekDay = weekDays[indexPath.row]
+        let isDaySelected = selectedDays.first(where: { $0 == weekDay })
+        
         cell.delegate = self
         cell.selectionStyle = .none
-        cell.configure(weekDay: weekDays[indexPath.row])
+        cell.configure(
+            weekDay: weekDay,
+            isDayAlreadySelected: isDaySelected != nil
+        )
         
         return cell
     }
@@ -132,9 +142,19 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
     }
 }
 
+// MARK: - IWeekDayCellDelegate
+
 extension EventsScheduleViewController: IWeekDayCellDelegate {
     func dayChosen(isOn: Bool, day: WeekDay) {
         if isOn { selectedDays.insert(day) }
         else { selectedDays.remove(day) }
+    }
+}
+
+// MARK: - IEventsScheduleInput
+
+extension EventsScheduleViewController: IEventsScheduleInput {
+    func setSelectedDays(selectedDays: Set<WeekDay>) {
+        self.selectedDays = selectedDays
     }
 }
