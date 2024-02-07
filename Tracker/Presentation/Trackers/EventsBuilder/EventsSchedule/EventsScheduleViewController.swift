@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol IEventsScheduleInput {
-    func setSelectedDays(selectedDays: Set<WeekDay>)
-}
-
 protocol IEventsScheduleView: AnyObject { }
 
 final class EventsScheduleViewController: UIViewController {

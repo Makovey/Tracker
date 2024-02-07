@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol ICategoryBuilderInput {
-    func setExistedCategories(_ categories: [String])
-}
-
 protocol ICategoryBuilderView: AnyObject { }
 
 final class CategoryBuilderViewController: UIViewController {
@@ -24,7 +20,6 @@ final class CategoryBuilderViewController: UIViewController {
     
     private let presenter: any ICategoryBuilderPresenter
     
-    private var existedCategories = [String]()
     private var categoryName: String? {
         didSet { checkAvailability() }
     }
@@ -94,7 +89,7 @@ final class CategoryBuilderViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationItem.setHidesBackButton(true, animated: true)
 
-        title = "Новая категория"
+        title = "Новая категория" // TODO: Localization
         errorLabel.isHidden = true
         
         textField.placedOn(view)
@@ -123,23 +118,22 @@ final class CategoryBuilderViewController: UIViewController {
     
     @objc
     private func textFieldValueChanged(_ sender: UITextField) {
+        errorLabel.isHidden = true
         categoryName = sender.text?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     @objc
     private func doneButtonTapped() {
-        guard let categoryName else { return }
-        
-        guard existedCategories.first(where: { $0 == categoryName }) == nil else { // TODO: -> presenter
+        guard let categoryName, presenter.isValidCategoryName(categoryName) else {
             errorLabel.isHidden = false
             return
         }
-        
+
         presenter.doneButtonTapped(category: categoryName)
     }
     
     private func checkAvailability() {
-        if categoryName?.isEmpty == false {
+        if presenter.isDoneButtonEnabled(with: categoryName) {
             UIView.animate(withDuration: 0.3) {
                 self.doneButton.enable()
             }
@@ -159,6 +153,6 @@ extension CategoryBuilderViewController: ICategoryBuilderView { }
 
 extension CategoryBuilderViewController: ICategoryBuilderInput {
     func setExistedCategories(_ categories: [String]) {
-        existedCategories = categories
+        presenter.updateExistedCategories(categories)
     }
 }

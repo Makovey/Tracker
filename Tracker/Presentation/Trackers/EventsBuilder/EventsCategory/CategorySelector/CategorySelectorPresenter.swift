@@ -7,21 +7,17 @@
 
 import Foundation
 
-protocol ICategorySelectorOutput: AnyObject {
-    func categorySelected(_ category: String)
-}
-
 protocol ICategorySelectorPresenter {
     func addCategoryButtonTapped(existedCategory: [String])
     func categorySelected(_ category: String)
 }
 
-final class CategorySelectorPresenter {
+final class CategorySelectorPresenter: ICategorySelectorPresenter {
     // MARK: - Properties
     
-    private let router: any ICategorySelectorRouter
     weak var output: (any ICategorySelectorOutput)?
     weak var view: (any ICategorySelectorView)?
+    private let router: any ICategorySelectorRouter
 
     // MARK: - Lifecycle
 
@@ -30,13 +26,7 @@ final class CategorySelectorPresenter {
     }
 
     // MARK: - Public
-
-    // MARK: - Private
-}
-
-// MARK: - ICategorySelectorPresenter
-
-extension CategorySelectorPresenter: ICategorySelectorPresenter {
+    
     func categorySelected(_ category: String) {
         output?.categorySelected(category)
         router.popScreen()
@@ -50,7 +40,7 @@ extension CategorySelectorPresenter: ICategorySelectorPresenter {
 // MARK: - ICategoryBuilderOutput
 
 extension CategorySelectorPresenter: ICategoryBuilderOutput {
-    func getNewCategoryFromBuilder(_ category: String) {
-        view?.getNewCategoryName(category)
+    func didBuildNewCategory(_ category: String) {
+        view?.updateCategory(category)
     }
 }

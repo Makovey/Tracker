@@ -13,7 +13,7 @@ typealias CategoriesSnapshot = NSDiffableDataSourceSnapshot<Section, String>
 typealias CategoriesDataSource = UITableViewDiffableDataSource<Section, String>
 
 protocol ICategorySelectorView: AnyObject { 
-    func getNewCategoryName(_ category: String)
+    func updateCategory(_ category: String)
 }
 
 final class CategorySelectorViewController: UIViewController {
@@ -32,7 +32,7 @@ final class CategorySelectorViewController: UIViewController {
     
     private lazy var dataSource: CategoriesDataSource = {
         CategoriesDataSource(tableView: tableView) { [weak self] tableView, indexPath, category in
-            guard let self else { fatalError("CategorySelectorViewController is nil") }
+            guard let self else { fatalError("\(CategorySelectorViewController.self) is nil") }
             return self.cellProvider(tableView: tableView, indexPath: indexPath, category: category)
         }
     }()
@@ -82,7 +82,7 @@ final class CategorySelectorViewController: UIViewController {
         return stackView.forAutolayout()
     }()
 
-    // MARK: - Initialization
+    // MARK: - Lifecycle
 
     init(presenter: some ICategorySelectorPresenter) {
         self.presenter = presenter
@@ -95,7 +95,6 @@ final class CategorySelectorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addMockData()
         
         setupUI()
         setupInitialState()
@@ -128,7 +127,6 @@ final class CategorySelectorViewController: UIViewController {
     
     private func setupInitialState() {
         tableView.dataSource = dataSource
-        reloadSnapshot()
     }
     
     private func reloadSnapshot() {
@@ -170,13 +168,6 @@ final class CategorySelectorViewController: UIViewController {
         return cell
     }
     
-    private func addMockData() {
-        categories = [
-            "Важное",
-            "Очень важное"
-        ]
-    }
-    
     @objc
     private func addCategoryButtonTapped() { 
         presenter.addCategoryButtonTapped(existedCategory: categories)
@@ -208,10 +199,18 @@ extension CategorySelectorViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - IEventsCategoryView
+// MARK: - ICategorySelectorView
 
 extension CategorySelectorViewController: ICategorySelectorView {
-    func getNewCategoryName(_ category: String) {
+    func updateCategory(_ category: String) {
         categories.append(category)
+    }
+}
+
+// MARK: - ICategorySelectorView
+
+extension CategorySelectorViewController: ICategorySelectorInput {
+    func setCategories(categories: [String]) {
+        self.categories = categories
     }
 }

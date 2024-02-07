@@ -11,7 +11,7 @@ typealias TrackersSnapshot = NSDiffableDataSourceSnapshot<String, Tracker>
 typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracker>
 
 protocol ITrackersView: AnyObject {
-    func addNewCategory(tracker: TrackerCategory)
+    func updateTrackerList(with trackers: [TrackerCategory])
 }
 
 final class TrackersViewController: UIViewController {
@@ -123,8 +123,8 @@ final class TrackersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-
-        addMockData()
+        
+        presenter.viewDidLoad()
         setupUI()
         setupInitialState()
     }
@@ -189,28 +189,21 @@ final class TrackersViewController: UIViewController {
             for: indexPath
         ) as? TrackersCell else { return UICollectionViewCell() }
         
-        let isEditingAvailable = Calendar.current.compare(chosenDate, to: Date(), toGranularity: .day) != .orderedDescending
-        
         let isCompletedForToday = completedTrackers
-            .filter { isTrackerCompletedForToday(record: $0, id: tracker.id) }
+            .filter { presenter.isTrackerCompletedForThisDay(date: chosenDate, record: $0, id: tracker.id) }
             .count != 0
 
         let model = TrackersCell.Model(
             tracker: tracker,
             isCompletedForToday: isCompletedForToday,
             completedTimes: completedTrackers.filter { $0.id == tracker.id }.count,
-            isEditingAvailable: isEditingAvailable
+            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: chosenDate)
         )
         
         cell.configure(with: model)
         cell.delegate = self
 
         return cell
-    }
-    
-    private func isTrackerCompletedForToday(record: TrackerRecord, id: UUID) -> Bool {
-        guard record.id == id else { return false }
-        return Calendar.current.compare(chosenDate, to: record.endDate, toGranularity: .day) == .orderedSame
     }
     
     private func supplementaryViewProvider(
@@ -266,19 +259,8 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
-    func addNewCategory(tracker: TrackerCategory) {
-        if fullCategoryList.contains(where: { $0.header == tracker.header }) {
-            fullCategoryList = fullCategoryList.compactMap {
-                if $0.header == tracker.header {
-                    var tempTrackers = $0.trackers
-                    tempTrackers.append(contentsOf: tracker.trackers)
-                    return .init(header: $0.header, trackers: tempTrackers)
-                }
-                return .init(header: $0.header, trackers: $0.trackers)
-            }
-        } else {
-            fullCategoryList.append(tracker)
-        }
+    func updateTrackerList(with trackers: [TrackerCategory]) {
+        fullCategoryList = trackers
         updateCategoriesForChosenDate()
     }
 }
@@ -302,45 +284,5 @@ extension TrackersViewController: ITrackersCellDelegate {
         } else {
             completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
         }
-    }
-}
-
-// MARK: - Mock/Debug data
-
-extension TrackersViewController {
-    private func addMockData() {
-        fullCategoryList = [
-            .init(header: "Отдых", trackers: [
-                .init(
-                    name: "Погулять",
-                    color: .primaryGreen,
-                    emoji: "🚶",
-                    schedule: [.sunday, .thursday]),
-                .init(
-                    name: "Покататься на велосипеде",
-                    color: .primaryOrange,
-                    emoji: "🚴",
-                    schedule: [.saturday]),
-                .init(
-                    name: "Почитать книгу",
-                    color: .primaryRed,
-                    emoji: "📙",
-                    schedule: [.friday, .wednesday])
-            ]),
-            .init(header: "Работа", trackers: [
-                .init(
-                    name: "Закрыть задачу",
-                    color: .primaryLightBlue,
-                    emoji: "👷",
-                    schedule: [.monday])
-            ]),
-            .init(header: "Поездка", trackers: [
-                .init(
-                    name: "Забронировать отель",
-                    color: .primaryLightGreen,
-                    emoji: "🏢",
-                    schedule: [.wednesday])
-            ])
-        ]
     }
 }

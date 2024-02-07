@@ -7,20 +7,21 @@
 
 import Foundation
 
-protocol ICategoryBuilderOutput: AnyObject {
-    func getNewCategoryFromBuilder(_ category: String)
-}
-
 protocol ICategoryBuilderPresenter {
+    func updateExistedCategories(_ categories: [String])
     func doneButtonTapped(category: String)
+    func isValidCategoryName(_ categoryName: String) -> Bool
+    func isDoneButtonEnabled(with categoryName: String?) -> Bool
 }
 
-final class CategoryBuilderPresenter {
+final class CategoryBuilderPresenter: ICategoryBuilderPresenter {
     // MARK: - Properties
-    
-    private let router: any ICategoryBuilderRouter
+
     weak var view: (any ICategoryBuilderView)?
     weak var output: (any ICategoryBuilderOutput)?
+    
+    private let router: any ICategoryBuilderRouter
+    private var existedCategories = [String]()
 
     // MARK: - Lifecycle
 
@@ -29,15 +30,21 @@ final class CategoryBuilderPresenter {
     }
 
     // MARK: - Public
-
-    // MARK: - Private
-}
-
-// MARK: - ICategoryBuilderPresenter
-
-extension CategoryBuilderPresenter: ICategoryBuilderPresenter {
+    
+    func updateExistedCategories(_ categories: [String]) {
+        existedCategories = categories
+    }
+    
     func doneButtonTapped(category: String) {
+        output?.didBuildNewCategory(category)
         router.popScreen()
-        output?.getNewCategoryFromBuilder(category)
+    }
+    
+    func isValidCategoryName(_ categoryName: String) -> Bool {
+        existedCategories.first(where: { $0 == categoryName }) == nil
+    }
+    
+    func isDoneButtonEnabled(with categoryName: String?) -> Bool {
+        categoryName?.isEmpty == false
     }
 }

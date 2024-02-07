@@ -12,7 +12,10 @@ final class TrackersAssembly {
 
     static func assemble() -> UIViewController {
         let router = TrackersRouter()
-        let presenter = TrackersPresenter(router: router)
+        let presenter = TrackersPresenter(
+            router: router,
+            categoryRepository: TrackerCategoryRepository.shared
+        )
         
         let layoutProvider = TrackersLayoutProvider()
         let view = TrackersViewController(

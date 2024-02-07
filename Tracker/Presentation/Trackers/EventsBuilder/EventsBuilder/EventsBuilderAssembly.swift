@@ -16,7 +16,10 @@ final class EventsBuilderAssembly {
         output: some IEventsBuilderOutput
     ) -> UIViewController {
         let router = EventsBuilderRouter()
-        let presenter = EventsBuilderPresenter(router: router)
+        let presenter = EventsBuilderPresenter(
+            router: router,
+            categoryRepository: TrackerCategoryRepository.shared
+        )
         let view = EventsBuilderViewController(presenter: presenter, mode: mode)
 
         router.viewController = navigationController

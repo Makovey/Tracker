@@ -7,13 +7,9 @@
 
 import Foundation
 
-protocol IEventsBuilderOutput: AnyObject {
-    func setNewTracker(tracker: TrackerCategory)
-}
-
 protocol IEventsBuilderPresenter {
     func cancelButtonTapped()
-    func createButtonTapped(with tracker: TrackerCategory)
+    func createButtonTapped(with tracker: Tracker)
     func categoryTapped()
     func scheduleTapped()
 }
@@ -21,15 +17,21 @@ protocol IEventsBuilderPresenter {
 final class EventsBuilderPresenter {
     // MARK: - Properties
     
-    private let router: any IEventsBuilderRouter
     weak var view: (any IEventsBuilderView)?
     weak var output: (any IEventsBuilderOutput)?
+    
+    private let router: any IEventsBuilderRouter
+    private let categoryRepository: any ITrackerCategoryRepository
     private var selectedDays = Set<WeekDay>()
 
     // MARK: - Lifecycle
 
-    init(router: some IEventsBuilderRouter) {
+    init(
+        router: some IEventsBuilderRouter,
+        categoryRepository: some ITrackerCategoryRepository
+    ) {
         self.router = router
+        self.categoryRepository = categoryRepository
     }
 
     // MARK: - Public
@@ -41,15 +43,20 @@ final class EventsBuilderPresenter {
 
 extension EventsBuilderPresenter: IEventsBuilderPresenter {
     func categoryTapped() {
-        router.openCategoryScreen(categoryModuleOutput: self)
+        let categories = categoryRepository
+            .fetchCategories()
+            .map { $0.header }
+        
+        router.openCategoryScreen(categoryModuleOutput: self, categories: categories)
     }
     
     func cancelButtonTapped() {
         router.dismissModule()
     }
     
-    func createButtonTapped(with tracker: TrackerCategory) {
-        output?.setNewTracker(tracker: tracker)
+    func createButtonTapped(with tracker: Tracker) {
+        try? categoryRepository.createTracker(tracker)
+        output?.didCreateNewTracker()
         router.dismissModule()
     }
     
@@ -65,6 +72,7 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
 
 extension EventsBuilderPresenter: ICategorySelectorOutput {
     func categorySelected(_ category: String) {
+        categoryRepository.saveCategoryName(category)
         view?.updateCategoryField(with: category)
     }
 }
