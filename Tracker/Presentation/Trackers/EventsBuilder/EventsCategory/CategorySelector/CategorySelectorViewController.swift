@@ -30,6 +30,8 @@ final class CategorySelectorViewController: UIViewController {
         didSet { reloadSnapshot() }
     }
     
+    private var selectedCategory: String?
+    
     private lazy var dataSource: CategoriesDataSource = {
         CategoriesDataSource(tableView: tableView) { [weak self] tableView, indexPath, category in
             guard let self else { fatalError("\(CategorySelectorViewController.self) is nil") }
@@ -161,9 +163,11 @@ final class CategorySelectorViewController: UIViewController {
             withIdentifier: PrimaryCell.identifier,
             for: indexPath
         ) as? PrimaryCell else { return UITableViewCell() }
-        
+
         cell.selectionStyle = .none
         cell.configure(title: category, accessory: .checkmark)
+
+        if category == selectedCategory { cell.didSelect() }
 
         return cell
     }
@@ -197,6 +201,14 @@ extension CategorySelectorViewController: UITableViewDelegate {
         
         cell.didDeselect()
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if categories[indexPath.row] == selectedCategory {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
+    }
 }
 
 // MARK: - ICategorySelectorView
@@ -210,7 +222,11 @@ extension CategorySelectorViewController: ICategorySelectorView {
 // MARK: - ICategorySelectorView
 
 extension CategorySelectorViewController: ICategorySelectorInput {
-    func setCategories(categories: [String]) {
+    func setSelectedCategory(category: String?) {
+        selectedCategory = category
+    }
+
+    func setAllCategories(categories: [String]) {
         self.categories = categories
     }
 }

@@ -11,6 +11,7 @@ protocol IEventsBuilderRouter {
     func dismissModule()
     func openCategoryScreen(
         categoryModuleOutput: some ICategorySelectorOutput,
+        selectedCategory: String?,
         categories: [String]
     )
     func openScheduleScreen(
@@ -33,13 +34,15 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
     
     func openCategoryScreen(
         categoryModuleOutput: some ICategorySelectorOutput,
+        selectedCategory: String?,
         categories: [String]
     ) {
         let destination = CategorySelectorAssembly.assemble(
             navigationController: viewController,
             output: categoryModuleOutput
         )
-        (destination as? ICategorySelectorInput)?.setCategories(categories: categories)
+        (destination as? ICategorySelectorInput)?.setSelectedCategory(category: selectedCategory)
+        (destination as? ICategorySelectorInput)?.setAllCategories(categories: categories)
         viewController?.pushViewController(destination, animated: true)
     }
     

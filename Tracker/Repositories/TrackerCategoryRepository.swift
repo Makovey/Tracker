@@ -13,7 +13,8 @@ enum TrackerCategoryRepositoryError: Error {
 
 protocol ITrackerCategoryRepository {
     func fetchCategories() -> [TrackerCategory]
-    func saveCategoryName(_ categoryName: String)
+    func fetchSelectedCategoryName() -> String?
+    func saveSelectedCategoryName(_ categoryName: String)
     func createTracker(_ tracker: Tracker) throws
 }
 
@@ -69,12 +70,15 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
         categories
     }
     
-    func saveCategoryName(_ categoryName: String) {
+    func fetchSelectedCategoryName() -> String? {
+        tempCategory?.header
+    }
+    
+    func saveSelectedCategoryName(_ categoryName: String) {
         let newCategory = TrackerCategory(header: categoryName, trackers: [])
         addToExistedCategory(category: newCategory)
         tempCategory = newCategory
     }
-    
  
     func createTracker(_ tracker: Tracker) throws {
         guard let tempCategory else {

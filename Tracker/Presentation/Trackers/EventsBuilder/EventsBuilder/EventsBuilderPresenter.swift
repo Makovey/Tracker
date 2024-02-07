@@ -47,7 +47,11 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
             .fetchCategories()
             .map { $0.header }
         
-        router.openCategoryScreen(categoryModuleOutput: self, categories: categories)
+        router.openCategoryScreen(
+            categoryModuleOutput: self,
+            selectedCategory: categoryRepository.fetchSelectedCategoryName(),
+            categories: categories
+        )
     }
     
     func cancelButtonTapped() {
@@ -55,7 +59,7 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
     }
     
     func createButtonTapped(with tracker: Tracker) {
-        try? categoryRepository.createTracker(tracker)
+        try? categoryRepository.createTracker(tracker) // TODO: handle exception
         output?.didCreateNewTracker()
         router.dismissModule()
     }
@@ -72,7 +76,7 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
 
 extension EventsBuilderPresenter: ICategorySelectorOutput {
     func categorySelected(_ category: String) {
-        categoryRepository.saveCategoryName(category)
+        categoryRepository.saveSelectedCategoryName(category)
         view?.updateCategoryField(with: category)
     }
 }
