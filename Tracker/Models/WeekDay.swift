@@ -13,38 +13,38 @@ enum WeekDay: Int, CaseIterable {
     var label: String {
         switch self {
         case .monday:
-            return "Понедельник" // TODO: Localization
+            return "weekday.monday.title".localized
         case .tuesday:
-            return "Вторник" // TODO: Localization
+            return "weekday.tuesday.title".localized
         case .wednesday:
-            return "Среда" // TODO: Localization
+            return "weekday.wednesday.title".localized
         case .thursday:
-            return "Четверг" // TODO: Localization
+            return "weekday.thursday.title".localized
         case .friday:
-            return "Пятница" // TODO: Localization
+            return "weekday.friday.title".localized
         case .saturday:
-            return "Суббота" // TODO: Localization
+            return "weekday.saturday.title".localized
         case .sunday:
-            return "Воскресенье" // TODO: Localization
+            return "weekday.sunday.title".localized
         }
     }
     
     var shortLabel: String {
         switch self {
         case .monday:
-            return "Пн" // TODO: Localization
+            return "weekday.monday.shortTitle".localized
         case .tuesday:
-            return "Вт" // TODO: Localization
+            return "weekday.tuesday.shortTitle".localized
         case .wednesday:
-            return "Ср" // TODO: Localization
+            return "weekday.wednesday.shortTitle".localized
         case .thursday:
-            return "Чт" // TODO: Localization
+            return "weekday.thursday.shortTitle".localized
         case .friday:
-            return "Пт" // TODO: Localization
+            return "weekday.friday.shortTitle".localized
         case .saturday:
-            return "Сб" // TODO: Localization
+            return "weekday.saturday.shortTitle".localized
         case .sunday:
-            return "Вс" // TODO: Localization
+            return "weekday.sunday.shortTitle".localized
         }
     }
     

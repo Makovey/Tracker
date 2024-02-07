@@ -29,7 +29,7 @@ final class CategoryBuilderViewController: UIViewController {
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .primaryElementBackground
-        textField.placeholder = "Введите название категории" // TODO: Localization
+        textField.placeholder = "category.builder.textField.placeholder".localized
         textField.clearButtonMode = .whileEditing
 
         textField.font = .systemFont(ofSize: 17)
@@ -54,13 +54,13 @@ final class CategoryBuilderViewController: UIViewController {
         label.font = .systemFont(ofSize: 17)
         label.textColor = .canceledState
         label.textAlignment = .center
-        label.text = "Такая категория уже существует"
+        label.text = "category.builder.errorLabel.title".localized
         
         return label.forAutolayout()
     }()
     
     private lazy var doneButton: PrimaryButton = {
-        let button = PrimaryButton(style: .disabled, text: "Готово")
+        let button = PrimaryButton(style: .disabled, text: "common.doneButton.title".localized)
         button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
 
         return button
@@ -89,7 +89,7 @@ final class CategoryBuilderViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationItem.setHidesBackButton(true, animated: true)
 
-        title = "Новая категория" // TODO: Localization
+        title = "category.builder.screen.title".localized
         errorLabel.isHidden = true
         
         textField.placedOn(view)

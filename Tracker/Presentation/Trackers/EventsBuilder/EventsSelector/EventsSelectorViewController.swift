@@ -23,8 +23,14 @@ final class EventsSelectorViewController: UIViewController {
     // MARK: - UI
     
     private lazy var stackView: UIStackView = {
-        let habitButton = PrimaryButton(style: .enabled, text: "Привычка") // TODO: Localization
-        let irregularEventsButton = PrimaryButton(style: .enabled, text: "Нерегулярное событие") // TODO: Localization
+        let habitButton = PrimaryButton(
+            style: .enabled,
+            text: "events.selector.habitButton.title".localized
+        )
+        let irregularEventsButton = PrimaryButton(
+            style: .enabled,
+            text: "events.selector.irregularEventButton.title".localized
+        )
         
         habitButton.addTarget(self, action: #selector(habitButtonTapped), for: .touchUpInside)
         irregularEventsButton.addTarget(self, action: #selector(irregularEventsButtonTapped), for: .touchUpInside)
@@ -62,7 +68,7 @@ final class EventsSelectorViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        title = "Создание трекера" // TODO: Localization
+        title = "category.selector.screen.title".localized
 
         stackView
             .placedOn(view)

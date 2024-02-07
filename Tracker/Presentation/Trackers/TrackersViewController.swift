@@ -33,12 +33,12 @@ final class TrackersViewController: UIViewController {
         
     private lazy var dataSource: TrackersDataSource = {
         let dataSource = TrackersDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
-            guard let self else { fatalError("TrackersViewController is nil") }
+            guard let self else { fatalError("\(TrackersViewController.self) is nil") }
             return self.cellProvider(collectionView: collectionView, indexPath: indexPath, tracker: tracker)
         }
 
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let self else { fatalError("TrackersViewController is nil") }
+            guard let self else { fatalError("\(TrackersViewController.self) is nil") }
             return self.supplementaryViewProvider(collection: collectionView, kind: kind, indexPath: indexPath)
         }
 
@@ -60,9 +60,11 @@ final class TrackersViewController: UIViewController {
     }()
     
     private lazy var searchInput: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
+        let searchController = UISearchController()
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Поиск" // TODO: Localization
+        searchController.searchBar.placeholder = "trackers.searchBar.placeholder".localized
+        searchController.searchBar.tintColor = .optionState
+        searchController.hidesNavigationBarDuringPresentation = false
         
         return searchController
     }()
@@ -85,7 +87,7 @@ final class TrackersViewController: UIViewController {
         imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
         
         let label = UILabel()
-        label.text = "Что будем отслеживать?" // TODO: Localization
+        label.text = "trackers.emptyState.title".localized
         label.font = .systemFont(ofSize: 12)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, label])
@@ -269,8 +271,8 @@ extension TrackersViewController: ITrackersView {
 
 extension TrackersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        print("\(#function) with text \(text)")
+        guard let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces) else { return }
+        
     }
 }
 

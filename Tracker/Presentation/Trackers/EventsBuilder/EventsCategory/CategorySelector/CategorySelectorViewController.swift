@@ -60,7 +60,7 @@ final class CategorySelectorViewController: UIViewController {
     }()
     
     private lazy var addCategoryButton: PrimaryButton = {
-        let button = PrimaryButton(style: .enabled, text: "Добавить категорию") // TODO: Localization
+        let button = PrimaryButton(style: .enabled, text: "category.selector.primaryButton.title".localized)
         button.addTarget(self, action: #selector(addCategoryButtonTapped), for: .touchUpInside)
         
         return button.forAutolayout()
@@ -73,7 +73,7 @@ final class CategorySelectorViewController: UIViewController {
         let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.text = "Привычки и события можно\n объединить по смыслу" // TODO: Localization
+        label.text = "category.selector.emptyState.title".localized
         label.font = .systemFont(ofSize: 12)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, label])
@@ -108,7 +108,7 @@ final class CategorySelectorViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationItem.setHidesBackButton(true, animated: true)
 
-        title = "Категория" // TODO: Localization
+        title = "events.builder.categoryCell.title".localized
         
         addCategoryButton.placedOn(view)
         NSLayoutConstraint.activate([

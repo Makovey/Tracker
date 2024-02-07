@@ -35,7 +35,7 @@ final class TrackersCell: UICollectionViewCell {
     private var id = UUID()
     private var completedDaysCounter = 0 {
         didSet {
-            dateLabel.text = "\(completedDaysCounter) дней" // TODO: Localization
+            dateLabel.text = "\(completedDaysCounter) \("trackers.cell.subtitle".localized)"
         }
     }
     
@@ -53,7 +53,7 @@ final class TrackersCell: UICollectionViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: Constant.baseFontSize)
-        label.textColor = .systemBackground
+        label.textColor = .white
         label.numberOfLines = 2
         
         return label.forAutolayout()

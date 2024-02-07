@@ -60,7 +60,7 @@ final class EventsBuilderViewController: UIViewController {
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .primaryElementBackground
-        textField.placeholder = "Введите название трекера" // TODO: Localization
+        textField.placeholder = "events.builder.textField.placeholder".localized
         textField.clearButtonMode = .whileEditing
 
         textField.font = .systemFont(ofSize: 17)
@@ -101,14 +101,14 @@ final class EventsBuilderViewController: UIViewController {
     }()
     
     private lazy var cancelButton: PrimaryButton = {
-        let cancelButton = PrimaryButton(style: .canceled, text: "Отменить") // TODO: Localization
+        let cancelButton = PrimaryButton(style: .canceled, text: "events.builder.cancelButton.title".localized)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
         return cancelButton
     }()
     
     private lazy var createButton: PrimaryButton = {
-        let createButton = PrimaryButton(style: .disabled, text: "Создать") // TODO: Localization
+        let createButton = PrimaryButton(style: .disabled, text: "events.builder.createButton.title".localized)
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         
         return createButton
@@ -153,10 +153,10 @@ final class EventsBuilderViewController: UIViewController {
 
         switch mode {
         case .habit:
-            title = "Новая привычка" // TODO: Localization
+            title = "events.builder.habitScreen.title".localized
             navigationItems.append(.schedule)
         case .event:
-            title = "Новое нерегулярное событие" // TODO: Localization
+            title = "events.builder.irregularEventScreen.title".localized
         }
         
         textField.placedOn(view)
@@ -199,7 +199,7 @@ final class EventsBuilderViewController: UIViewController {
         guard let trackerName, let categoryName else { return }
         let tracker = Tracker(
             name: trackerName,
-            color: .blue,
+            color: .primaryOrange,
             emoji: "🤷‍♂️",
             schedule: schedule
         )
@@ -270,14 +270,14 @@ extension EventsBuilderViewController: UITableViewDataSource {
         
         switch navigationItems[indexPath.row] {
         case .category:
-            title = "Категория" // TODO: Localization
+            title = "events.builder.categoryCell.title".localized
             cell.configure(
                 title: title,
                 subTitle: categoryName,
                 accessory: .chevron
             )
         case .schedule:
-            title = "Расписание" // TODO: Localization
+            title = "common.schedule.title".localized
             
             let scheduleString = schedule?
                 .sorted(by: { $0.rawValue < $1.rawValue })

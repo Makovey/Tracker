@@ -29,12 +29,12 @@ final class TabBarController: UITabBarController {
         let trackers = prepareViewController(
             TrackersAssembly.assemble(),
             image: .init(systemName: Constant.trackersImageName),
-            title: "Трекеры" // TODO: Localization
+            title: "main.title.trackers".localized
         )
         let habits = prepareViewController(
             HabitsAssembly.assemble(),
             image: .init(systemName: Constant.habitsImageName),
-            title: "Статистика"  // TODO: Localization
+            title: "main.title.statistics".localized
         )
         
         viewControllers = [trackers, habits]
