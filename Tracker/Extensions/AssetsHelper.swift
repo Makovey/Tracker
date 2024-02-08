@@ -25,5 +25,6 @@ extension UIColor {
 
 extension UIImage {
     static let emptyImage = UIImage(named: "EmptyTrackerImage") ?? .init()
+    static let notFoundImage = UIImage(named: "NotFoundTrackerImage") ?? .init()
     static let chevron = UIImage(named: "Chevron") ?? .init()
 }

@@ -16,7 +16,11 @@ protocol ITrackersView: AnyObject {
 
 final class TrackersViewController: UIViewController {
     private enum Constant {
-        static let dayInSeconds: TimeInterval = 86400
+        static let baseInset: CGFloat = 16
+    }
+    
+    private enum EmptyViewError {
+        case text, date
     }
     
     // MARK: - Properties
@@ -29,8 +33,8 @@ final class TrackersViewController: UIViewController {
         didSet { reloadSnapshot() }
     }
     private var completedTrackers = [TrackerRecord]()
-    private var chosenDate = Date()
-        
+    private var emptyState: EmptyViewError = .date
+
     private lazy var dataSource: TrackersDataSource = {
         let dataSource = TrackersDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
             guard let self else { fatalError("\(TrackersViewController.self) is nil") }
@@ -61,10 +65,9 @@ final class TrackersViewController: UIViewController {
     
     private lazy var searchInput: UISearchController = {
         let searchController = UISearchController()
-        searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "trackers.searchBar.placeholder".localized
         searchController.searchBar.tintColor = .optionState
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
         
         return searchController
     }()
@@ -83,11 +86,10 @@ final class TrackersViewController: UIViewController {
     }()
     
     private lazy var emptyStateView: UIStackView = {
-        let imageView = UIImageView(image: .emptyImage)
+        let imageView = UIImageView()
         imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
         
         let label = UILabel()
-        label.text = "trackers.emptyState.title".localized
         label.font = .systemFont(ofSize: 12)
 
         let stackView = UIStackView(arrangedSubviews: [imageView, label])
@@ -153,10 +155,32 @@ final class TrackersViewController: UIViewController {
     private func setupInitialState() {
         collectionView.dataSource = dataSource
     
-        updateCategoriesForChosenDate()
+        updateVisibilityCategories()
     }
     
     private func showEmptyState() {
+        let image: UIImage
+        let title: String
+        
+        switch emptyState {
+        case .date:
+            title = "trackers.emptyState.title".localized
+            image = .emptyImage
+        case .text:
+            title = "trackers.notFoundState.title".localized
+            image = .notFoundImage
+        }
+        
+        emptyStateView.arrangedSubviews.forEach {
+            switch $0 {
+            case let imageView as UIImageView:
+                imageView.image = image
+            case let label as UILabel:
+                label.text = title
+            default: break
+            }
+        }
+        
         emptyStateView.placedOn(collectionView)
 
         NSLayoutConstraint.activate([
@@ -192,14 +216,14 @@ final class TrackersViewController: UIViewController {
         ) as? TrackersCell else { return UICollectionViewCell() }
         
         let isCompletedForToday = completedTrackers
-            .filter { presenter.isTrackerCompletedForThisDay(date: chosenDate, record: $0, id: tracker.id) }
+            .filter { presenter.isTrackerCompletedForThisDay(date: datePicker.date, record: $0, id: tracker.id) }
             .count != 0
 
         let model = TrackersCell.Model(
             tracker: tracker,
             isCompletedForToday: isCompletedForToday,
             completedTimes: completedTrackers.filter { $0.id == tracker.id }.count,
-            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: chosenDate)
+            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: datePicker.date)
         )
         
         cell.configure(with: model)
@@ -224,17 +248,22 @@ final class TrackersViewController: UIViewController {
         return header
     }
     
-    private func updateCategoriesForChosenDate() {
-        let filteredWeekday = Calendar.current.component(.weekday, from: chosenDate)
+    private func updateVisibilityCategories() {
+        let filteredWeekday = Calendar.current.component(.weekday, from: datePicker.date)
+
+        let searchText = (searchInput.searchBar.text?.trimmingCharacters(in: .whitespaces) ?? "").lowercased()
         
         visibleCategoryList.removeAll()
         visibleCategoryList = fullCategoryList.compactMap {
             let trackers = $0.trackers.filter {
                 guard let schedule = $0.schedule else { return true }
-
-                return schedule.contains {
+                
+                let searchCondition = searchText.isEmpty || $0.name.lowercased().contains(searchText)
+                let weekDayCondition = schedule.contains {
                     $0.dayInt == filteredWeekday
                 }
+                
+                return searchCondition && weekDayCondition
             }
 
             guard !trackers.isEmpty else { return nil }
@@ -253,8 +282,8 @@ final class TrackersViewController: UIViewController {
     
     @objc
     func datePickerValueChanged(_ sender: UIDatePicker) {
-        chosenDate = sender.date
-        updateCategoriesForChosenDate()
+        emptyState = .date
+        updateVisibilityCategories()
     }
 }
 
@@ -263,16 +292,16 @@ final class TrackersViewController: UIViewController {
 extension TrackersViewController: ITrackersView {
     func updateTrackerList(with trackers: [TrackerCategory]) {
         fullCategoryList = trackers
-        updateCategoriesForChosenDate()
+        updateVisibilityCategories()
     }
 }
 
-// MARK: - UISearchResultsUpdating
+// MARK: - UISearchBarDelegate
 
-extension TrackersViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces) else { return }
-        
+extension TrackersViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        emptyState = .text
+        updateVisibilityCategories()
     }
 }
 
@@ -280,7 +309,7 @@ extension TrackersViewController: UISearchResultsUpdating {
 
 extension TrackersViewController: ITrackersCellDelegate {
     func doneButtonTapped(with id: UUID, state: Bool) {
-        let trackerRecord = TrackerRecord(id: id, endDate: chosenDate)
+        let trackerRecord = TrackerRecord(id: id, endDate: datePicker.date)
         if state {
             completedTrackers.append(trackerRecord)
         } else {

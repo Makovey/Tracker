@@ -14,6 +14,7 @@
 
 "trackers.searchBar.placeholder" = "Поиск";
 "trackers.emptyState.title" = "Что будем отслеживать?";
+"trackers.notFoundState.title" = "Ничего не найдено";
 "trackers.cell.subtitle" = "дней";
 
 "events.selector.habitButton.title" = "Привычка";

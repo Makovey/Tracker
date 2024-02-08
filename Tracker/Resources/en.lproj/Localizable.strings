@@ -14,6 +14,7 @@
 
 "trackers.searchBar.placeholder" = "Search";
 "trackers.emptyState.title" = "What we'll track?";
+"trackers.notFoundState.title" = "Nothing found";
 "trackers.cell.subtitle" = "days";
 
 "events.selector.habitButton.title" = "Habit";
