@@ -75,6 +75,10 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
 // MARK: - ICategorySelectorOutput
 
 extension EventsBuilderPresenter: ICategorySelectorOutput {
+    func allCreatedCategories(_ categories: [String]) {
+        categoryRepository.saveAllCategories(categories)
+    }
+    
     func categorySelected(_ category: String) {
         categoryRepository.saveSelectedCategoryName(category)
         view?.updateCategoryField(with: category)

@@ -13,5 +13,6 @@ protocol ICategorySelectorInput {
 }
 
 protocol ICategorySelectorOutput: AnyObject {
+    func allCreatedCategories(_ categories: [String])
     func categorySelected(_ category: String)
 }

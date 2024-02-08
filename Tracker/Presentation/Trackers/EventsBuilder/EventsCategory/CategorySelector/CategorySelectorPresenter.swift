@@ -9,7 +9,7 @@ import Foundation
 
 protocol ICategorySelectorPresenter {
     func addCategoryButtonTapped(existedCategory: [String])
-    func categorySelected(_ category: String)
+    func categorySelected(allCategories: [String], selectedCategory: String)
 }
 
 final class CategorySelectorPresenter: ICategorySelectorPresenter {
@@ -27,8 +27,9 @@ final class CategorySelectorPresenter: ICategorySelectorPresenter {
 
     // MARK: - Public
     
-    func categorySelected(_ category: String) {
-        output?.categorySelected(category)
+    func categorySelected(allCategories: [String], selectedCategory: String) {
+        output?.categorySelected(selectedCategory)
+        output?.allCreatedCategories(allCategories)
         router.popScreen()
     }
     

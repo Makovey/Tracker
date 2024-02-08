@@ -187,7 +187,10 @@ extension CategorySelectorViewController: UITableViewDelegate {
         ) as? PrimaryCell else { return }
         
         cell.didSelect()
-        presenter.categorySelected(categories[indexPath.row])
+        presenter.categorySelected(
+            allCategories: categories,
+            selectedCategory: categories[indexPath.row]
+        )
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -216,7 +219,7 @@ extension CategorySelectorViewController: ICategorySelectorView {
     }
 }
 
-// MARK: - ICategorySelectorView
+// MARK: - ICategorySelectorInput
 
 extension CategorySelectorViewController: ICategorySelectorInput {
     func setSelectedCategory(category: String?) {

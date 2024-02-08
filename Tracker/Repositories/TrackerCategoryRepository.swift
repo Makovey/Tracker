@@ -15,6 +15,7 @@ protocol ITrackerCategoryRepository {
     func fetchCategories() -> [TrackerCategory]
     func fetchSelectedCategoryName() -> String?
     func saveSelectedCategoryName(_ categoryName: String)
+    func saveAllCategories(_ categories: [String])
     func createTracker(_ tracker: Tracker) throws
 }
 
@@ -78,6 +79,13 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
         let newCategory = TrackerCategory(header: categoryName, trackers: [])
         addToExistedCategory(category: newCategory)
         tempCategory = newCategory
+    }
+    
+    func saveAllCategories(_ categories: [String]) {
+        categories.forEach {
+            let newCategory = TrackerCategory(header: $0, trackers: [])
+            addToExistedCategory(category: newCategory)
+        }
     }
  
     func createTracker(_ tracker: Tracker) throws {
