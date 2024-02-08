@@ -44,15 +44,7 @@ final class CategorySelectorViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.layer.cornerRadius = Constant.baseCornerRadius
-
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = .init(
-            top: .zero,
-            left: Constant.baseInset,
-            bottom: .zero,
-            right: Constant.baseInset
-        )
-
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.register(PrimaryCell.self, forCellReuseIdentifier: PrimaryCell.identifier)
         
@@ -165,7 +157,11 @@ final class CategorySelectorViewController: UIViewController {
         ) as? PrimaryCell else { return UITableViewCell() }
 
         cell.selectionStyle = .none
-        cell.configure(title: category, accessory: .checkmark)
+        cell.configure(
+            title: category,
+            accessory: .checkmark,
+            isLastCell: indexPath.row == categories.count - 1
+        )
 
         if category == selectedCategory { cell.didSelect() }
 
@@ -215,6 +211,7 @@ extension CategorySelectorViewController: UITableViewDelegate {
 
 extension CategorySelectorViewController: ICategorySelectorView {
     func updateCategory(_ category: String) {
+        tableView.reloadData()
         categories.append(category)
     }
 }

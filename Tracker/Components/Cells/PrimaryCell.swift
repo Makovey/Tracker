@@ -54,6 +54,13 @@ final class PrimaryCell: UITableViewCell {
         return stackView.forAutolayout()
     }()
     
+    private lazy var separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .transparent
+        
+        return view.forAutolayout()
+    }()
+    
     // MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -64,12 +71,18 @@ final class PrimaryCell: UITableViewCell {
     
     required init?(coder: NSCoder) { nil }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        separator.isHidden = false
+    }
+    
     // MARK: - Public
     
     func configure(
         title: String,
         subTitle: String? = nil,
-        accessory: Accessory
+        accessory: Accessory,
+        isLastCell: Bool
     ) {
         if let subTitle {
             setupWithSubtitle(title: title, subTitle: subTitle)
@@ -84,6 +97,11 @@ final class PrimaryCell: UITableViewCell {
             accessoryImageView.isHidden = true
             accessoryImageView.image = UIImage(systemName: "checkmark")
             accessoryImageView.tintColor = .optionState
+        }
+        
+        if isLastCell { 
+            separator.isHidden = true
+            roundCorners()
         }
     }
     
@@ -106,6 +124,14 @@ final class PrimaryCell: UITableViewCell {
             accessoryImageView.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset),
             accessoryImageView.width.constraint(equalToConstant: 24),
             accessoryImageView.height.constraint(equalToConstant: 24)
+        ])
+        
+        separator.placedOn(contentView)
+        NSLayoutConstraint.activate([
+            separator.left.constraint(equalTo: contentView.left, constant: Constant.baseInset),
+            separator.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset),
+            separator.bottom.constraint(equalTo: contentView.bottom),
+            separator.height.constraint(equalToConstant: 1)
         ])
     }
     
@@ -131,5 +157,11 @@ final class PrimaryCell: UITableViewCell {
             stackView.right.constraint(equalTo: accessoryImageView.left, constant: -1),
             stackView.bottom.constraint(equalTo: contentView.bottom, constant: -14),
         ])
+    }
+    
+    private func roundCorners() {
+        layer.masksToBounds = true
+        layer.cornerRadius = 16
+        layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
     }
 }

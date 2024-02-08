@@ -81,6 +81,7 @@ final class CategoryBuilderViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        setupInitialState()
     }
 
     // MARK: - Private
@@ -114,6 +115,10 @@ final class CategoryBuilderViewController: UIViewController {
             doneButton.bottom.constraint(equalTo: view.safeBottom, constant: -Constant.baseInset),
             doneButton.height.constraint(equalToConstant: 60)
         ])
+    }
+    
+    private func setupInitialState() {
+        textField.becomeFirstResponder()
     }
     
     @objc

@@ -40,6 +40,13 @@ final class WeekDayCell: UITableViewCell {
         
         return switcher.forAutolayout()
     }()
+    
+    private lazy var separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .transparent
+        
+        return view.forAutolayout()
+    }()
 
     // MARK: - Lifecycle
     
@@ -53,11 +60,16 @@ final class WeekDayCell: UITableViewCell {
     
     // MARK: - Public
     
-    func configure(weekDay: WeekDay, isDayAlreadySelected: Bool) {
+    func configure(
+        weekDay: WeekDay,
+        isDayAlreadySelected: Bool,
+        isLastCell: Bool
+    ) {
         self.weekDay = weekDay
         
         titleLabel.text = self.weekDay?.label
         switcher.isOn = isDayAlreadySelected
+        if isLastCell { separator.isHidden = true }
     }
     
     // MARK: - Private
@@ -75,6 +87,14 @@ final class WeekDayCell: UITableViewCell {
         NSLayoutConstraint.activate([
             switcher.centerY.constraint(equalTo: contentView.centerY),
             switcher.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset)
+        ])
+        
+        separator.placedOn(contentView)
+        NSLayoutConstraint.activate([
+            separator.left.constraint(equalTo: contentView.left, constant: Constant.baseInset),
+            separator.right.constraint(equalTo: contentView.right, constant: -Constant.baseInset),
+            separator.bottom.constraint(equalTo: contentView.bottom),
+            separator.height.constraint(equalToConstant: 1)
         ])
     }
     

@@ -84,15 +84,7 @@ final class EventsBuilderViewController: UIViewController {
         let tableView = UITableView()
         tableView.layer.cornerRadius = Constant.baseCornerRadius
         tableView.isScrollEnabled = false
-
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = .init(
-            top: .zero,
-            left: Constant.baseInset,
-            bottom: .zero,
-            right: Constant.baseInset
-        )
-
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PrimaryCell.self, forCellReuseIdentifier: PrimaryCell.identifier)
@@ -196,7 +188,7 @@ final class EventsBuilderViewController: UIViewController {
     
     @objc
     private func createButtonTapped() {
-        guard let trackerName, let categoryName else { return }
+        guard let trackerName, categoryName != nil else { return }
         let tracker = Tracker(
             name: trackerName,
             color: .primaryOrange,
@@ -274,7 +266,8 @@ extension EventsBuilderViewController: UITableViewDataSource {
             cell.configure(
                 title: title,
                 subTitle: categoryName,
-                accessory: .chevron
+                accessory: .chevron, 
+                isLastCell: indexPath.row == navigationItems.count - 1
             )
         case .schedule:
             title = "common.schedule.title".localized
@@ -287,7 +280,7 @@ extension EventsBuilderViewController: UITableViewDataSource {
             cell.configure(
                 title: title,
                 subTitle: scheduleString,
-                accessory: .chevron
+                accessory: .chevron, isLastCell: indexPath.row == navigationItems.count - 1
             )
         }
         

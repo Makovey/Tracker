@@ -28,15 +28,7 @@ final class EventsScheduleViewController: UIViewController {
         let tableView = UITableView()
         tableView.layer.cornerRadius = Constant.baseCornerRadius
         tableView.isScrollEnabled = false
-
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = .init(
-            top: .zero,
-            left: Constant.baseInset,
-            bottom: .zero,
-            right: Constant.baseInset
-        )
-
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(WeekDayCell.self, forCellReuseIdentifier: WeekDayCell.identifier)
@@ -127,7 +119,8 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
         cell.selectionStyle = .none
         cell.configure(
             weekDay: weekDay,
-            isDayAlreadySelected: isDaySelected != nil
+            isDayAlreadySelected: isDaySelected != nil,
+            isLastCell: indexPath.row == weekDays.count - 1
         )
         
         return cell
