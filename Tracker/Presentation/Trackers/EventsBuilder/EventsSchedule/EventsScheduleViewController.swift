@@ -108,10 +108,6 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
             for: indexPath
         ) as? WeekDayCell else { return UITableViewCell() }
         
-        if indexPath.row == weekDays.count - 1 {
-            cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-        }
-        
         let weekDay = weekDays[indexPath.row]
         let isDaySelected = selectedDays.first(where: { $0 == weekDay })
         

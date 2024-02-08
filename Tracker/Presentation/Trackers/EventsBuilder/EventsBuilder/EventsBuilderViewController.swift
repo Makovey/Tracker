@@ -28,7 +28,7 @@ final class EventsBuilderViewController: UIViewController {
     // MARK: - Properties
 
     private var trackerName: String? {
-        didSet { checkAvailability() } // TODO: presenter.checkAvailability() ?
+        didSet { checkAvailability() }
     }
     
     private var categoryName: String? {
@@ -260,11 +260,7 @@ extension EventsBuilderViewController: UITableViewDataSource {
             withIdentifier: PrimaryCell.identifier,
             for: indexPath
         ) as? PrimaryCell else { return UITableViewCell() }
-        
-        if indexPath.row == navigationItems.count - 1 {
-            cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-        }
-        
+
         let title: String
         
         switch navigationItems[indexPath.row] {
