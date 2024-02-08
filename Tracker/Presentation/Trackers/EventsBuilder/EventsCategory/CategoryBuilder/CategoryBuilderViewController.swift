@@ -31,6 +31,7 @@ final class CategoryBuilderViewController: UIViewController {
         textField.backgroundColor = .primaryElementBackground
         textField.placeholder = "category.builder.textField.placeholder".localized
         textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
 
         textField.font = .systemFont(ofSize: 17)
         textField.layer.cornerRadius = Constant.baseCornerRadius
@@ -45,6 +46,7 @@ final class CategoryBuilderViewController: UIViewController {
         textField.leftView = paddingView
         textField.leftViewMode = .always
         textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
+        textField.delegate = self
         
         return textField.forAutolayout()
     }()
@@ -118,6 +120,7 @@ final class CategoryBuilderViewController: UIViewController {
     }
     
     private func setupInitialState() {
+        hideKeyboardWhenTappedAround()
         textField.becomeFirstResponder()
     }
     
@@ -160,4 +163,22 @@ extension CategoryBuilderViewController: ICategoryBuilderInput {
     func setExistedCategories(_ categories: [String]) {
         presenter.updateExistedCategories(categories)
     }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension CategoryBuilderViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+     }
 }

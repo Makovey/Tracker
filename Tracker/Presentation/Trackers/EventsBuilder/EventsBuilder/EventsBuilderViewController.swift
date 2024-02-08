@@ -62,6 +62,7 @@ final class EventsBuilderViewController: UIViewController {
         textField.backgroundColor = .primaryElementBackground
         textField.placeholder = "events.builder.textField.placeholder".localized
         textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
 
         textField.font = .systemFont(ofSize: 17)
         textField.layer.cornerRadius = Constant.baseCornerRadius
@@ -76,6 +77,7 @@ final class EventsBuilderViewController: UIViewController {
         textField.leftView = paddingView
         textField.leftViewMode = .always
         textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
+        textField.delegate = self
         
         return textField.forAutolayout()
     }()
@@ -135,6 +137,7 @@ final class EventsBuilderViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
+        setupInitialState()
     }
 
     // MARK: - Private
@@ -174,6 +177,10 @@ final class EventsBuilderViewController: UIViewController {
             stackView.bottom.constraint(equalTo: view.safeBottom),
             stackView.height.constraint(equalToConstant: 60)
         ])
+    }
+    
+    private func setupInitialState() {
+        hideKeyboardWhenTappedAround()
     }
     
     @objc
@@ -292,4 +299,23 @@ extension EventsBuilderViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constant.cellsHeight
     }
+}
+
+
+// MARK: - UITextFieldDelegate
+
+extension EventsBuilderViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+     }
 }
