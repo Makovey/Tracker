@@ -103,11 +103,8 @@ extension EventsScheduleViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: WeekDayCell.identifier,
-            for: indexPath
-        ) as? WeekDayCell else { return UITableViewCell() }
-        
+        let cell: WeekDayCell = tableView.dequeueCell(for: indexPath)
+
         let weekDay = weekDays[indexPath.row]
         let isDaySelected = selectedDays.first(where: { $0 == weekDay })
         

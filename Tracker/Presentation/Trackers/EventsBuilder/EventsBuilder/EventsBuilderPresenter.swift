@@ -12,6 +12,10 @@ protocol IEventsBuilderPresenter {
     func createButtonTapped(with tracker: Tracker)
     func categoryTapped()
     func scheduleTapped()
+    func canCreateFilledTracker(
+        mode: EventType,
+        trackerToFill: EventsBuilderViewController.TrackerToFill
+    ) -> Bool
 }
 
 final class EventsBuilderPresenter {
@@ -69,6 +73,25 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
             scheduleModuleOutput: self,
             selectedDays: selectedDays
         )
+    }
+
+    func canCreateFilledTracker(
+        mode: EventType,
+        trackerToFill: EventsBuilderViewController.TrackerToFill
+    ) -> Bool {
+        switch mode {
+        case .habit:
+            trackerToFill.trackerName?.isEmpty == false &&
+            trackerToFill.categoryName?.isEmpty == false &&
+            trackerToFill.schedule?.isEmpty == false &&
+            trackerToFill.selectedEmoji?.isEmpty == false &&
+            trackerToFill.selectedColor != nil
+        case .event:
+            trackerToFill.trackerName?.isEmpty == false &&
+            trackerToFill.categoryName?.isEmpty == false &&
+            trackerToFill.selectedEmoji?.isEmpty == false &&
+            trackerToFill.selectedColor != nil
+        }
     }
 }
 

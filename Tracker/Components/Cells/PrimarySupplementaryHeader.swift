@@ -1,5 +1,5 @@
 //
-//  TrackersSupplementaryView.swift
+//  PrimarySupplementaryHeader.swift
 //  Tracker
 //
 //  Created by MAKOVEY Vladislav on 11.01.2024.
@@ -8,14 +8,12 @@
 import Foundation
 import UIKit
 
-final class TrackersSupplementaryView: UICollectionReusableView {
+final class PrimarySupplementaryHeader: UICollectionReusableView {
     private enum Constant {
         static let baseFontSize: CGFloat = 19
         static let baseInset: CGFloat = 12
     }
-    
-    static let identifier = "TrackersSupplementaryView"
-    
+
     // MARK: - UI
     
     private lazy var label: UILabel = {
@@ -44,7 +42,7 @@ final class TrackersSupplementaryView: UICollectionReusableView {
     
     // MARK: - Public
     
-    func configure(for model: TrackerCategory) {
-        label.text = model.header
+    func configure(title: String) {
+        label.text = title
     }
 }

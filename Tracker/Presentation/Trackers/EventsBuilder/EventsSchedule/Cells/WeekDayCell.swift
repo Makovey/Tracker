@@ -17,8 +17,6 @@ final class WeekDayCell: UITableViewCell {
         static let baseInset: CGFloat = 16
         static let baseFontSize: CGFloat = 17
     }
-    
-    static let identifier = "WeekDayCell"
 
     weak var delegate: IWeekDayCellDelegate?
     private var weekDay: WeekDay?

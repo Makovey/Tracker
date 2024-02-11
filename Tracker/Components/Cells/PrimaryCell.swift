@@ -17,9 +17,7 @@ final class PrimaryCell: UITableViewCell {
         static let baseInset: CGFloat = 16
         static let baseFontSize: CGFloat = 17
     }
-    
-    static let identifier = "PrimaryCell"
-    
+
     // MARK: - UI
     
     private lazy var titleLabel: UILabel = {
