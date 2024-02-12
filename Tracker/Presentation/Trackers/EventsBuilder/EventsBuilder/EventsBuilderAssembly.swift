@@ -17,6 +17,7 @@ final class EventsBuilderAssembly {
     ) -> UIViewController {
         let router = EventsBuilderRouter()
         let presenter = EventsBuilderPresenter(
+            storage: CoreDataStorage(), 
             router: router,
             categoryRepository: TrackerCategoryRepository.shared
         )

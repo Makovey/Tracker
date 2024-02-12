@@ -23,6 +23,7 @@ final class ColorCell: UICollectionViewCell {
     var mainColor: UIColor? {
         didSet { colorView.backgroundColor = mainColor }
     }
+
     private var borderColor: CGColor? {
         mainColor?.withAlphaComponent(0.3).cgColor ?? UIColor.gray.cgColor
     }
