@@ -9,7 +9,9 @@ import CoreData
 import Foundation
 
 protocol IPersistenceStorage {
-    func save()
+    func fetchRecords() -> [TrackerRecord]
+    func save(record: TrackerRecord)
+    func deleteRecordById(_ id: UUID)
 }
 
 final class CoreDataStorage: IPersistenceStorage {
@@ -19,33 +21,57 @@ final class CoreDataStorage: IPersistenceStorage {
 
     // MARK: - Properties
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var trackerRecordStore: ITrackerRecordStore = TrackerRecordStore(context: context)
+    
+    private lazy var context: NSManagedObjectContext = {
         let container = NSPersistentContainer(name: Constant.modelName)
         container.loadPersistentStores { description, error in
             if let error = error as? NSError {
-                fatalError("Can't load persistence stores cause: \(error)")
+                assertionFailure("Can't load persistence stores cause: \(error)")
             }
         }
         
-        return container
+        return container.viewContext
     }()
     
     // MARK: - Public
     
-    func save() {
-        print(#function)
+    func fetchRecords() -> [TrackerRecord] {
+        do {
+            return try trackerRecordStore.fetchRecords()
+        } catch {
+            assertionFailure("Can't fetch records cause: \(error)")
+        }
+        
+        return []
+    }
+
+    func save(record: TrackerRecord) {
+        do {
+            try trackerRecordStore.save(record: record)
+        } catch {
+            assertionFailure("Can't save record -> \(record) cause: \(error)")
+        }
+    }
+    
+    func deleteRecordById(_ id: UUID) {
+        do {
+            try trackerRecordStore.deleteById(id)
+        } catch {
+            assertionFailure("Can't delete record with -> \(id) cause: \(error)")
+        }
     }
 
     // MARK: - Private
     
     func saveContext () {
-        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
             } catch {
                 let error = error as NSError
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                assertionFailure("Unresolved error \(error), \(error.userInfo)")
+                context.rollback()
             }
         }
     }

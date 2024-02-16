@@ -11,10 +11,13 @@ final class TrackersAssembly {
     // MARK: - Public
 
     static func assemble() -> UIViewController {
+        let storage: IPersistenceStorage = CoreDataStorage()
+        let repository: ITrackerCategoryRepository = TrackerCategoryRepository(storage: storage)
+        
         let router = TrackersRouter()
         let presenter = TrackersPresenter(
             router: router,
-            categoryRepository: TrackerCategoryRepository.shared
+            categoryRepository: repository
         )
         
         let layoutProvider = TrackersLayoutProvider()

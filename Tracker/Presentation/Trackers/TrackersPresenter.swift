@@ -16,6 +16,9 @@ protocol ITrackersPresenter {
         record: TrackerRecord,
         id: UUID
     ) -> Bool
+    
+    func saveCategoryRecord(_ record: TrackerRecord)
+    func deleteCategoryRecord(id: UUID)
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -38,6 +41,7 @@ final class TrackersPresenter: ITrackersPresenter {
     // MARK: - Public
     
     func viewDidLoad() {
+        view?.updateTrackerRecordList(with: categoryRepository.fetchRecords())
         view?.updateTrackerList(with: categoryRepository.fetchCategories())
     }
     
@@ -56,6 +60,14 @@ final class TrackersPresenter: ITrackersPresenter {
     ) -> Bool {
         guard record.id == id else { return false }
         return Calendar.current.compare(date, to: record.endDate, toGranularity: .day) == .orderedSame
+    }
+    
+    func saveCategoryRecord(_ record: TrackerRecord) {
+        categoryRepository.save(record: record)
+    }
+    
+    func deleteCategoryRecord(id: UUID) {
+        categoryRepository.deleteRecordById(id)
     }
 
     // MARK: - Private

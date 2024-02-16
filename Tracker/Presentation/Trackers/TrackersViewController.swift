@@ -12,6 +12,7 @@ typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracke
 
 protocol ITrackersView: AnyObject {
     func updateTrackerList(with trackers: [TrackerCategory])
+    func updateTrackerRecordList(with records: [TrackerRecord])
 }
 
 final class TrackersViewController: UIViewController {
@@ -286,6 +287,10 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
+    func updateTrackerRecordList(with records: [TrackerRecord]) {
+        completedTrackers = records
+    }
+    
     func updateTrackerList(with trackers: [TrackerCategory]) {
         fullCategoryList = trackers
         updateVisibilityCategories()
@@ -307,8 +312,10 @@ extension TrackersViewController: ITrackersCellDelegate {
     func doneButtonTapped(with id: UUID, state: Bool) {
         let trackerRecord = TrackerRecord(id: id, endDate: datePicker.date)
         if state {
+            presenter.saveCategoryRecord(trackerRecord)
             completedTrackers.append(trackerRecord)
         } else {
+            presenter.deleteCategoryRecord(id: id)
             completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
         }
     }

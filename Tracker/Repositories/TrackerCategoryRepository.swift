@@ -17,14 +17,17 @@ protocol ITrackerCategoryRepository {
     func saveSelectedCategoryName(_ categoryName: String)
     func saveAllCategories(_ categories: [String])
     func createTracker(_ tracker: Tracker) throws
+    
+    func fetchRecords() -> [TrackerRecord]
+    func save(record: TrackerRecord)
+    func deleteRecordById(_ id: UUID)
 }
 
 final class TrackerCategoryRepository: ITrackerCategoryRepository {
-    static let shared = TrackerCategoryRepository()
+
+    // MARK: - Properties
     
-    // MARK: - Private
-    
-    // with temp mock data
+    private let storage: any IPersistenceStorage
     private var categories: [TrackerCategory] = [
         .init(header: "Отдых", trackers: [
             .init(
@@ -63,9 +66,11 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
         
     // MARK: - Lifecycle
     
-    private init() {}
+    init(storage: some IPersistenceStorage) {
+        self.storage = storage
+    }
     
-    // MARK: - ITrackerCategoryRepository
+    // MARK: - Public
     
     func fetchCategories() -> [TrackerCategory] {
         categories
@@ -109,6 +114,20 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
         
         flush()
     }
+    
+    func fetchRecords() -> [TrackerRecord] {
+        storage.fetchRecords()
+    }
+    
+    func save(record: TrackerRecord) {
+        storage.save(record: record)
+    }
+    
+    func deleteRecordById(_ id: UUID) {
+        storage.deleteRecordById(id)
+    }
+    
+    // MARK: - Private
     
     private func addToExistedCategory(
         category: TrackerCategory

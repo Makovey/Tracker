@@ -15,11 +15,13 @@ final class EventsBuilderAssembly {
         navigationController: UINavigationController?,
         output: some IEventsBuilderOutput
     ) -> UIViewController {
+        let storage: IPersistenceStorage = CoreDataStorage()
+        let repository: ITrackerCategoryRepository = TrackerCategoryRepository(storage: storage)
+        
         let router = EventsBuilderRouter()
         let presenter = EventsBuilderPresenter(
-            storage: CoreDataStorage(), 
             router: router,
-            categoryRepository: TrackerCategoryRepository.shared
+            categoryRepository: repository
         )
         let view = EventsBuilderViewController(
             mode: mode,

@@ -24,7 +24,6 @@ final class EventsBuilderPresenter {
     weak var view: (any IEventsBuilderView)?
     weak var output: (any IEventsBuilderOutput)?
     
-    private let storage: any IPersistenceStorage
     private let router: any IEventsBuilderRouter
     private let categoryRepository: any ITrackerCategoryRepository
     private var selectedDays = Set<WeekDay>()
@@ -32,11 +31,9 @@ final class EventsBuilderPresenter {
     // MARK: - Lifecycle
 
     init(
-        storage: some IPersistenceStorage,
         router: some IEventsBuilderRouter,
         categoryRepository: some ITrackerCategoryRepository
     ) {
-        self.storage = storage
         self.router = router
         self.categoryRepository = categoryRepository
     }
