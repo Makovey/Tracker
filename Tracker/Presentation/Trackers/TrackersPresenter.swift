@@ -26,24 +26,23 @@ final class TrackersPresenter: ITrackersPresenter {
 
     weak var view: (any ITrackersView)?
     private let router: any ITrackersRouter
-    private let categoryRepository: any ITrackerCategoryRepository
+    private let trackerRepository: any ITrackerRepository
 
     // MARK: - Lifecycle
 
     init(
         router: some ITrackersRouter,
-        categoryRepository: some ITrackerCategoryRepository
+        categoryRepository: some ITrackerRepository
     ) {
         self.router = router
-        self.categoryRepository = categoryRepository
+        self.trackerRepository = categoryRepository
     }
     
     // MARK: - Public
     
     func viewDidLoad() {
-        print("DEBUG 🚗 -> \(categoryRepository.fetchCategories())")
-        view?.updateTrackerRecordList(with: categoryRepository.fetchRecords())
-        view?.updateTrackerList(with: categoryRepository.fetchCategories())
+        view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
+        view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
     
     func addTrackerButtonTapped() {
@@ -64,11 +63,11 @@ final class TrackersPresenter: ITrackersPresenter {
     }
     
     func saveCategoryRecord(_ record: TrackerRecord) {
-        categoryRepository.save(record: record)
+        trackerRepository.save(record: record)
     }
     
     func deleteCategoryRecord(id: UUID) {
-        categoryRepository.deleteRecordById(id)
+        trackerRepository.deleteRecordById(id)
     }
 
     // MARK: - Private
@@ -79,6 +78,6 @@ final class TrackersPresenter: ITrackersPresenter {
 
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
-        view?.updateTrackerList(with: categoryRepository.fetchCategories())
+        view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
 }

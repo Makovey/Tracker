@@ -81,7 +81,7 @@ final class TrackerCategoryStore: ITrackerCategoryStore {
             return []
         }
         
-        return trackersCDArray.map {
+        let trackers = trackersCDArray.map {
             Tracker(
                 id: $0.id ?? .init(),
                 name: $0.name ?? "",
@@ -90,5 +90,7 @@ final class TrackerCategoryStore: ITrackerCategoryStore {
                 schedule: $0.schedule as? Set<WeekDay>
             )
         }
+        
+        return trackers.sorted(by: { $0.name < $1.name })
     }
 }

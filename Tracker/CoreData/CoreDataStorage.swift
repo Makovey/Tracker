@@ -16,9 +16,6 @@ protocol IPersistenceStorage {
     func fetchCategories() -> [TrackerCategory]
     func save(trackerCategory: TrackerCategory)
     func replaceCategory(from existedCategory: TrackerCategory, to category: TrackerCategory)
-    
-    func fetchTrackers() -> [Tracker]
-    func saveTracker(tracker: Tracker)
 }
 
 final class CoreDataStorage: IPersistenceStorage {
@@ -73,7 +70,7 @@ final class CoreDataStorage: IPersistenceStorage {
     
     func fetchCategories() -> [TrackerCategory] {
         do {
-            return try trackerCategoryStore.fetchCategories()
+            return try trackerCategoryStore.fetchCategories().sorted(by: { $0.header < $1.header })
         } catch {
             assertionFailure("Can't fetch categories cause: \(error)")
         }
@@ -100,23 +97,4 @@ final class CoreDataStorage: IPersistenceStorage {
             assertionFailure("Can't replace category with -> \(existedCategory.header) cause: \(error)")
         }
     }
-    
-    func fetchTrackers() -> [Tracker] {
-        do {
-            return try trackerStore.fetchTrackers()
-        } catch {
-            assertionFailure("Can't fetch trackers cause: \(error)")
-        }
-        
-        return []
-    }
-    
-    func saveTracker(tracker: Tracker) {
-        do {
-            try trackerStore.save(tracker: tracker)
-        } catch {
-            assertionFailure("Can't save tracker -> \(tracker) cause: \(error)")
-        }
-    }
-
 }

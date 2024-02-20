@@ -25,14 +25,14 @@ final class EventsBuilderPresenter {
     weak var output: (any IEventsBuilderOutput)?
     
     private let router: any IEventsBuilderRouter
-    private let categoryRepository: any ITrackerCategoryRepository
+    private let categoryRepository: any ITrackerRepository
     private var selectedDays = Set<WeekDay>()
 
     // MARK: - Lifecycle
 
     init(
         router: some IEventsBuilderRouter,
-        categoryRepository: some ITrackerCategoryRepository
+        categoryRepository: some ITrackerRepository
     ) {
         self.router = router
         self.categoryRepository = categoryRepository

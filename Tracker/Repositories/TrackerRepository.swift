@@ -11,7 +11,7 @@ enum TrackerCategoryRepositoryError: Error {
     case requiredDataIsMissing
 }
 
-protocol ITrackerCategoryRepository {
+protocol ITrackerRepository {
     func fetchCategories() -> [TrackerCategory]
     func fetchSelectedCategoryName() -> String?
     func saveSelectedCategoryName(_ categoryName: String)
@@ -23,7 +23,7 @@ protocol ITrackerCategoryRepository {
     func deleteRecordById(_ id: UUID)
 }
 
-final class TrackerCategoryRepository: ITrackerCategoryRepository {
+final class TrackerRepository: ITrackerRepository {
     
     // MARK: - Properties
     
@@ -48,14 +48,14 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
     
     func saveSelectedCategoryName(_ categoryName: String) {
         let newCategory = TrackerCategory(header: categoryName, trackers: [])
-        saveExistedCategory(category: newCategory)
+        saveCategory(category: newCategory)
         tempCategory = newCategory
     }
     
     func saveAllCategories(_ categories: [String]) {
         categories.forEach {
             let newCategory = TrackerCategory(header: $0, trackers: [])
-            saveExistedCategory(category: newCategory)
+            saveCategory(category: newCategory)
         }
     }
  
@@ -68,7 +68,7 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
             var tempTrackers = existedCategory.trackers
             tempTrackers.append(tracker)
 
-            saveExistedCategory(category: .init(header: existedCategory.header, trackers: tempTrackers))
+            saveCategory(category: .init(header: existedCategory.header, trackers: tempTrackers))
         } else {
             storage.save(trackerCategory: .init(header: tempCategory.header, trackers: [tracker]))
         }
@@ -90,10 +90,10 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
     
     // MARK: - Private
     
-    private func saveExistedCategory(
+    private func saveCategory(
         category: TrackerCategory
     ) {
-        if isAlreadyHaveCategory(category) {
+        if isCategoryAlreadyExisted(category) {
             if let existedCategory = findFirstExistedCategory(header: category.header), !category.trackers.isEmpty {
                 let tempTrackers: Set<Tracker> = .init(existedCategory.trackers).union(category.trackers)
                 
@@ -107,7 +107,7 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
         }
     }
     
-    private func isAlreadyHaveCategory(_ category: TrackerCategory) -> Bool {
+    private func isCategoryAlreadyExisted(_ category: TrackerCategory) -> Bool {
         storage.fetchCategories().contains(where: { $0.header == category.header })
     }
     
