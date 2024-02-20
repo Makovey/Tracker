@@ -41,6 +41,7 @@ final class TrackersPresenter: ITrackersPresenter {
     // MARK: - Public
     
     func viewDidLoad() {
+        print("DEBUG 🚗 -> \(categoryRepository.fetchCategories())")
         view?.updateTrackerRecordList(with: categoryRepository.fetchRecords())
         view?.updateTrackerList(with: categoryRepository.fetchCategories())
     }

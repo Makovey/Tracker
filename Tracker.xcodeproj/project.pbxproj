@@ -72,6 +72,8 @@
 		5EEF95A62B7E64A100BE0266 /* TrackerCategoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF95A52B7E64A100BE0266 /* TrackerCategoryStore.swift */; };
 		5EEF95A82B7E64A900BE0266 /* TrackerRecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF95A72B7E64A900BE0266 /* TrackerRecordStore.swift */; };
 		5EEF95AA2B7E64B200BE0266 /* TrackerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF95A92B7E64B200BE0266 /* TrackerStore.swift */; };
+		5EEF95AD2B8331BD00BE0266 /* WeekDayTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF95AC2B8331BD00BE0266 /* WeekDayTransformer.swift */; };
+		5EEF95AF2B83A78400BE0266 /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEF95AE2B83A78400BE0266 /* NSManagedObjectContext+Ext.swift */; };
 		5EF1A4792B56C93E00699BFD /* TrackersLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +146,8 @@
 		5EEF95A52B7E64A100BE0266 /* TrackerCategoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategoryStore.swift; sourceTree = "<group>"; };
 		5EEF95A72B7E64A900BE0266 /* TrackerRecordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecordStore.swift; sourceTree = "<group>"; };
 		5EEF95A92B7E64B200BE0266 /* TrackerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerStore.swift; sourceTree = "<group>"; };
+		5EEF95AC2B8331BD00BE0266 /* WeekDayTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayTransformer.swift; sourceTree = "<group>"; };
+		5EEF95AE2B83A78400BE0266 /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
 		5EF1A4782B56C93E00699BFD /* TrackersLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersLayoutProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -292,6 +296,7 @@
 				5E7841962B4A995C00062777 /* Presentation */,
 				5E7841932B4A98FE00062777 /* Extensions */,
 				5E1986FE2B60162500A4538D /* Components */,
+				5EEF95AB2B8331A500BE0266 /* Utils */,
 				5E78417F2B4A92F500062777 /* AppDelegate.swift */,
 				5E7841812B4A92F500062777 /* SceneDelegate.swift */,
 				5E7841882B4A92FA00062777 /* Assets.xcassets */,
@@ -307,6 +312,7 @@
 				5E69F01A2B7563AC00637095 /* UI */,
 				5E7841942B4A991200062777 /* AssetsHelper.swift */,
 				5E69F0102B73CA4800637095 /* String+Ext.swift */,
+				5EEF95AE2B83A78400BE0266 /* NSManagedObjectContext+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -440,6 +446,14 @@
 			path = Stores;
 			sourceTree = "<group>";
 		};
+		5EEF95AB2B8331A500BE0266 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5EEF95AC2B8331BD00BE0266 /* WeekDayTransformer.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -531,6 +545,7 @@
 				5EEF95A62B7E64A100BE0266 /* TrackerCategoryStore.swift in Sources */,
 				5E7841A22B4A99D000062777 /* TrackersAssembly.swift in Sources */,
 				5EC2C8432B6D152D00AD920B /* CategorySelectorViewController.swift in Sources */,
+				5EEF95AF2B83A78400BE0266 /* NSManagedObjectContext+Ext.swift in Sources */,
 				5E69F04B2B7A316400637095 /* TrackerModel.xcdatamodeld in Sources */,
 				5EDD0ED82B654944007A6DCF /* PrimaryCell.swift in Sources */,
 				5EEF95A82B7E64A900BE0266 /* TrackerRecordStore.swift in Sources */,
@@ -560,6 +575,7 @@
 				5ED092C42B627698000E29AE /* EventsBuilderPresenter.swift in Sources */,
 				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
 				5E7841B02B4AA93A00062777 /* UIView+Ext.swift in Sources */,
+				5EEF95AD2B8331BD00BE0266 /* WeekDayTransformer.swift in Sources */,
 				5EDD0EF72B67FFA5007A6DCF /* EventsScheduleAssembly.swift in Sources */,
 				5E6CE2382B737B2000B7946E /* EventsBuilderIO.swift in Sources */,
 				5E7841AE2B4A9E8200062777 /* TabBarController.swift in Sources */,

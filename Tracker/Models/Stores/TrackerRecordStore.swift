@@ -48,7 +48,7 @@ final class TrackerRecordStore: ITrackerRecordStore {
         trackerRecord.id = record.id
         trackerRecord.endDate = record.endDate
 
-        try context.save()
+        context.safeSave()
     }
     
     func deleteById(_ id: UUID) throws {
@@ -62,6 +62,6 @@ final class TrackerRecordStore: ITrackerRecordStore {
         guard let record = records.first else { return }
 
         context.delete(record)
-        try context.save()
+        context.safeSave()
     }
 }

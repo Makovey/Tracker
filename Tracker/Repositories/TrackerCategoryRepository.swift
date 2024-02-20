@@ -24,44 +24,10 @@ protocol ITrackerCategoryRepository {
 }
 
 final class TrackerCategoryRepository: ITrackerCategoryRepository {
-
+    
     // MARK: - Properties
     
     private let storage: any IPersistenceStorage
-    private var categories: [TrackerCategory] = [
-        .init(header: "Отдых", trackers: [
-            .init(
-                name: "Погулять",
-                color: .primaryGreen,
-                emoji: "🚶",
-                schedule: [.sunday, .thursday]),
-            .init(
-                name: "Покататься на велосипеде",
-                color: .primaryOrange,
-                emoji: "🚴",
-                schedule: [.saturday]),
-            .init(
-                name: "Почитать книгу",
-                color: .primaryRed,
-                emoji: "📙",
-                schedule: [.friday, .wednesday])
-        ]),
-        .init(header: "Работа", trackers: [
-            .init(
-                name: "Закрыть задачу",
-                color: .primaryLightBlue,
-                emoji: "👷",
-                schedule: [.monday])
-        ]),
-        .init(header: "Поездка", trackers: [
-            .init(
-                name: "Забронировать отель",
-                color: .primaryLightGreen,
-                emoji: "🏢",
-                schedule: [.wednesday])
-        ])
-    ]
-    
     private var tempCategory: TrackerCategory?
         
     // MARK: - Lifecycle
@@ -73,7 +39,7 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
     // MARK: - Public
     
     func fetchCategories() -> [TrackerCategory] {
-        categories
+        storage.fetchCategories()
     }
     
     func fetchSelectedCategoryName() -> String? {
@@ -82,14 +48,14 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
     
     func saveSelectedCategoryName(_ categoryName: String) {
         let newCategory = TrackerCategory(header: categoryName, trackers: [])
-        addToExistedCategory(category: newCategory)
+        saveExistedCategory(category: newCategory)
         tempCategory = newCategory
     }
     
     func saveAllCategories(_ categories: [String]) {
         categories.forEach {
             let newCategory = TrackerCategory(header: $0, trackers: [])
-            addToExistedCategory(category: newCategory)
+            saveExistedCategory(category: newCategory)
         }
     }
  
@@ -97,21 +63,16 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
         guard let tempCategory else {
             throw TrackerCategoryRepositoryError.requiredDataIsMissing
         }
-        
-        categories = categories.compactMap {
-            if $0.header == tempCategory.header {
-                var tempTrackers = $0.trackers
-                tempTrackers.append(tracker)
-                
-                return .init(
-                    header: tempCategory.header,
-                    trackers: tempTrackers
-                )
-            }
-            
-            return .init(header: $0.header, trackers: $0.trackers)
+
+        if let existedCategory = storage.fetchCategories().first(where: { $0.header == tempCategory.header }) {
+            var tempTrackers = existedCategory.trackers
+            tempTrackers.append(tracker)
+
+            saveExistedCategory(category: .init(header: existedCategory.header, trackers: tempTrackers))
+        } else {
+            storage.save(trackerCategory: .init(header: tempCategory.header, trackers: [tracker]))
         }
-        
+
         flush()
     }
     
@@ -129,27 +90,31 @@ final class TrackerCategoryRepository: ITrackerCategoryRepository {
     
     // MARK: - Private
     
-    private func addToExistedCategory(
+    private func saveExistedCategory(
         category: TrackerCategory
     ) {
-        if isAlreadyHaveCategory(tracker: category) {
-            categories = categories.compactMap {
-                if $0.header == category.header {
-                    var tempTrackers = $0.trackers
-                    tempTrackers.append(contentsOf: category.trackers)
-                    return .init(header: $0.header, trackers: tempTrackers)
-                }
-                return .init(header: $0.header, trackers: $0.trackers)
+        if isAlreadyHaveCategory(category) {
+            if let existedCategory = findFirstExistedCategory(header: category.header), !category.trackers.isEmpty {
+                let tempTrackers: Set<Tracker> = .init(existedCategory.trackers).union(category.trackers)
+                
+                storage.replaceCategory(
+                    from: existedCategory,
+                    to: .init(header: existedCategory.header, trackers: Array(tempTrackers))
+                )
             }
         } else {
-            categories.append(category)
+            storage.save(trackerCategory: category)
         }
     }
     
-    private func isAlreadyHaveCategory(tracker: TrackerCategory) -> Bool {
-        categories.contains(where: { $0.header == tracker.header })
+    private func isAlreadyHaveCategory(_ category: TrackerCategory) -> Bool {
+        storage.fetchCategories().contains(where: { $0.header == category.header })
     }
     
+    private func findFirstExistedCategory(header: String) -> TrackerCategory? {
+        storage.fetchCategories().first(where: { $0.header == header })
+    }
+
     private func flush() {
         tempCategory = nil
     }

@@ -12,6 +12,13 @@ protocol IPersistenceStorage {
     func fetchRecords() -> [TrackerRecord]
     func save(record: TrackerRecord)
     func deleteRecordById(_ id: UUID)
+    
+    func fetchCategories() -> [TrackerCategory]
+    func save(trackerCategory: TrackerCategory)
+    func replaceCategory(from existedCategory: TrackerCategory, to category: TrackerCategory)
+    
+    func fetchTrackers() -> [Tracker]
+    func saveTracker(tracker: Tracker)
 }
 
 final class CoreDataStorage: IPersistenceStorage {
@@ -22,6 +29,8 @@ final class CoreDataStorage: IPersistenceStorage {
     // MARK: - Properties
     
     private lazy var trackerRecordStore: ITrackerRecordStore = TrackerRecordStore(context: context)
+    private lazy var trackerCategoryStore: ITrackerCategoryStore = TrackerCategoryStore(context: context)
+    private lazy var trackerStore: ITrackerStore = TrackerStore(context: context)
     
     private lazy var context: NSManagedObjectContext = {
         let container = NSPersistentContainer(name: Constant.modelName)
@@ -61,18 +70,53 @@ final class CoreDataStorage: IPersistenceStorage {
             assertionFailure("Can't delete record with -> \(id) cause: \(error)")
         }
     }
-
-    // MARK: - Private
     
-    func saveContext () {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let error = error as NSError
-                assertionFailure("Unresolved error \(error), \(error.userInfo)")
-                context.rollback()
-            }
+    func fetchCategories() -> [TrackerCategory] {
+        do {
+            return try trackerCategoryStore.fetchCategories()
+        } catch {
+            assertionFailure("Can't fetch categories cause: \(error)")
+        }
+        
+        return []
+    }
+    
+    func save(trackerCategory: TrackerCategory) {
+        do {
+            try trackerCategoryStore.save(trackerCategory: trackerCategory)
+        } catch {
+            assertionFailure("Can't save category -> \(trackerCategory) cause: \(error)")
         }
     }
+    
+    func replaceCategory(from existedCategory: TrackerCategory, to category: TrackerCategory) {
+        do {
+            try existedCategory.trackers.forEach {
+                try trackerStore.deleteById($0.id)
+            }
+            try trackerCategoryStore.deleteCategoryByName(existedCategory.header)
+            try trackerCategoryStore.save(trackerCategory: category)
+        } catch {
+            assertionFailure("Can't replace category with -> \(existedCategory.header) cause: \(error)")
+        }
+    }
+    
+    func fetchTrackers() -> [Tracker] {
+        do {
+            return try trackerStore.fetchTrackers()
+        } catch {
+            assertionFailure("Can't fetch trackers cause: \(error)")
+        }
+        
+        return []
+    }
+    
+    func saveTracker(tracker: Tracker) {
+        do {
+            try trackerStore.save(tracker: tracker)
+        } catch {
+            assertionFailure("Can't save tracker -> \(tracker) cause: \(error)")
+        }
+    }
+
 }

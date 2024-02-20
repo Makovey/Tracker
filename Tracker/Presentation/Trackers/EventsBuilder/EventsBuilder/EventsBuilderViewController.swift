@@ -254,6 +254,7 @@ final class EventsBuilderViewController: UIViewController {
         else { return }
 
         let tracker = Tracker(
+            id: .init(), 
             name: trackerName,
             color: selectedColor,
             emoji: selectedEmoji,
