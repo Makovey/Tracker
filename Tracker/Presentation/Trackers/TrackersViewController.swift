@@ -12,6 +12,7 @@ typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracke
 
 protocol ITrackersView: AnyObject {
     func updateTrackerList(with trackers: [TrackerCategory])
+    func updateTrackerRecordList(with records: [TrackerRecord])
 }
 
 final class TrackersViewController: UIViewController {
@@ -75,11 +76,10 @@ final class TrackersViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider.layout())
         
-        collectionView.register(TrackersCell.self, forCellWithReuseIdentifier: TrackersCell.identifier)
+        collectionView.register(TrackersCell.self)
         collectionView.register(
-            TrackersSupplementaryView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: TrackersSupplementaryView.identifier
+            PrimarySupplementaryHeader.self,
+            of: UICollectionView.elementKindSectionHeader
         )
         
         return collectionView.forAutolayout()
@@ -210,10 +210,7 @@ final class TrackersViewController: UIViewController {
         indexPath: IndexPath,
         tracker: Tracker
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TrackersCell.identifier,
-            for: indexPath
-        ) as? TrackersCell else { return UICollectionViewCell() }
+        let cell: TrackersCell = collectionView.dequeueCell(for: indexPath)
         
         let isCompletedForToday = completedTrackers
             .filter { presenter.isTrackerCompletedForThisDay(date: datePicker.date, record: $0, id: tracker.id) }
@@ -237,13 +234,13 @@ final class TrackersViewController: UIViewController {
         kind: String,
         indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: TrackersSupplementaryView.identifier, for: indexPath
-        ) as? TrackersSupplementaryView else { return UICollectionReusableView() }
+        let header: PrimarySupplementaryHeader = collectionView.dequeueSupplementary(
+            kind: UICollectionView.elementKindSectionHeader,
+            for: indexPath
+        )
         
         let modelForSection = self.visibleCategoryList[indexPath.section]
-        header.configure(for: modelForSection)
+        header.configure(title: modelForSection.header)
         
         return header
     }
@@ -290,6 +287,10 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
+    func updateTrackerRecordList(with records: [TrackerRecord]) {
+        completedTrackers = records
+    }
+    
     func updateTrackerList(with trackers: [TrackerCategory]) {
         fullCategoryList = trackers
         updateVisibilityCategories()
@@ -311,8 +312,10 @@ extension TrackersViewController: ITrackersCellDelegate {
     func doneButtonTapped(with id: UUID, state: Bool) {
         let trackerRecord = TrackerRecord(id: id, endDate: datePicker.date)
         if state {
+            presenter.saveCategoryRecord(trackerRecord)
             completedTrackers.append(trackerRecord)
         } else {
+            presenter.deleteCategoryRecord(id: id)
             completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
         }
     }

@@ -46,6 +46,15 @@ extension UIView {
         ])
     }
     
+    func pin(to parent: UIView, inset: UIEdgeInsets) {
+        NSLayoutConstraint.activate([
+            self.top.constraint(equalTo: parent.top, constant: inset.top),
+            self.left.constraint(equalTo: parent.left, constant: inset.left),
+            self.right.constraint(equalTo: parent.right, constant: -inset.right),
+            self.bottom.constraint(equalTo: parent.bottom, constant: -inset.bottom)
+        ])
+    }
+    
     func pinToCenter(of view: UIView) {
         NSLayoutConstraint.activate([
             self.centerX.constraint(equalTo: view.centerX),

@@ -29,7 +29,6 @@ final class TrackersCell: UICollectionViewCell {
     }
     
     weak var delegate: (any ITrackersCellDelegate)?
-    static let identifier = "TrackersCell"
     
     private var isButtonTapped = false
     private var id = UUID()

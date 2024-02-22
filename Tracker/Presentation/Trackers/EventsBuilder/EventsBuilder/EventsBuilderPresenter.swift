@@ -12,6 +12,10 @@ protocol IEventsBuilderPresenter {
     func createButtonTapped(with tracker: Tracker)
     func categoryTapped()
     func scheduleTapped()
+    func canCreateFilledTracker(
+        mode: EventType,
+        trackerToFill: EventsBuilderViewController.TrackerToFill
+    ) -> Bool
 }
 
 final class EventsBuilderPresenter {
@@ -21,14 +25,14 @@ final class EventsBuilderPresenter {
     weak var output: (any IEventsBuilderOutput)?
     
     private let router: any IEventsBuilderRouter
-    private let categoryRepository: any ITrackerCategoryRepository
+    private let categoryRepository: any ITrackerRepository
     private var selectedDays = Set<WeekDay>()
 
     // MARK: - Lifecycle
 
     init(
         router: some IEventsBuilderRouter,
-        categoryRepository: some ITrackerCategoryRepository
+        categoryRepository: some ITrackerRepository
     ) {
         self.router = router
         self.categoryRepository = categoryRepository
@@ -69,6 +73,25 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
             scheduleModuleOutput: self,
             selectedDays: selectedDays
         )
+    }
+
+    func canCreateFilledTracker(
+        mode: EventType,
+        trackerToFill: EventsBuilderViewController.TrackerToFill
+    ) -> Bool {
+        switch mode {
+        case .habit:
+            trackerToFill.trackerName?.isEmpty == false &&
+            trackerToFill.categoryName?.isEmpty == false &&
+            trackerToFill.schedule?.isEmpty == false &&
+            trackerToFill.selectedEmoji?.isEmpty == false &&
+            trackerToFill.selectedColor != nil
+        case .event:
+            trackerToFill.trackerName?.isEmpty == false &&
+            trackerToFill.categoryName?.isEmpty == false &&
+            trackerToFill.selectedEmoji?.isEmpty == false &&
+            trackerToFill.selectedColor != nil
+        }
     }
 }
 

@@ -16,6 +16,9 @@ protocol ITrackersPresenter {
         record: TrackerRecord,
         id: UUID
     ) -> Bool
+    
+    func saveCategoryRecord(_ record: TrackerRecord)
+    func deleteCategoryRecord(id: UUID)
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -23,22 +26,23 @@ final class TrackersPresenter: ITrackersPresenter {
 
     weak var view: (any ITrackersView)?
     private let router: any ITrackersRouter
-    private let categoryRepository: any ITrackerCategoryRepository
+    private let trackerRepository: any ITrackerRepository
 
     // MARK: - Lifecycle
 
     init(
         router: some ITrackersRouter,
-        categoryRepository: some ITrackerCategoryRepository
+        categoryRepository: some ITrackerRepository
     ) {
         self.router = router
-        self.categoryRepository = categoryRepository
+        self.trackerRepository = categoryRepository
     }
     
     // MARK: - Public
     
     func viewDidLoad() {
-        view?.updateTrackerList(with: categoryRepository.fetchCategories())
+        view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
+        view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
     
     func addTrackerButtonTapped() {
@@ -57,6 +61,14 @@ final class TrackersPresenter: ITrackersPresenter {
         guard record.id == id else { return false }
         return Calendar.current.compare(date, to: record.endDate, toGranularity: .day) == .orderedSame
     }
+    
+    func saveCategoryRecord(_ record: TrackerRecord) {
+        trackerRepository.save(record: record)
+    }
+    
+    func deleteCategoryRecord(id: UUID) {
+        trackerRepository.deleteRecordById(id)
+    }
 
     // MARK: - Private
     
@@ -66,6 +78,6 @@ final class TrackersPresenter: ITrackersPresenter {
 
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
-        view?.updateTrackerList(with: categoryRepository.fetchCategories())
+        view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
 }

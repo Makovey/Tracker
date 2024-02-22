@@ -151,10 +151,7 @@ final class CategorySelectorViewController: UIViewController {
         indexPath: IndexPath,
         category: String
     ) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: PrimaryCell.identifier,
-            for: indexPath
-        ) as? PrimaryCell else { return UITableViewCell() }
+        let cell: PrimaryCell = tableView.dequeueCell(for: indexPath)
 
         cell.selectionStyle = .none
         cell.configure(
