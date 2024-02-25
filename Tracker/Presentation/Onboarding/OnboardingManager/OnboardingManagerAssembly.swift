@@ -18,7 +18,10 @@ final class OnboardingManagerAssembly {
         ]
 
         let router = OnboardingManagerRouter()
-        let presenter = OnboardingManagerPresenter(router: router)
+        let presenter = OnboardingManagerPresenter(
+            router: router,
+            authStorage: AuthStorage()
+        )
         let view = OnboardingManagerViewController(presenter: presenter, onboardings: onboardings)
 
         presenter.view = view

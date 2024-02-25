@@ -16,12 +16,17 @@ final class OnboardingManagerPresenter {
     // MARK: - Properties
 
     private let router: any IOnboardingManagerRouter
+    private var authStorage: any IAuthStorage
     weak var view: (any IOnboardingManagerView)?
 
     // MARK: - Lifecycle
 
-    init(router: some IOnboardingManagerRouter) {
+    init(
+        router: some IOnboardingManagerRouter,
+        authStorage: some IAuthStorage
+    ) {
         self.router = router
+        self.authStorage = authStorage
     }
 
     // MARK: - Public
@@ -33,6 +38,7 @@ final class OnboardingManagerPresenter {
 
 extension OnboardingManagerPresenter: IOnboardingManagerPresenter {
     func primaryButtonTapped() {
+        authStorage.isAlreadyAuthenticated = true
         router.openMainScreen()
     }
 }
