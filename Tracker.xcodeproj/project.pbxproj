@@ -53,6 +53,14 @@
 		5E7841B52B4E9C6500062777 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B42B4E9C6500062777 /* Tracker.swift */; };
 		5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */; };
 		5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7841B82B4E9C7500062777 /* TrackerRecord.swift */; };
+		5EADE7882B8B3BD300DF7891 /* OnboardingManagerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7832B8B3BD300DF7891 /* OnboardingManagerPresenter.swift */; };
+		5EADE7892B8B3BD300DF7891 /* OnboardingManagerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7842B8B3BD300DF7891 /* OnboardingManagerRouter.swift */; };
+		5EADE78A2B8B3BD300DF7891 /* OnboardingManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7852B8B3BD300DF7891 /* OnboardingManagerViewController.swift */; };
+		5EADE78B2B8B3BD300DF7891 /* OnboardingManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7862B8B3BD300DF7891 /* OnboardingManagerAssembly.swift */; };
+		5EADE7942B8B458D00DF7891 /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE78F2B8B458D00DF7891 /* OnboardingPresenter.swift */; };
+		5EADE7952B8B458D00DF7891 /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7902B8B458D00DF7891 /* OnboardingRouter.swift */; };
+		5EADE7962B8B458D00DF7891 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7912B8B458D00DF7891 /* OnboardingViewController.swift */; };
+		5EADE7972B8B458D00DF7891 /* OnboardingAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7922B8B458D00DF7891 /* OnboardingAssembly.swift */; };
 		5EC2C8412B6D152D00AD920B /* CategorySelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83C2B6D152D00AD920B /* CategorySelectorPresenter.swift */; };
 		5EC2C8422B6D152D00AD920B /* CategorySelectorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */; };
 		5EC2C8432B6D152D00AD920B /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */; };
@@ -127,6 +135,14 @@
 		5E7841B42B4E9C6500062777 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		5E7841B62B4E9C6E00062777 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		5E7841B82B4E9C7500062777 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
+		5EADE7832B8B3BD300DF7891 /* OnboardingManagerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerPresenter.swift; sourceTree = "<group>"; };
+		5EADE7842B8B3BD300DF7891 /* OnboardingManagerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerRouter.swift; sourceTree = "<group>"; };
+		5EADE7852B8B3BD300DF7891 /* OnboardingManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerViewController.swift; sourceTree = "<group>"; };
+		5EADE7862B8B3BD300DF7891 /* OnboardingManagerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManagerAssembly.swift; sourceTree = "<group>"; };
+		5EADE78F2B8B458D00DF7891 /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
+		5EADE7902B8B458D00DF7891 /* OnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRouter.swift; sourceTree = "<group>"; };
+		5EADE7912B8B458D00DF7891 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		5EADE7922B8B458D00DF7891 /* OnboardingAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAssembly.swift; sourceTree = "<group>"; };
 		5EC2C83C2B6D152D00AD920B /* CategorySelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorPresenter.swift; sourceTree = "<group>"; };
 		5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorRouter.swift; sourceTree = "<group>"; };
 		5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +336,7 @@
 		5E7841962B4A995C00062777 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5EADE7812B8B3BA700DF7891 /* Onboarding */,
 				5E7841982B4A99B900062777 /* Trackers */,
 				5E7841972B4A996A00062777 /* Habits */,
 				5E7841AD2B4A9E8200062777 /* TabBarController.swift */,
@@ -361,6 +378,37 @@
 				5EDD0EFC2B68DBDC007A6DCF /* WeekDay.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5EADE7812B8B3BA700DF7891 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				5EADE78D2B8B456F00DF7891 /* Onboarding */,
+				5EADE78C2B8B454000DF7891 /* OnboardingManager */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		5EADE78C2B8B454000DF7891 /* OnboardingManager */ = {
+			isa = PBXGroup;
+			children = (
+				5EADE7862B8B3BD300DF7891 /* OnboardingManagerAssembly.swift */,
+				5EADE7852B8B3BD300DF7891 /* OnboardingManagerViewController.swift */,
+				5EADE7832B8B3BD300DF7891 /* OnboardingManagerPresenter.swift */,
+				5EADE7842B8B3BD300DF7891 /* OnboardingManagerRouter.swift */,
+			);
+			path = OnboardingManager;
+			sourceTree = "<group>";
+		};
+		5EADE78D2B8B456F00DF7891 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				5EADE7922B8B458D00DF7891 /* OnboardingAssembly.swift */,
+				5EADE7912B8B458D00DF7891 /* OnboardingViewController.swift */,
+				5EADE78F2B8B458D00DF7891 /* OnboardingPresenter.swift */,
+				5EADE7902B8B458D00DF7891 /* OnboardingRouter.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		5EC2C83A2B6D14F000AD920B /* EventsCategory */ = {
@@ -529,11 +577,14 @@
 				5E7841952B4A991200062777 /* AssetsHelper.swift in Sources */,
 				5EDD0EED2B67FF47007A6DCF /* EventType.swift in Sources */,
 				5EDD0EFB2B682BC9007A6DCF /* WeekDayCell.swift in Sources */,
+				5EADE7882B8B3BD300DF7891 /* OnboardingManagerPresenter.swift in Sources */,
+				5EADE78A2B8B3BD300DF7891 /* OnboardingManagerViewController.swift in Sources */,
 				5E69F0112B73CA4800637095 /* String+Ext.swift in Sources */,
 				5E7841A92B4A9C9200062777 /* HabitsPresenter.swift in Sources */,
 				5E7841A12B4A99D000062777 /* TrackersViewController.swift in Sources */,
 				5EDD0EF42B67FFA5007A6DCF /* EventsSchedulePresenter.swift in Sources */,
 				5E5F26BF2B5DB2F800237047 /* EventsSelectorRouter.swift in Sources */,
+				5EADE7942B8B458D00DF7891 /* OnboardingPresenter.swift in Sources */,
 				5ED092C52B627698000E29AE /* EventsBuilderRouter.swift in Sources */,
 				5E69F04E2B7A38A200637095 /* CoreDataStorage.swift in Sources */,
 				5E7841AA2B4A9C9200062777 /* HabitsRouter.swift in Sources */,
@@ -559,6 +610,7 @@
 				5E4A85B82B6ECD6400C1C7F7 /* CategoryBuilderPresenter.swift in Sources */,
 				5E5F26C02B5DB2F800237047 /* EventsSelectorViewController.swift in Sources */,
 				5E69F0232B763FD400637095 /* UIColor+Ext.swift in Sources */,
+				5EADE7952B8B458D00DF7891 /* OnboardingRouter.swift in Sources */,
 				5E69F0192B7563A400637095 /* UICollectionView+Ext.swift in Sources */,
 				5EDD0EF62B67FFA5007A6DCF /* EventsScheduleViewController.swift in Sources */,
 				5E6CE2342B721F3F00B7946E /* CategorySelectorIO.swift in Sources */,
@@ -567,17 +619,21 @@
 				5E7841A02B4A99D000062777 /* TrackersRouter.swift in Sources */,
 				5E7841B92B4E9C7500062777 /* TrackerRecord.swift in Sources */,
 				5E56AE932B4FF6DE007A2D97 /* TrackersCell.swift in Sources */,
+				5EADE7972B8B458D00DF7891 /* OnboardingAssembly.swift in Sources */,
 				5EC2C8422B6D152D00AD920B /* CategorySelectorRouter.swift in Sources */,
 				5EDD0EF52B67FFA5007A6DCF /* EventsScheduleRouter.swift in Sources */,
 				5E56AE972B500996007A2D97 /* PrimarySupplementaryHeader.swift in Sources */,
+				5EADE7892B8B3BD300DF7891 /* OnboardingManagerRouter.swift in Sources */,
 				5E69F0212B762CC500637095 /* ColorCell.swift in Sources */,
 				5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */,
 				5ED092C42B627698000E29AE /* EventsBuilderPresenter.swift in Sources */,
 				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
+				5EADE7962B8B458D00DF7891 /* OnboardingViewController.swift in Sources */,
 				5E7841B02B4AA93A00062777 /* UIView+Ext.swift in Sources */,
 				5EEF95AD2B8331BD00BE0266 /* WeekDayTransformer.swift in Sources */,
 				5EDD0EF72B67FFA5007A6DCF /* EventsScheduleAssembly.swift in Sources */,
 				5E6CE2382B737B2000B7946E /* EventsBuilderIO.swift in Sources */,
+				5EADE78B2B8B3BD300DF7891 /* OnboardingManagerAssembly.swift in Sources */,
 				5E7841AE2B4A9E8200062777 /* TabBarController.swift in Sources */,
 				5ED092C72B627698000E29AE /* EventsBuilderAssembly.swift in Sources */,
 				5E7841AC2B4A9C9200062777 /* HabitsAssembly.swift in Sources */,

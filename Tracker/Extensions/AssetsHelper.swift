@@ -21,10 +21,15 @@ extension UIColor {
 
     static let primaryGray = UIColor(named: "PrimaryGray") ?? .init()
     static let primaryElementBackground = UIColor(named: "PrimaryElementBackground") ?? .init()
+
+    static let staticBlack = UIColor(named: "StaticBlack") ?? .init()
 }
 
 extension UIImage {
     static let emptyImage = UIImage(named: "EmptyTrackerImage") ?? .init()
     static let notFoundImage = UIImage(named: "NotFoundTrackerImage") ?? .init()
     static let chevron = UIImage(named: "Chevron") ?? .init()
+
+    static let onboardingBlue = UIImage(named: "BlueOnboarding") ?? .init()
+    static let onboardingOrange = UIImage(named: "OrangeOnboarding") ?? .init()
 }
