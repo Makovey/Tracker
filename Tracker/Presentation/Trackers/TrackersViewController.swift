@@ -11,7 +11,7 @@ typealias TrackersSnapshot = NSDiffableDataSourceSnapshot<String, Tracker>
 typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracker>
 
 protocol ITrackersView: AnyObject {
-    func updateTrackerList(with trackers: [TrackerCategory])
+    func updateTrackerList()
 }
 
 final class TrackersViewController: UIViewController {
@@ -157,7 +157,12 @@ final class TrackersViewController: UIViewController {
     
     private func setupInitialState() {
         collectionView.dataSource = dataSource
-        
+
+        viewModel.fullCategoryListBinding = { [weak self] in
+            self?.fullCategoryList = $0
+            self?.updateVisibilityCategories()
+        }
+
         viewModel.completedTrackersBinding = { [weak self] in
             self?.completedTrackers = $0
         }
@@ -294,9 +299,8 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
-    func updateTrackerList(with trackers: [TrackerCategory]) {
-        fullCategoryList = trackers
-        updateVisibilityCategories()
+    func updateTrackerList() {
+        viewModel.updateCategories()
     }
 }
 
@@ -317,14 +321,11 @@ extension TrackersViewController: ITrackersCellDelegate {
         recordId: UUID?,
         state: Bool
     ) {
+        let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
         if state {
-            let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
             viewModel.saveCategoryRecord(trackerRecord)
-//            completedTrackers.append(trackerRecord)
         } else {
-            guard let recordId else { return }
             viewModel.deleteCategoryRecord(id: recordId)
-//            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
         }
     }
 }

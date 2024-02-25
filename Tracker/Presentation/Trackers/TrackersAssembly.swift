@@ -15,10 +15,7 @@ final class TrackersAssembly {
         let repository: ITrackerRepository = TrackerRepository(storage: storage)
         
         let router = TrackersRouter()
-        let presenter = TrackersPresenter(
-            router: router,
-            categoryRepository: repository
-        )
+        let presenter = TrackersPresenter(router: router)
         
         let layoutProvider = TrackersLayoutProvider()
         let view = TrackersViewController(

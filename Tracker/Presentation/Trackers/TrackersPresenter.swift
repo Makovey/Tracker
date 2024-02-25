@@ -23,24 +23,17 @@ final class TrackersPresenter: ITrackersPresenter {
 
     weak var view: (any ITrackersView)?
     private let router: any ITrackersRouter
-    private let trackerRepository: any ITrackerRepository
 
     // MARK: - Lifecycle
 
-    init(
-        router: some ITrackersRouter,
-        categoryRepository: some ITrackerRepository
-    ) {
+    init(router: some ITrackersRouter) {
         self.router = router
-        self.trackerRepository = categoryRepository
     }
     
     // MARK: - Public
     
-    func viewDidLoad() {
-        view?.updateTrackerList(with: trackerRepository.fetchCategories())
-    }
-    
+    func viewDidLoad() { }
+
     func addTrackerButtonTapped() {
         router.openEventsSelectorScreen(builderOutput: self)
     }
@@ -66,6 +59,6 @@ final class TrackersPresenter: ITrackersPresenter {
 
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
-        view?.updateTrackerList(with: trackerRepository.fetchCategories())
+        view?.updateTrackerList()
     }
 }

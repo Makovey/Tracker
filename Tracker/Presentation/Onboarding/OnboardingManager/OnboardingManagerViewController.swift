@@ -24,7 +24,7 @@ final class OnboardingManagerViewController: UIPageViewController {
     // MARK: - UI
 
     private lazy var primaryButton: PrimaryButton = {
-        let button = PrimaryButton(style: .enabledStatic, text: "Вот это технологии!") // TODO: Localization
+        let button = PrimaryButton(style: .enabledStatic, text: "onboarding.primaryButton.title".localized)
         button.addTarget(self, action: #selector(primaryButtonTapped), for: .touchUpInside)
         return button.forAutolayout()
     }()
