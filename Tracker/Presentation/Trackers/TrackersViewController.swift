@@ -12,7 +12,6 @@ typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracke
 
 protocol ITrackersView: AnyObject {
     func updateTrackerList(with trackers: [TrackerCategory])
-    func updateTrackerRecordList(with records: [TrackerRecord])
 }
 
 final class TrackersViewController: UIViewController {
@@ -28,6 +27,7 @@ final class TrackersViewController: UIViewController {
 
     private let presenter: any ITrackersPresenter
     private let layoutProvider: any ILayoutProvider
+    private var viewModel: any ITrackerViewModel
 
     private var fullCategoryList = [TrackerCategory]()
     private var visibleCategoryList = [TrackerCategory]() {
@@ -113,10 +113,13 @@ final class TrackersViewController: UIViewController {
 
     init(
         presenter: some ITrackersPresenter,
-        layoutProvider: some ILayoutProvider
+        layoutProvider: some ILayoutProvider,
+        viewModel: some ITrackerViewModel
     ) {
         self.presenter = presenter
         self.layoutProvider = layoutProvider
+        self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -154,7 +157,11 @@ final class TrackersViewController: UIViewController {
     
     private func setupInitialState() {
         collectionView.dataSource = dataSource
-    
+        
+        viewModel.completedTrackersBinding = { [weak self] in
+            self?.completedTrackers = $0
+        }
+
         updateVisibilityCategories()
     }
     
@@ -212,15 +219,15 @@ final class TrackersViewController: UIViewController {
     ) -> UICollectionViewCell {
         let cell: TrackersCell = collectionView.dequeueCell(for: indexPath)
         
-        let isCompletedForToday = completedTrackers
+        let trackerRecords = completedTrackers
             .filter { presenter.isTrackerCompletedForThisDay(date: datePicker.date, record: $0, id: tracker.id) }
-            .count != 0
 
         let model = TrackersCell.Model(
             tracker: tracker,
-            isCompletedForToday: isCompletedForToday,
-            completedTimes: completedTrackers.filter { $0.id == tracker.id }.count,
-            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: datePicker.date)
+            isCompletedForToday: trackerRecords.count != 0,
+            completedTimes: completedTrackers.filter { $0.trackerId == tracker.id }.count,
+            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: datePicker.date),
+            recordId: trackerRecords.first?.id
         )
         
         cell.configure(with: model)
@@ -287,10 +294,6 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
-    func updateTrackerRecordList(with records: [TrackerRecord]) {
-        completedTrackers = records
-    }
-    
     func updateTrackerList(with trackers: [TrackerCategory]) {
         fullCategoryList = trackers
         updateVisibilityCategories()
@@ -309,14 +312,19 @@ extension TrackersViewController: UISearchBarDelegate {
 // MARK: - ITrackersCellDelegate
 
 extension TrackersViewController: ITrackersCellDelegate {
-    func doneButtonTapped(with id: UUID, state: Bool) {
-        let trackerRecord = TrackerRecord(id: id, endDate: datePicker.date)
+    func doneButtonTapped(
+        with trackerId: UUID,
+        recordId: UUID?,
+        state: Bool
+    ) {
         if state {
-            presenter.saveCategoryRecord(trackerRecord)
-            completedTrackers.append(trackerRecord)
+            let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
+            viewModel.saveCategoryRecord(trackerRecord)
+//            completedTrackers.append(trackerRecord)
         } else {
-            presenter.deleteCategoryRecord(id: id)
-            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
+            guard let recordId else { return }
+            viewModel.deleteCategoryRecord(id: recordId)
+//            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
         }
     }
 }

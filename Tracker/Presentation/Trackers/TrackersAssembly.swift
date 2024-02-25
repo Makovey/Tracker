@@ -23,7 +23,8 @@ final class TrackersAssembly {
         let layoutProvider = TrackersLayoutProvider()
         let view = TrackersViewController(
             presenter: presenter,
-            layoutProvider: layoutProvider
+            layoutProvider: layoutProvider, 
+            viewModel: TrackerViewModel(trackerRepository: repository)
         )
 
         router.viewController = view

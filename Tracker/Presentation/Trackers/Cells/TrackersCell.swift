@@ -9,7 +9,11 @@ import Foundation
 import UIKit
 
 protocol ITrackersCellDelegate: AnyObject {
-    func doneButtonTapped(with id: UUID, state: Bool)
+    func doneButtonTapped(
+        with trackerId: UUID,
+        recordId: UUID?,
+        state: Bool
+    )
 }
 
 final class TrackersCell: UICollectionViewCell {
@@ -26,12 +30,14 @@ final class TrackersCell: UICollectionViewCell {
         let isCompletedForToday: Bool
         let completedTimes: Int
         let isEditingAvailable: Bool
+        let recordId: UUID?
     }
     
     weak var delegate: (any ITrackersCellDelegate)?
     
     private var isButtonTapped = false
-    private var id = UUID()
+    private var trackerId = UUID()
+    private var recordId: UUID?
     private var completedDaysCounter = 0 {
         didSet {
             dateLabel.text = "\(completedDaysCounter) \("trackers.cell.subtitle".localized)"
@@ -97,8 +103,9 @@ final class TrackersCell: UICollectionViewCell {
         updateUI(model: model)
         
         completedDaysCounter = model.completedTimes
-        id = model.tracker.id
-        
+        trackerId = model.tracker.id
+        recordId = model.recordId
+
         if model.isEditingAvailable {
             addButton.isEnabled = true
         }
@@ -181,6 +188,10 @@ final class TrackersCell: UICollectionViewCell {
             completedDaysCounter += 1
         }
         
-        delegate?.doneButtonTapped(with: id, state: isButtonTapped)
+        delegate?.doneButtonTapped(
+            with: trackerId,
+            recordId: recordId,
+            state: isButtonTapped
+        )
     }
 }
