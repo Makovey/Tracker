@@ -18,7 +18,7 @@ protocol ITrackersPresenter {
     ) -> Bool
 
     func saveCategoryRecord(_ record: TrackerRecord)
-    func deleteCategoryRecord(id: UUID?)
+    func deleteCategoryRecord(id: UUID?) -> UUID?
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -68,10 +68,11 @@ final class TrackersPresenter: ITrackersPresenter {
         trackerRepository.save(record: record)
     }
 
-    func deleteCategoryRecord(id: UUID?) {
+    func deleteCategoryRecord(id: UUID?) -> UUID? {
         let safeId = id != nil ? id : todaysId
-        guard let safeId else { return assertionFailure("Can't delete record, because id is nil") }
+        guard let safeId else { assertionFailure("Can't delete record, because id is nil"); return nil }
         trackerRepository.deleteRecordById(safeId)
+        return safeId
     }
 }
 

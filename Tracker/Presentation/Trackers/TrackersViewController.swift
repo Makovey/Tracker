@@ -314,13 +314,13 @@ extension TrackersViewController: ITrackersCellDelegate {
         recordId: UUID?,
         state: Bool
     ) {
-        let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
         if state {
+            let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
             presenter.saveCategoryRecord(trackerRecord)
             completedTrackers.append(trackerRecord)
         } else {
-            presenter.deleteCategoryRecord(id: recordId)
-            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
+            let id = presenter.deleteCategoryRecord(id: recordId)
+            completedTrackers = completedTrackers.filter { $0.id != id }
         }
     }
 }
