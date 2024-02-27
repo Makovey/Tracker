@@ -15,12 +15,17 @@ final class CategorySelectorAssembly {
         output: some ICategorySelectorOutput
     ) -> UIViewController {
         let router = CategorySelectorRouter()
-        let presenter = CategorySelectorPresenter(router: router)
-        let view = CategorySelectorViewController(presenter: presenter)
+        let storage: IPersistenceStorage = CoreDataStorage()
+        let repository: ITrackerRepository = TrackerRepository(storage: storage)
+
+        let viewModel = CategorySelectorViewModel(trackerRepository: repository, router: router)
+        viewModel.output = output
+
+        let view = CategorySelectorViewController(
+            viewModel: viewModel
+        )
 
         router.viewController = navigationController
-        presenter.view = view
-        presenter.output = output
 
         return view
     }

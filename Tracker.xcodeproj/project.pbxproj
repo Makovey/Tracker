@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E1987002B60164500A4538D /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1986FF2B60164500A4538D /* PrimaryButton.swift */; };
 		5E2BD6B42B627463008A57EB /* EventsSelectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2BD6B32B627463008A57EB /* EventsSelectorAssembly.swift */; };
+		5E3462C22B8E304D009C3C42 /* CategorySelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3462C12B8E304D009C3C42 /* CategorySelectorViewModel.swift */; };
 		5E4A85B82B6ECD6400C1C7F7 /* CategoryBuilderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4A85B32B6ECD6400C1C7F7 /* CategoryBuilderPresenter.swift */; };
 		5E4A85B92B6ECD6400C1C7F7 /* CategoryBuilderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4A85B42B6ECD6400C1C7F7 /* CategoryBuilderRouter.swift */; };
 		5E4A85BA2B6ECD6400C1C7F7 /* CategoryBuilderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4A85B52B6ECD6400C1C7F7 /* CategoryBuilderViewController.swift */; };
@@ -68,7 +69,6 @@
 		5EADE7A42B8B62CF00DF7891 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7A32B8B62CF00DF7891 /* AuthStorage.swift */; };
 		5EADE7A62B8BCC7D00DF7891 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7A52B8BCC7D00DF7891 /* Binding.swift */; };
 		5EADE7A82B8BCEC500DF7891 /* TrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADE7A72B8BCEC500DF7891 /* TrackerViewModel.swift */; };
-		5EC2C8412B6D152D00AD920B /* CategorySelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83C2B6D152D00AD920B /* CategorySelectorPresenter.swift */; };
 		5EC2C8422B6D152D00AD920B /* CategorySelectorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */; };
 		5EC2C8432B6D152D00AD920B /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */; };
 		5EC2C8442B6D152D00AD920B /* CategorySelectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83F2B6D152D00AD920B /* CategorySelectorAssembly.swift */; };
@@ -95,6 +95,7 @@
 /* Begin PBXFileReference section */
 		5E1986FF2B60164500A4538D /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		5E2BD6B32B627463008A57EB /* EventsSelectorAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsSelectorAssembly.swift; sourceTree = "<group>"; };
+		5E3462C12B8E304D009C3C42 /* CategorySelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewModel.swift; sourceTree = "<group>"; };
 		5E4A85B32B6ECD6400C1C7F7 /* CategoryBuilderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBuilderPresenter.swift; sourceTree = "<group>"; };
 		5E4A85B42B6ECD6400C1C7F7 /* CategoryBuilderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBuilderRouter.swift; sourceTree = "<group>"; };
 		5E4A85B52B6ECD6400C1C7F7 /* CategoryBuilderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBuilderViewController.swift; sourceTree = "<group>"; };
@@ -157,7 +158,6 @@
 		5EADE7A32B8B62CF00DF7891 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
 		5EADE7A52B8BCC7D00DF7891 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		5EADE7A72B8BCEC500DF7891 /* TrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewModel.swift; sourceTree = "<group>"; };
-		5EC2C83C2B6D152D00AD920B /* CategorySelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorPresenter.swift; sourceTree = "<group>"; };
 		5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorRouter.swift; sourceTree = "<group>"; };
 		5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
 		5EC2C83F2B6D152D00AD920B /* CategorySelectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorAssembly.swift; sourceTree = "<group>"; };
@@ -219,8 +219,8 @@
 				5E6CE2332B721F3F00B7946E /* CategorySelectorIO.swift */,
 				5EC2C83F2B6D152D00AD920B /* CategorySelectorAssembly.swift */,
 				5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */,
-				5EC2C83C2B6D152D00AD920B /* CategorySelectorPresenter.swift */,
 				5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */,
+				5E3462C12B8E304D009C3C42 /* CategorySelectorViewModel.swift */,
 			);
 			path = CategorySelector;
 			sourceTree = "<group>";
@@ -661,6 +661,7 @@
 				5EADE7892B8B3BD300DF7891 /* OnboardingManagerRouter.swift in Sources */,
 				5E69F0212B762CC500637095 /* ColorCell.swift in Sources */,
 				5E7841B72B4E9C6E00062777 /* TrackerCategory.swift in Sources */,
+				5E3462C22B8E304D009C3C42 /* CategorySelectorViewModel.swift in Sources */,
 				5EADE7A12B8B60F400DF7891 /* SplashViewController.swift in Sources */,
 				5ED092C42B627698000E29AE /* EventsBuilderPresenter.swift in Sources */,
 				5E7841AB2B4A9C9200062777 /* HabitsViewController.swift in Sources */,
@@ -675,7 +676,6 @@
 				5E7841AC2B4A9C9200062777 /* HabitsAssembly.swift in Sources */,
 				5E69F01F2B76253D00637095 /* BuilderDataProvider.swift in Sources */,
 				5EC2C8442B6D152D00AD920B /* CategorySelectorAssembly.swift in Sources */,
-				5EC2C8412B6D152D00AD920B /* CategorySelectorPresenter.swift in Sources */,
 				5EEF95AA2B7E64B200BE0266 /* TrackerStore.swift in Sources */,
 				5E6CE2362B726D5B00B7946E /* EventsScheduleIO.swift in Sources */,
 				5E78419F2B4A99D000062777 /* TrackersPresenter.swift in Sources */,

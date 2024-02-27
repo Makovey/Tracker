@@ -38,10 +38,6 @@ final class SplashPresenter {
 
 extension SplashPresenter: ISplashPresenter {
     func viewDidLoad() { 
-        if authStorage.isAlreadyAuthenticated {
-            router.openMainScreen()
-        } else {
-            router.openOnboardingScreen()
-        }
+        authStorage.isAlreadyAuthenticated ? router.openMainScreen() : router.openOnboardingScreen()
     }
 }

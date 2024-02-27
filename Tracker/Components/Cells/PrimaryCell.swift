@@ -72,6 +72,7 @@ final class PrimaryCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         separator.isHidden = false
+        layer.cornerRadius = 0
     }
     
     // MARK: - Public

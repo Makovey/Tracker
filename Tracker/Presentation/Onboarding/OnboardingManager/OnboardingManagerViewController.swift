@@ -125,21 +125,22 @@ extension OnboardingManagerViewController: UIPageViewControllerDataSource {
         _ pageViewController: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard let currentIndex = onboardings.firstIndex(of: viewController) else { return nil }
-        let previousIndex = currentIndex - 1
-        guard previousIndex >= 0 else { return nil }
+        guard let currentIndex = onboardings.firstIndex(of: viewController), currentIndex - 1 >= 0 else {
+            return nil
+        }
 
-        return onboardings[previousIndex]
+        return onboardings[currentIndex - 1]
     }
     
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard let currentIndex = onboardings.firstIndex(of: viewController) else { return nil }
-        let nextIndex = currentIndex + 1
-        guard nextIndex < onboardings.count else { return nil }
+        guard let currentIndex = onboardings.firstIndex(of: viewController),
+                currentIndex + 1 < onboardings.count else {
+            return nil
+        }
 
-        return onboardings[nextIndex]
+        return onboardings[currentIndex + 1]
     }
 }
