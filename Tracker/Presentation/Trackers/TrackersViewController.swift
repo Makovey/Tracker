@@ -11,7 +11,8 @@ typealias TrackersSnapshot = NSDiffableDataSourceSnapshot<String, Tracker>
 typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracker>
 
 protocol ITrackersView: AnyObject {
-    func updateTrackerList()
+    func updateTrackerList(with trackers: [TrackerCategory])
+    func updateTrackerRecordList(with records: [TrackerRecord])
 }
 
 final class TrackersViewController: UIViewController {
@@ -27,7 +28,6 @@ final class TrackersViewController: UIViewController {
 
     private let presenter: any ITrackersPresenter
     private let layoutProvider: any ILayoutProvider
-    private var viewModel: any ITrackerViewModel
 
     private var fullCategoryList = [TrackerCategory]()
     private var visibleCategoryList = [TrackerCategory]() {
@@ -113,12 +113,10 @@ final class TrackersViewController: UIViewController {
 
     init(
         presenter: some ITrackersPresenter,
-        layoutProvider: some ILayoutProvider,
-        viewModel: some ITrackerViewModel
+        layoutProvider: some ILayoutProvider
     ) {
         self.presenter = presenter
         self.layoutProvider = layoutProvider
-        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -157,16 +155,6 @@ final class TrackersViewController: UIViewController {
     
     private func setupInitialState() {
         collectionView.dataSource = dataSource
-
-        viewModel.fullCategoryListBinding = { [weak self] in
-            self?.fullCategoryList = $0
-            self?.updateVisibilityCategories()
-        }
-
-        viewModel.completedTrackersBinding = { [weak self] in
-            self?.completedTrackers = $0
-        }
-
         updateVisibilityCategories()
     }
     
@@ -299,8 +287,13 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
-    func updateTrackerList() {
-        viewModel.updateCategories()
+    func updateTrackerRecordList(with records: [TrackerRecord]) {
+        completedTrackers = records
+    }
+
+    func updateTrackerList(with trackers: [TrackerCategory]) {
+        fullCategoryList = trackers
+        updateVisibilityCategories()
     }
 }
 
@@ -323,9 +316,11 @@ extension TrackersViewController: ITrackersCellDelegate {
     ) {
         let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
         if state {
-            viewModel.saveCategoryRecord(trackerRecord)
+            presenter.saveCategoryRecord(trackerRecord)
+            completedTrackers.append(trackerRecord)
         } else {
-            viewModel.deleteCategoryRecord(id: recordId)
+            presenter.deleteCategoryRecord(id: recordId)
+            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
         }
     }
 }

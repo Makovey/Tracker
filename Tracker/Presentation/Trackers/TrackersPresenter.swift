@@ -16,6 +16,9 @@ protocol ITrackersPresenter {
         record: TrackerRecord,
         id: UUID
     ) -> Bool
+
+    func saveCategoryRecord(_ record: TrackerRecord)
+    func deleteCategoryRecord(id: UUID?)
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -23,16 +26,25 @@ final class TrackersPresenter: ITrackersPresenter {
 
     weak var view: (any ITrackersView)?
     private let router: any ITrackersRouter
+    private let trackerRepository: any ITrackerRepository
+    private var todaysId: UUID?
 
     // MARK: - Lifecycle
 
-    init(router: some ITrackersRouter) {
+    init(
+        router: some ITrackersRouter,
+        trackerRepository: some ITrackerRepository
+    ) {
         self.router = router
+        self.trackerRepository = trackerRepository
     }
     
     // MARK: - Public
     
-    func viewDidLoad() { }
+    func viewDidLoad() {
+        view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
+        view?.updateTrackerList(with: trackerRepository.fetchCategories())
+    }
 
     func addTrackerButtonTapped() {
         router.openEventsSelectorScreen(builderOutput: self)
@@ -51,14 +63,22 @@ final class TrackersPresenter: ITrackersPresenter {
         return Calendar.current.compare(date, to: record.endDate, toGranularity: .day) == .orderedSame
     }
 
-    // MARK: - Private
-    
+    func saveCategoryRecord(_ record: TrackerRecord) {
+        todaysId = record.id
+        trackerRepository.save(record: record)
+    }
+
+    func deleteCategoryRecord(id: UUID?) {
+        let safeId = id != nil ? id : todaysId
+        guard let safeId else { return assertionFailure("Can't delete record, because id is nil") }
+        trackerRepository.deleteRecordById(safeId)
+    }
 }
 
 // MARK: - IEventsBuilderOutput
 
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
-        view?.updateTrackerList()
+        view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
 }
