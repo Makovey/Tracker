@@ -9,10 +9,8 @@ import Foundation
 
 protocol ICategorySelectorInput {
     func setSelectedCategory(category: String?)
-    func setAllCategories(categories: [String])
 }
 
 protocol ICategorySelectorOutput: AnyObject {
-    func allCreatedCategories(_ categories: [String])
     func categorySelected(_ category: String)
 }

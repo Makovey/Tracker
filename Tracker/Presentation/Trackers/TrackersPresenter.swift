@@ -16,9 +16,9 @@ protocol ITrackersPresenter {
         record: TrackerRecord,
         id: UUID
     ) -> Bool
-    
+
     func saveCategoryRecord(_ record: TrackerRecord)
-    func deleteCategoryRecord(id: UUID)
+    func deleteCategoryRecord(id: UUID?) -> UUID?
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -27,15 +27,16 @@ final class TrackersPresenter: ITrackersPresenter {
     weak var view: (any ITrackersView)?
     private let router: any ITrackersRouter
     private let trackerRepository: any ITrackerRepository
+    private var todaysId: UUID?
 
     // MARK: - Lifecycle
 
     init(
         router: some ITrackersRouter,
-        categoryRepository: some ITrackerRepository
+        trackerRepository: some ITrackerRepository
     ) {
         self.router = router
-        self.trackerRepository = categoryRepository
+        self.trackerRepository = trackerRepository
     }
     
     // MARK: - Public
@@ -44,7 +45,7 @@ final class TrackersPresenter: ITrackersPresenter {
         view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
         view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
-    
+
     func addTrackerButtonTapped() {
         router.openEventsSelectorScreen(builderOutput: self)
     }
@@ -58,20 +59,21 @@ final class TrackersPresenter: ITrackersPresenter {
         record: TrackerRecord,
         id: UUID
     ) -> Bool {
-        guard record.id == id else { return false }
+        guard record.trackerId == id else { return false }
         return Calendar.current.compare(date, to: record.endDate, toGranularity: .day) == .orderedSame
     }
-    
+
     func saveCategoryRecord(_ record: TrackerRecord) {
+        todaysId = record.id
         trackerRepository.save(record: record)
     }
-    
-    func deleteCategoryRecord(id: UUID) {
-        trackerRepository.deleteRecordById(id)
-    }
 
-    // MARK: - Private
-    
+    func deleteCategoryRecord(id: UUID?) -> UUID? {
+        let safeId = id != nil ? id : todaysId
+        guard let safeId else { assertionFailure("Can't delete record, because id is nil"); return nil }
+        trackerRepository.deleteRecordById(safeId)
+        return safeId
+    }
 }
 
 // MARK: - IEventsBuilderOutput

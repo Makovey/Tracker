@@ -50,3 +50,7 @@
 "weekday.friday.shortTitle" = "Пт";
 "weekday.saturday.shortTitle" = "Сб";
 "weekday.sunday.shortTitle" = "Вс";
+
+"onboarding.first.title" = "Отслеживайте только то, что хотите";
+"onboarding.second.title" = "Даже если это не литры воды и йога";
+"onboarding.primaryButton.title" = "Вот это технологии!";

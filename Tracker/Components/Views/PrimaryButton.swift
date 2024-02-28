@@ -68,6 +68,8 @@ final class PrimaryButton: UIButton {
             setTitleColor(.canceledState, for: .normal)
         case .option:
             backgroundColor = .optionState
+        case .enabledStatic:
+            backgroundColor = .staticBlack
         }
     }
     
@@ -82,6 +84,7 @@ extension PrimaryButton {
         case disabled
         case canceled
         case option
+        case enabledStatic
     }
 }
 

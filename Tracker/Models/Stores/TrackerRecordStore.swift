@@ -37,6 +37,7 @@ final class TrackerRecordStore: ITrackerRecordStore {
         return records.map {
             TrackerRecord(
                 id: $0.id ?? UUID(),
+                trackerId: $0.trackerId ?? UUID(),
                 endDate: $0.endDate ?? Date()
             )
         }
@@ -46,6 +47,7 @@ final class TrackerRecordStore: ITrackerRecordStore {
         let trackerRecord = TrackerRecordCD(context: context)
 
         trackerRecord.id = record.id
+        trackerRecord.trackerId = record.trackerId
         trackerRecord.endDate = record.endDate
 
         context.safeSave()

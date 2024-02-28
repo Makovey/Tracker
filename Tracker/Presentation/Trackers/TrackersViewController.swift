@@ -117,6 +117,7 @@ final class TrackersViewController: UIViewController {
     ) {
         self.presenter = presenter
         self.layoutProvider = layoutProvider
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -154,7 +155,6 @@ final class TrackersViewController: UIViewController {
     
     private func setupInitialState() {
         collectionView.dataSource = dataSource
-    
         updateVisibilityCategories()
     }
     
@@ -212,15 +212,15 @@ final class TrackersViewController: UIViewController {
     ) -> UICollectionViewCell {
         let cell: TrackersCell = collectionView.dequeueCell(for: indexPath)
         
-        let isCompletedForToday = completedTrackers
+        let trackerRecords = completedTrackers
             .filter { presenter.isTrackerCompletedForThisDay(date: datePicker.date, record: $0, id: tracker.id) }
-            .count != 0
 
         let model = TrackersCell.Model(
             tracker: tracker,
-            isCompletedForToday: isCompletedForToday,
-            completedTimes: completedTrackers.filter { $0.id == tracker.id }.count,
-            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: datePicker.date)
+            isCompletedForToday: trackerRecords.count != 0,
+            completedTimes: completedTrackers.filter { $0.trackerId == tracker.id }.count,
+            isEditingAvailable: presenter.isEditingAvailableForThisDay(date: datePicker.date),
+            recordId: trackerRecords.first?.id
         )
         
         cell.configure(with: model)
@@ -290,7 +290,7 @@ extension TrackersViewController: ITrackersView {
     func updateTrackerRecordList(with records: [TrackerRecord]) {
         completedTrackers = records
     }
-    
+
     func updateTrackerList(with trackers: [TrackerCategory]) {
         fullCategoryList = trackers
         updateVisibilityCategories()
@@ -309,14 +309,18 @@ extension TrackersViewController: UISearchBarDelegate {
 // MARK: - ITrackersCellDelegate
 
 extension TrackersViewController: ITrackersCellDelegate {
-    func doneButtonTapped(with id: UUID, state: Bool) {
-        let trackerRecord = TrackerRecord(id: id, endDate: datePicker.date)
+    func doneButtonTapped(
+        with trackerId: UUID,
+        recordId: UUID?,
+        state: Bool
+    ) {
         if state {
+            let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
             presenter.saveCategoryRecord(trackerRecord)
             completedTrackers.append(trackerRecord)
         } else {
-            presenter.deleteCategoryRecord(id: id)
-            completedTrackers = completedTrackers.filter { $0.id != trackerRecord.id }
+            let id = presenter.deleteCategoryRecord(id: recordId)
+            completedTrackers = completedTrackers.filter { $0.id != id }
         }
     }
 }

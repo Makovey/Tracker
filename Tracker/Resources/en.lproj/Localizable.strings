@@ -50,3 +50,7 @@
 "weekday.friday.shortTitle" = "Fri";
 "weekday.saturday.shortTitle" = "Sat";
 "weekday.sunday.shortTitle" = "Sun";
+
+"onboarding.first.title" = "Track only what you want";
+"onboarding.second.title" = "Even if it's not liters of water and yoga";
+"onboarding.primaryButton.title" = "This is technology!";

@@ -12,9 +12,7 @@ enum Section { case main }
 typealias CategoriesSnapshot = NSDiffableDataSourceSnapshot<Section, String>
 typealias CategoriesDataSource = UITableViewDiffableDataSource<Section, String>
 
-protocol ICategorySelectorView: AnyObject { 
-    func updateCategory(_ category: String)
-}
+protocol ICategorySelectorView: AnyObject { }
 
 final class CategorySelectorViewController: UIViewController {
     private enum Constant {
@@ -25,7 +23,7 @@ final class CategorySelectorViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let presenter: any ICategorySelectorPresenter
+    private var viewModel: any ICategorySelectorViewModel
     private var categories = [String]() {
         didSet { reloadSnapshot() }
     }
@@ -78,8 +76,8 @@ final class CategorySelectorViewController: UIViewController {
 
     // MARK: - Lifecycle
 
-    init(presenter: some ICategorySelectorPresenter) {
-        self.presenter = presenter
+    init(viewModel: some ICategorySelectorViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -120,6 +118,15 @@ final class CategorySelectorViewController: UIViewController {
     }
     
     private func setupInitialState() {
+        viewModel.selectedCategoryBinding = { [weak self] in
+            self?.selectedCategory = $0
+        }
+
+        viewModel.categoriesNamesBinding = { [weak self] in
+            self?.categories = $0
+            self?.tableView.reloadData()
+        }
+
         tableView.dataSource = dataSource
     }
     
@@ -167,7 +174,7 @@ final class CategorySelectorViewController: UIViewController {
     
     @objc
     private func addCategoryButtonTapped() { 
-        presenter.addCategoryButtonTapped(existedCategory: categories)
+        viewModel.addCategoryButtonTapped()
     }
 }
 
@@ -184,10 +191,8 @@ extension CategorySelectorViewController: UITableViewDelegate {
         ) as? PrimaryCell else { return }
         
         cell.didSelect()
-        presenter.categorySelected(
-            allCategories: categories,
-            selectedCategory: categories[indexPath.row]
-        )
+        viewModel.saveAllCreatedCategories(categories)
+        viewModel.categorySelected(categories[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -207,23 +212,11 @@ extension CategorySelectorViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - ICategorySelectorView
-
-extension CategorySelectorViewController: ICategorySelectorView {
-    func updateCategory(_ category: String) {
-        tableView.reloadData()
-        categories.append(category)
-    }
-}
-
 // MARK: - ICategorySelectorInput
 
 extension CategorySelectorViewController: ICategorySelectorInput {
     func setSelectedCategory(category: String?) {
-        selectedCategory = category
-    }
-
-    func setAllCategories(categories: [String]) {
-        self.categories = categories
+        guard let category else { return }
+        viewModel.saveSelectedCategoryName(category)
     }
 }
