@@ -71,6 +71,7 @@
 		5EC2C8422B6D152D00AD920B /* CategorySelectorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */; };
 		5EC2C8432B6D152D00AD920B /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */; };
 		5EC2C8442B6D152D00AD920B /* CategorySelectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C83F2B6D152D00AD920B /* CategorySelectorAssembly.swift */; };
+		5EC9E3732B93C156002E1164 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5EC9E3752B93C156002E1164 /* Localizable.stringsdict */; };
 		5ED092C42B627698000E29AE /* EventsBuilderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED092BF2B627698000E29AE /* EventsBuilderPresenter.swift */; };
 		5ED092C52B627698000E29AE /* EventsBuilderRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED092C02B627698000E29AE /* EventsBuilderRouter.swift */; };
 		5ED092C62B627698000E29AE /* EventsBuilderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED092C12B627698000E29AE /* EventsBuilderViewController.swift */; };
@@ -159,6 +160,8 @@
 		5EC2C83D2B6D152D00AD920B /* CategorySelectorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorRouter.swift; sourceTree = "<group>"; };
 		5EC2C83E2B6D152D00AD920B /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
 		5EC2C83F2B6D152D00AD920B /* CategorySelectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorAssembly.swift; sourceTree = "<group>"; };
+		5EC9E3742B93C156002E1164 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		5EC9E3762B93C15B002E1164 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5ED092BF2B627698000E29AE /* EventsBuilderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsBuilderPresenter.swift; sourceTree = "<group>"; };
 		5ED092C02B627698000E29AE /* EventsBuilderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsBuilderRouter.swift; sourceTree = "<group>"; };
 		5ED092C12B627698000E29AE /* EventsBuilderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsBuilderViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				5E69F00E2B73CA1800637095 /* Localizable.strings */,
+				5EC9E3752B93C156002E1164 /* Localizable.stringsdict */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -588,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E78418C2B4A92FA00062777 /* LaunchScreen.storyboard in Resources */,
+				5EC9E3732B93C156002E1164 /* Localizable.stringsdict in Resources */,
 				5E69F00C2B73CA1800637095 /* Localizable.strings in Resources */,
 				5E7841892B4A92FA00062777 /* Assets.xcassets in Resources */,
 			);
@@ -700,6 +705,15 @@
 				5E78418B2B4A92FA00062777 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		5EC9E3752B93C156002E1164 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5EC9E3742B93C156002E1164 /* en */,
+				5EC9E3762B93C15B002E1164 /* ru */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

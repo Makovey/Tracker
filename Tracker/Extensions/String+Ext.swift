@@ -8,7 +8,14 @@
 import Foundation
 
 extension String {
-    var localized: String {
+    static func completedDays(_ quantity: Int) -> Self {
+        Self.localizedStringWithFormat(
+            NSLocalizedString("completedDays", comment: "Number of completed days. Streak"),
+            quantity
+        )
+    }
+
+    var localized: Self {
         NSLocalizedString(self, comment: "")
     }
 }

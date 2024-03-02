@@ -40,12 +40,12 @@ final class TrackersCell: UICollectionViewCell {
     private var recordId: UUID?
     private var completedDaysCounter = 0 {
         didSet {
-            dateLabel.text = "\(completedDaysCounter) \("trackers.cell.subtitle".localized)"
+            dateLabel.text = String.completedDays(completedDaysCounter)
         }
     }
     
-    // MARK: UI
-    
+    // MARK: - UI
+
     private lazy var backgroundCardView: UIView = {
         let background = UIView()
         background.layer.borderWidth = 1
