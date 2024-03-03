@@ -27,6 +27,9 @@ events.builder.cancelButton.title = "Cancel";
 events.builder.createButton.title = "Create";
 events.builder.categoryCell.title = "Category";
 
+events.builder.categorySection.First.title = "Emojis";
+events.builder.categorySection.Second.title = "Color";
+
 category.selector.screen.title = "Create a tracker";
 category.selector.primaryButton.title = "Add category";
 category.selector.emptyState.title = "Habits and events can be\ncombined by meaning";

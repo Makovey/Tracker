@@ -8,8 +8,17 @@
 import Foundation
 
 enum BuilderSection: String, Hashable, CaseIterable {
-    case emoji = "Emojis"
-    case color = "Цвет" // TODO: Localization
+    case emoji
+    case color
+
+    var localizedSection: String {
+        switch self {
+        case .emoji:
+            return .loc.Events.Builder.CategorySection.First.title
+        case .color:
+            return .loc.Events.Builder.CategorySection.Second.title
+        }
+    }
 }
 
 struct BuilderDataProvider {

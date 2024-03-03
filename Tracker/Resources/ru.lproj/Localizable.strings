@@ -27,6 +27,9 @@ events.builder.cancelButton.title = "Отменить";
 events.builder.createButton.title = "Создать";
 events.builder.categoryCell.title = "Категория";
 
+events.builder.categorySection.First.title = "Emojis";
+events.builder.categorySection.Second.title = "Цвет";
+
 category.selector.screen.title = "Создание трекера";
 category.selector.primaryButton.title = "Добавить категорию";
 category.selector.emptyState.title = "Привычки и события можно\nобъединить по смыслу";

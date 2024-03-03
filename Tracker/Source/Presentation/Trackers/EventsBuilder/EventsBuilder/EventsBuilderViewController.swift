@@ -417,7 +417,7 @@ extension EventsBuilderViewController {
             kind: UICollectionView.elementKindSectionHeader,
             for: indexPath
         )
-        let title = BuilderSection.allCases[indexPath.section].rawValue
+        let title = BuilderSection.allCases[indexPath.section].localizedSection
         header.configure(title: title)
         
         return header
