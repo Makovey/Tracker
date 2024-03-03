@@ -47,10 +47,6 @@ final class EventsBuilderPresenter {
 
 extension EventsBuilderPresenter: IEventsBuilderPresenter {
     func categoryTapped() {
-        let categories = categoryRepository
-            .fetchCategories()
-            .map { $0.header }
-        
         router.openCategoryScreen(
             categoryModuleOutput: self,
             selectedCategory: categoryRepository.fetchSelectedCategoryName()
