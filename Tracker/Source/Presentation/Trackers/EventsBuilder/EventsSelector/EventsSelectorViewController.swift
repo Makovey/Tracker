@@ -25,11 +25,11 @@ final class EventsSelectorViewController: UIViewController {
     private lazy var stackView: UIStackView = {
         let habitButton = PrimaryButton(
             style: .enabled,
-            text: "events.selector.habitButton.title".localized
+            text: .loc.Events.Selector.HabitButton.title
         )
         let irregularEventsButton = PrimaryButton(
             style: .enabled,
-            text: "events.selector.irregularEventButton.title".localized
+            text: .loc.Events.Selector.IrregularEventButton.title
         )
         
         habitButton.addTarget(self, action: #selector(habitButtonTapped), for: .touchUpInside)
@@ -68,7 +68,7 @@ final class EventsSelectorViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        title = "category.selector.screen.title".localized
+        title = .loc.Category.Selector.Screen.title
 
         stackView
             .placedOn(view)

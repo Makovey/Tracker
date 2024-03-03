@@ -18,8 +18,4 @@ extension String {
             quantity
         )
     }
-
-    var localized: Self {
-        NSLocalizedString(self, comment: "")
-    }
 }

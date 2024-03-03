@@ -13,8 +13,8 @@ final class OnboardingManagerAssembly {
 
     static func assemble() -> UIViewController {
         let onboardings = [
-            OnboardingAssembly.assemble(with: "onboarding.first.title".localized, backgroundImage: Assets.blueOnboarding.image),
-            OnboardingAssembly.assemble(with: "onboarding.second.title".localized, backgroundImage: Assets.orangeOnboarding.image)
+            OnboardingAssembly.assemble(with: .loc.Onboarding.First.title, backgroundImage: Assets.blueOnboarding.image),
+            OnboardingAssembly.assemble(with: .loc.Onboarding.Second.title, backgroundImage: Assets.orangeOnboarding.image)
         ]
 
         let router = OnboardingManagerRouter()

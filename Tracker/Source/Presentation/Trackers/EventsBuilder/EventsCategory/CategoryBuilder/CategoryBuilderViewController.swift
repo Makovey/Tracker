@@ -29,7 +29,7 @@ final class CategoryBuilderViewController: UIViewController {
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = Assets.primaryElementBackground.color
-        textField.placeholder = "category.builder.textField.placeholder".localized
+        textField.placeholder = .loc.Category.Builder.TextField.placeholder
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
 
@@ -56,13 +56,13 @@ final class CategoryBuilderViewController: UIViewController {
         label.font = .systemFont(ofSize: 17)
         label.textColor = Assets.canceledState.color
         label.textAlignment = .center
-        label.text = "category.builder.errorLabel.title".localized
-        
+        label.text = .loc.Category.Builder.ErrorLabel.title
+
         return label.forAutolayout()
     }()
     
     private lazy var doneButton: PrimaryButton = {
-        let button = PrimaryButton(style: .disabled, text: "common.doneButton.title".localized)
+        let button = PrimaryButton(style: .disabled, text: .loc.Common.DoneButton.title)
         button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
 
         return button
@@ -92,7 +92,7 @@ final class CategoryBuilderViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationItem.setHidesBackButton(true, animated: true)
 
-        title = "category.builder.screen.title".localized
+        title = .loc.Category.Builder.Screen.title
         errorLabel.isHidden = true
         
         textField.placedOn(view)

@@ -37,7 +37,7 @@ final class EventsScheduleViewController: UIViewController {
     }()
     
     private lazy var doneButton: PrimaryButton = {
-        let button = PrimaryButton(style: .enabled, text: "common.doneButton.title".localized)
+        let button = PrimaryButton(style: .enabled, text: .loc.Common.DoneButton.title)
         button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         
         return button.forAutolayout()
@@ -66,7 +66,7 @@ final class EventsScheduleViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationItem.setHidesBackButton(true, animated: true)
 
-        title = "common.schedule.title".localized
+        title = .loc.Common.Schedule.title
         
         tableView.placedOn(view)
         NSLayoutConstraint.activate([

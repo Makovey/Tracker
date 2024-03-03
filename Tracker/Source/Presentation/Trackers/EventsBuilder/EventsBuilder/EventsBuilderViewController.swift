@@ -99,7 +99,7 @@ final class EventsBuilderViewController: UIViewController {
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = Assets.primaryElementBackground.color
-        textField.placeholder = "events.builder.textField.placeholder".localized
+        textField.placeholder = .loc.Events.Builder.TextField.placeholder
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
 
@@ -134,14 +134,14 @@ final class EventsBuilderViewController: UIViewController {
     }()
     
     private lazy var cancelButton: PrimaryButton = {
-        let cancelButton = PrimaryButton(style: .canceled, text: "events.builder.cancelButton.title".localized)
+        let cancelButton = PrimaryButton(style: .canceled, text: .loc.Events.Builder.CancelButton.title)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
         return cancelButton
     }()
     
     private lazy var createButton: PrimaryButton = {
-        let createButton = PrimaryButton(style: .disabled, text: "events.builder.createButton.title".localized)
+        let createButton = PrimaryButton(style: .disabled, text: .loc.Events.Builder.CreateButton.title)
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         
         return createButton
@@ -188,10 +188,10 @@ final class EventsBuilderViewController: UIViewController {
 
         switch mode {
         case .habit:
-            title = "events.builder.habitScreen.title".localized
+            title = .loc.Events.Builder.HabitScreen.title
             navigationItems.append(.schedule)
         case .event:
-            title = "events.builder.irregularEventScreen.title".localized
+            title = .loc.Events.Builder.IrregularEventScreen.title
         }
         
         textField.placedOn(view)
@@ -328,7 +328,7 @@ extension EventsBuilderViewController: UITableViewDataSource {
         
         switch navigationItems[indexPath.row] {
         case .category:
-            title = "events.builder.categoryCell.title".localized
+            title = .loc.Events.Builder.CategoryCell.title
             cell.configure(
                 title: title,
                 subTitle: categoryName,
@@ -336,8 +336,8 @@ extension EventsBuilderViewController: UITableViewDataSource {
                 isLastCell: indexPath.row == navigationItems.count - 1
             )
         case .schedule:
-            title = "common.schedule.title".localized
-            
+            title = .loc.Common.Schedule.title
+
             let scheduleString = schedule?
                 .sorted(by: { $0.rawValue < $1.rawValue })
                 .compactMap({ $0.shortLabel })

@@ -13,38 +13,38 @@ enum WeekDay: Int, CaseIterable, Codable {
     var label: String {
         switch self {
         case .monday:
-            return "weekday.monday.title".localized
+            return .loc.Weekday.Monday.title
         case .tuesday:
-            return "weekday.tuesday.title".localized
+            return .loc.Weekday.Tuesday.title
         case .wednesday:
-            return "weekday.wednesday.title".localized
+            return .loc.Weekday.Wednesday.title
         case .thursday:
-            return "weekday.thursday.title".localized
+            return .loc.Weekday.Thursday.title
         case .friday:
-            return "weekday.friday.title".localized
+            return .loc.Weekday.Friday.title
         case .saturday:
-            return "weekday.saturday.title".localized
+            return .loc.Weekday.Saturday.title
         case .sunday:
-            return "weekday.sunday.title".localized
+            return .loc.Weekday.Sunday.title
         }
     }
     
     var shortLabel: String {
         switch self {
         case .monday:
-            return "weekday.monday.shortTitle".localized
+            return .loc.Weekday.Monday.shortTitle
         case .tuesday:
-            return "weekday.tuesday.shortTitle".localized
+            return .loc.Weekday.Tuesday.shortTitle
         case .wednesday:
-            return "weekday.wednesday.shortTitle".localized
+            return .loc.Weekday.Wednesday.shortTitle
         case .thursday:
-            return "weekday.thursday.shortTitle".localized
+            return .loc.Weekday.Thursday.shortTitle
         case .friday:
-            return "weekday.friday.shortTitle".localized
+            return .loc.Weekday.Friday.shortTitle
         case .saturday:
-            return "weekday.saturday.shortTitle".localized
+            return .loc.Weekday.Saturday.shortTitle
         case .sunday:
-            return "weekday.sunday.shortTitle".localized
+            return .loc.Weekday.Sunday.shortTitle
         }
     }
     
