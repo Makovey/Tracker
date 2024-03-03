@@ -36,7 +36,7 @@ final class OnboardingViewController: UIViewController {
         label.font = .systemFont(ofSize: 32, weight: .bold)
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.textColor = .staticBlack
+        label.textColor = Assets.staticBlack.color
 
         return label.forAutolayout()
     }()

@@ -33,8 +33,8 @@ final class OnboardingManagerViewController: UIPageViewController {
         let control = UIPageControl()
         control.numberOfPages = onboardings.count
 
-        control.currentPageIndicatorTintColor = .staticBlack
-        control.pageIndicatorTintColor = .staticBlack.withAlphaComponent(0.3)
+        control.currentPageIndicatorTintColor = Assets.staticBlack.color
+        control.pageIndicatorTintColor = Assets.staticBlack.color.withAlphaComponent(0.3)
         control.isUserInteractionEnabled = false
 
         return control.forAutolayout()

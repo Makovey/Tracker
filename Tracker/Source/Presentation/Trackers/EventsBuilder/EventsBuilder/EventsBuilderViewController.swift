@@ -98,7 +98,7 @@ final class EventsBuilderViewController: UIViewController {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .primaryElementBackground
+        textField.backgroundColor = Assets.primaryElementBackground.color
         textField.placeholder = "events.builder.textField.placeholder".localized
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done

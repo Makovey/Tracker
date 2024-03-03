@@ -31,14 +31,14 @@ final class PrimaryCell: UITableViewCell {
     private lazy var subTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: Constant.baseFontSize)
-        label.textColor = .primaryGray
-        
+        label.textColor = Assets.primaryGray.color
+
         return label.forAutolayout()
     }()
     
     private lazy var accessoryImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .primaryGray
+        imageView.tintColor = Assets.primaryGray.color
         imageView.contentMode = .scaleAspectFit
         
         return imageView.forAutolayout()
@@ -54,8 +54,8 @@ final class PrimaryCell: UITableViewCell {
     
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .transparent
-        
+        view.backgroundColor = Assets.transparent.color
+
         return view.forAutolayout()
     }()
     
@@ -91,11 +91,11 @@ final class PrimaryCell: UITableViewCell {
         
         switch accessory {
         case .chevron:
-            accessoryImageView.image = .chevron
+            accessoryImageView.image = Assets.chevron.image
         case .checkmark:
             accessoryImageView.isHidden = true
             accessoryImageView.image = UIImage(systemName: "checkmark")
-            accessoryImageView.tintColor = .optionState
+            accessoryImageView.tintColor = Assets.optionState.color
         }
         
         if isLastCell { 
@@ -115,7 +115,7 @@ final class PrimaryCell: UITableViewCell {
     // MARK: - Private
     
     private func setupUI() {
-        backgroundColor = .primaryElementBackground
+        backgroundColor = Assets.primaryElementBackground.color
         
         accessoryImageView.placedOn(contentView)
         NSLayoutConstraint.activate([

@@ -67,7 +67,7 @@ final class TrackersViewController: UIViewController {
     private lazy var searchInput: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "trackers.searchBar.placeholder".localized
-        searchController.searchBar.tintColor = .optionState
+        searchController.searchBar.tintColor = Assets.optionState.color
         searchController.searchBar.delegate = self
         
         return searchController
@@ -165,10 +165,10 @@ final class TrackersViewController: UIViewController {
         switch emptyState {
         case .date:
             title = "trackers.emptyState.title".localized
-            image = .emptyImage
+            image = Assets.emptyTrackerImage.image
         case .text:
             title = "trackers.notFoundState.title".localized
-            image = .notFoundImage
+            image = Assets.notFoundTrackerImage.image
         }
         
         emptyStateView.arrangedSubviews.forEach {

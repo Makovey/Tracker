@@ -6,51 +6,51 @@
   
 */
 
-"main.title.trackers" = "Трекеры";
-"main.title.statistics" = "Статистика";
+main.title.trackers = "Трекеры";
+main.title.statistics = "Статистика";
 
-"common.doneButton.title" = "Готово";
-"common.schedule.title" = "Расписание";
+common.doneButton.title = "Готово";
+common.schedule.title = "Расписание";
 
-"trackers.searchBar.placeholder" = "Поиск";
-"trackers.emptyState.title" = "Что будем отслеживать?";
-"trackers.notFoundState.title" = "Ничего не найдено";
-"trackers.cell.subtitle" = "дней";
+trackers.searchBar.placeholder = "Поиск";
+trackers.emptyState.title = "Что будем отслеживать?";
+trackers.notFoundState.title = "Ничего не найдено";
+trackers.cell.subtitle = "дней";
 
-"events.selector.habitButton.title" = "Привычка";
-"events.selector.irregularEventButton.title" = "Нерегулярное событие";
+events.selector.habitButton.title = "Привычка";
+events.selector.irregularEventButton.title = "Нерегулярное событие";
 
-"events.builder.habitScreen.title" = "Новая привычка";
-"events.builder.irregularEventScreen.title" = "Новое нерегулярное событие";
-"events.builder.textField.placeholder" = "Введите название трекера";
-"events.builder.cancelButton.title" = "Отменить";
-"events.builder.createButton.title" = "Создать";
-"events.builder.categoryCell.title" = "Категория";
+events.builder.habitScreen.title = "Новая привычка";
+events.builder.irregularEventScreen.title = "Новое нерегулярное событие";
+events.builder.textField.placeholder = "Введите название трекера";
+events.builder.cancelButton.title = "Отменить";
+events.builder.createButton.title = "Создать";
+events.builder.categoryCell.title = "Категория";
 
-"category.selector.screen.title" = "Создание трекера";
-"category.selector.primaryButton.title" = "Добавить категорию";
-"category.selector.emptyState.title" = "Привычки и события можно\nобъединить по смыслу";
+category.selector.screen.title = "Создание трекера";
+category.selector.primaryButton.title = "Добавить категорию";
+category.selector.emptyState.title = "Привычки и события можно\nобъединить по смыслу";
 
-"category.builder.screen.title" = "Новая категория";
-"category.builder.textField.placeholder" = "Введите название категории";
-"category.builder.errorLabel.title" = "Такая категория уже существует";
+category.builder.screen.title = "Новая категория";
+category.builder.textField.placeholder = "Введите название категории";
+category.builder.errorLabel.title = "Такая категория уже существует";
 
-"weekday.monday.title" = "Понедельник";
-"weekday.tuesday.title" = "Вторник";
-"weekday.wednesday.title" = "Среда";
-"weekday.thursday.title" = "Четверг";
-"weekday.friday.title" = "Пятница";
-"weekday.saturday.title" = "Суббота";
-"weekday.sunday.title" = "Воскресенье";
+weekday.monday.title = "Понедельник";
+weekday.tuesday.title = "Вторник";
+weekday.wednesday.title = "Среда";
+weekday.thursday.title = "Четверг";
+weekday.friday.title = "Пятница";
+weekday.saturday.title = "Суббота";
+weekday.sunday.title = "Воскресенье";
 
-"weekday.monday.shortTitle" = "Пн";
-"weekday.tuesday.shortTitle" = "Вт";
-"weekday.wednesday.shortTitle" = "Ср";
-"weekday.thursday.shortTitle" = "Чт";
-"weekday.friday.shortTitle" = "Пт";
-"weekday.saturday.shortTitle" = "Сб";
-"weekday.sunday.shortTitle" = "Вс";
+weekday.monday.shortTitle = "Пн";
+weekday.tuesday.shortTitle = "Вт";
+weekday.wednesday.shortTitle = "Ср";
+weekday.thursday.shortTitle = "Чт";
+weekday.friday.shortTitle = "Пт";
+weekday.saturday.shortTitle = "Сб";
+weekday.sunday.shortTitle = "Вс";
 
-"onboarding.first.title" = "Отслеживайте только то, что хотите";
-"onboarding.second.title" = "Даже если это не литры воды и йога";
-"onboarding.primaryButton.title" = "Вот это технологии!";
+onboarding.first.title = "Отслеживайте только то, что хотите";
+onboarding.second.title = "Даже если это не литры воды и йога";
+onboarding.primaryButton.title = "Вот это технологии!";

@@ -37,13 +37,13 @@ final class PrimaryButton: UIButton {
     
     func enable() {
         self.isEnabled = true
-        backgroundColor = .enabledState
+        backgroundColor = Assets.enabledState.color
         setTitleColor(.systemBackground, for: .normal)
     }
     
     func disable() {
         self.isEnabled = false
-        backgroundColor = .primaryGray
+        backgroundColor = Assets.primaryGray.color
         setTitleColor(.white, for: .normal)
     }
     
@@ -62,14 +62,14 @@ final class PrimaryButton: UIButton {
             disable()
         case .canceled:
             layer.borderWidth = 1.0
-            layer.borderColor = UIColor.canceledState.cgColor
-            
+            layer.borderColor = Assets.canceledState.color.cgColor
+
             backgroundColor = .systemBackground
-            setTitleColor(.canceledState, for: .normal)
+            setTitleColor(Assets.canceledState.color, for: .normal)
         case .option:
-            backgroundColor = .optionState
+            backgroundColor = Assets.optionState.color
         case .enabledStatic:
-            backgroundColor = .staticBlack
+            backgroundColor = Assets.staticBlack.color
         }
     }
     

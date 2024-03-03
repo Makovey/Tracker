@@ -6,51 +6,51 @@
   
 */
 
-"main.title.trackers" = "Trackers";
-"main.title.statistics" = "Statistics";
+main.title.trackers = "Trackers";
+main.title.statistics = "Statistics";
 
-"common.doneButton.title" = "Done";
-"common.schedule.title" = "Schedule";
+common.doneButton.title = "Done";
+common.schedule.title = "Schedule";
 
-"trackers.searchBar.placeholder" = "Search";
-"trackers.emptyState.title" = "What we'll track?";
-"trackers.notFoundState.title" = "Nothing found";
-"trackers.cell.subtitle" = "days";
+trackers.searchBar.placeholder = "Search";
+trackers.emptyState.title = "What we'll track?";
+trackers.notFoundState.title = "Nothing found";
+trackers.cell.subtitle = "days";
 
-"events.selector.habitButton.title" = "Habit";
-"events.selector.irregularEventButton.title" = "Irregular event";
+events.selector.habitButton.title = "Habit";
+events.selector.irregularEventButton.title = "Irregular event";
 
-"events.builder.habitScreen.title" = "New habit";
-"events.builder.irregularEventScreen.title" = "New irregular event";
-"events.builder.textField.placeholder" = "Enter tracker name";
-"events.builder.cancelButton.title" = "Cancel";
-"events.builder.createButton.title" = "Create";
-"events.builder.categoryCell.title" = "Category";
+events.builder.habitScreen.title = "New habit";
+events.builder.irregularEventScreen.title = "New irregular event";
+events.builder.textField.placeholder = "Enter tracker name";
+events.builder.cancelButton.title = "Cancel";
+events.builder.createButton.title = "Create";
+events.builder.categoryCell.title = "Category";
 
-"category.selector.screen.title" = "Create a tracker";
-"category.selector.primaryButton.title" = "Add category";
-"category.selector.emptyState.title" = "Habits and events can be\ncombined by meaning";
+category.selector.screen.title = "Create a tracker";
+category.selector.primaryButton.title = "Add category";
+category.selector.emptyState.title = "Habits and events can be\ncombined by meaning";
 
-"category.builder.screen.title" = "New category";
-"category.builder.textField.placeholder" = "Enter category name";
-"category.builder.errorLabel.title" = "This category already exists";
+category.builder.screen.title = "New category";
+category.builder.textField.placeholder = "Enter category name";
+category.builder.errorLabel.title = "This category already exists";
 
-"weekday.monday.title" = "Monday";
-"weekday.tuesday.title" = "Tuesday";
-"weekday.wednesday.title" = "Wednesday";
-"weekday.thursday.title" = "Thursday";
-"weekday.friday.title" = "Friday";
-"weekday.saturday.title" = "Saturday";
-"weekday.sunday.title" = "Sunday";
+weekday.monday.title = "Monday";
+weekday.tuesday.title = "Tuesday";
+weekday.wednesday.title = "Wednesday";
+weekday.thursday.title = "Thursday";
+weekday.friday.title = "Friday";
+weekday.saturday.title = "Saturday";
+weekday.sunday.title = "Sunday";
 
-"weekday.monday.shortTitle" = "Mon";
-"weekday.tuesday.shortTitle" = "Tue";
-"weekday.wednesday.shortTitle" = "Wed";
-"weekday.thursday.shortTitle" = "Thu";
-"weekday.friday.shortTitle" = "Fri";
-"weekday.saturday.shortTitle" = "Sat";
-"weekday.sunday.shortTitle" = "Sun";
+weekday.monday.shortTitle = "Mon";
+weekday.tuesday.shortTitle = "Tue";
+weekday.wednesday.shortTitle = "Wed";
+weekday.thursday.shortTitle = "Thu";
+weekday.friday.shortTitle = "Fri";
+weekday.saturday.shortTitle = "Sat";
+weekday.sunday.shortTitle = "Sun";
 
-"onboarding.first.title" = "Track only what you want";
-"onboarding.second.title" = "Even if it's not liters of water and yoga";
-"onboarding.primaryButton.title" = "This is technology!";
+onboarding.first.title = "Track only what you want";
+onboarding.second.title = "Even if it's not liters of water and yoga";
+onboarding.primaryButton.title = "This is technology!";

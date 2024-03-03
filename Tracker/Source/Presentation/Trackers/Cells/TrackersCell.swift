@@ -49,7 +49,7 @@ final class TrackersCell: UICollectionViewCell {
     private lazy var backgroundCardView: UIView = {
         let background = UIView()
         background.layer.borderWidth = 1
-        background.layer.borderColor = UIColor.transparent.cgColor
+        background.layer.borderColor = Assets.transparent.color.cgColor
         background.layer.masksToBounds = true
         
         return background.forAutolayout()

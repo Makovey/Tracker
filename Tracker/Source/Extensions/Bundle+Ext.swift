@@ -7,17 +7,9 @@
 
 import Foundation
 
-private extension String {
-    static let bundleName = "Tracker.bundle"
-}
-
 extension Bundle {
-    static let current: Bundle = {
-        let url = Bundle(for: BundleHandle.self).bundleURL.appendingPathComponent(.bundleName)
-        guard let bundle = Bundle(url: url) else { fatalError("Bundle not found!") }
-
-        return bundle
-    }()
+    static var current: Bundle {
+        class __ { }
+        return Bundle(for: __.self)
+    }
 }
-
-private class BundleHandle { }

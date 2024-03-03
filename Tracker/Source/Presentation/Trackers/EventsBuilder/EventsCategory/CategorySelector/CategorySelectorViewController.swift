@@ -57,7 +57,7 @@ final class CategorySelectorViewController: UIViewController {
     }()
     
     private lazy var emptyStateView: UIStackView = {
-        let imageView = UIImageView(image: .emptyImage)
+        let imageView = UIImageView(image: Assets.emptyTrackerImage.image)
         imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
         
         let label = UILabel()

@@ -33,7 +33,7 @@ final class WeekDayCell: UITableViewCell {
     
     private lazy var switcher: UISwitch = {
         let switcher = UISwitch()
-        switcher.onTintColor = .optionState
+        switcher.onTintColor = Assets.optionState.color
         switcher.addTarget(self, action: #selector(switcherValueChanged), for: .valueChanged)
         
         return switcher.forAutolayout()
@@ -41,8 +41,8 @@ final class WeekDayCell: UITableViewCell {
     
     private lazy var separator: UIView = {
         let view = UIView()
-        view.backgroundColor = .transparent
-        
+        view.backgroundColor = Assets.transparent.color
+
         return view.forAutolayout()
     }()
 
@@ -73,7 +73,7 @@ final class WeekDayCell: UITableViewCell {
     // MARK: - Private
     
     private func setupUI() {
-        backgroundColor = .primaryElementBackground
+        backgroundColor = Assets.primaryElementBackground.color
 
         titleLabel.placedOn(contentView)
         NSLayoutConstraint.activate([
