@@ -1,5 +1,5 @@
 //
-//  HabitsPresenter.swift
+//  StatisticsPresenter.swift
 //  Tracker
 //
 //  Created by MAKOVEY Vladislav on 07.01.2024.
@@ -7,19 +7,19 @@
 
 import Foundation
 
-protocol IHabitsPresenter {
+protocol IStatisticsPresenter {
     func viewDidLoad()
 }
 
-final class HabitsPresenter {
+final class StatisticsPresenter {
     // Dependencies
 
-    private let router: any IHabitsRouter
-    weak var view: (any IHabitsView)?
+    private let router: any IStatisticsRouter
+    weak var view: (any IStatisticsView)?
 
     // MARK: - Lifecycle
 
-    init(router: some IHabitsRouter) {
+    init(router: some IStatisticsRouter) {
         self.router = router
     }
 
@@ -30,6 +30,6 @@ final class HabitsPresenter {
 
 // MARK: - IHabitsPresenter
 
-extension HabitsPresenter: IHabitsPresenter {
+extension StatisticsPresenter: IStatisticsPresenter {
     func viewDidLoad() { }
 }

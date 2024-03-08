@@ -21,10 +21,10 @@
 		5EC9E3F62B94AF59002E1164 /* SplashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E38D2B94AF59002E1164 /* SplashPresenter.swift */; };
 		5EC9E3F72B94AF59002E1164 /* SplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E38E2B94AF59002E1164 /* SplashRouter.swift */; };
 		5EC9E3F82B94AF59002E1164 /* SplashAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E38F2B94AF59002E1164 /* SplashAssembly.swift */; };
-		5EC9E3F92B94AF59002E1164 /* HabitsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3912B94AF59002E1164 /* HabitsPresenter.swift */; };
-		5EC9E3FA2B94AF59002E1164 /* HabitsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3922B94AF59002E1164 /* HabitsRouter.swift */; };
-		5EC9E3FB2B94AF59002E1164 /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3932B94AF59002E1164 /* HabitsViewController.swift */; };
-		5EC9E3FC2B94AF59002E1164 /* HabitsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3942B94AF59002E1164 /* HabitsAssembly.swift */; };
+		5EC9E3F92B94AF59002E1164 /* StatisticsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3912B94AF59002E1164 /* StatisticsPresenter.swift */; };
+		5EC9E3FA2B94AF59002E1164 /* StatisticsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3922B94AF59002E1164 /* StatisticsRouter.swift */; };
+		5EC9E3FB2B94AF59002E1164 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3932B94AF59002E1164 /* StatisticsViewController.swift */; };
+		5EC9E3FC2B94AF59002E1164 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3942B94AF59002E1164 /* StatisticsAssembly.swift */; };
 		5EC9E3FD2B94AF59002E1164 /* TrackersLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3972B94AF59002E1164 /* TrackersLayoutProvider.swift */; };
 		5EC9E3FE2B94AF59002E1164 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3982B94AF59002E1164 /* EmojiView.swift */; };
 		5EC9E3FF2B94AF59002E1164 /* TrackersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E3992B94AF59002E1164 /* TrackersCell.swift */; };
@@ -115,10 +115,10 @@
 		5EC9E38D2B94AF59002E1164 /* SplashPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashPresenter.swift; sourceTree = "<group>"; };
 		5EC9E38E2B94AF59002E1164 /* SplashRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashRouter.swift; sourceTree = "<group>"; };
 		5EC9E38F2B94AF59002E1164 /* SplashAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashAssembly.swift; sourceTree = "<group>"; };
-		5EC9E3912B94AF59002E1164 /* HabitsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitsPresenter.swift; sourceTree = "<group>"; };
-		5EC9E3922B94AF59002E1164 /* HabitsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitsRouter.swift; sourceTree = "<group>"; };
-		5EC9E3932B94AF59002E1164 /* HabitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
-		5EC9E3942B94AF59002E1164 /* HabitsAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitsAssembly.swift; sourceTree = "<group>"; };
+		5EC9E3912B94AF59002E1164 /* StatisticsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsPresenter.swift; sourceTree = "<group>"; };
+		5EC9E3922B94AF59002E1164 /* StatisticsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsRouter.swift; sourceTree = "<group>"; };
+		5EC9E3932B94AF59002E1164 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		5EC9E3942B94AF59002E1164 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
 		5EC9E3972B94AF59002E1164 /* TrackersLayoutProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersLayoutProvider.swift; sourceTree = "<group>"; };
 		5EC9E3982B94AF59002E1164 /* EmojiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		5EC9E3992B94AF59002E1164 /* TrackersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersCell.swift; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				5EC9E38B2B94AF59002E1164 /* Splash */,
-				5EC9E3902B94AF59002E1164 /* Habits */,
+				5EC9E3902B94AF59002E1164 /* Statistics */,
 				5EC9E3952B94AF59002E1164 /* Trackers */,
 				5EC9E3C62B94AF59002E1164 /* Onboarding */,
 				5EC9E3D12B94AF59002E1164 /* TabBarController.swift */,
@@ -339,24 +339,24 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
-		5EC9E3902B94AF59002E1164 /* Habits */ = {
+		5EC9E3902B94AF59002E1164 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				5EC9E3912B94AF59002E1164 /* HabitsPresenter.swift */,
-				5EC9E3922B94AF59002E1164 /* HabitsRouter.swift */,
-				5EC9E3932B94AF59002E1164 /* HabitsViewController.swift */,
-				5EC9E3942B94AF59002E1164 /* HabitsAssembly.swift */,
+				5EC9E3912B94AF59002E1164 /* StatisticsPresenter.swift */,
+				5EC9E3922B94AF59002E1164 /* StatisticsRouter.swift */,
+				5EC9E3932B94AF59002E1164 /* StatisticsViewController.swift */,
+				5EC9E3942B94AF59002E1164 /* StatisticsAssembly.swift */,
 			);
-			path = Habits;
+			path = Statistics;
 			sourceTree = "<group>";
 		};
 		5EC9E3952B94AF59002E1164 /* Trackers */ = {
 			isa = PBXGroup;
 			children = (
+				5EC9E39C2B94AF59002E1164 /* EventsBuilder */,
 				5EC9E3962B94AF59002E1164 /* Cells */,
 				5EC9E39A2B94AF59002E1164 /* TrackersRouter.swift */,
 				5EC9E39B2B94AF59002E1164 /* TrackersViewController.swift */,
-				5EC9E39C2B94AF59002E1164 /* EventsBuilder */,
 				5EC9E3C42B94AF59002E1164 /* TrackersAssembly.swift */,
 				5EC9E3C52B94AF59002E1164 /* TrackersPresenter.swift */,
 			);
@@ -708,7 +708,7 @@
 				5EC9E43E2B94AF59002E1164 /* SceneDelegate.swift in Sources */,
 				5EC9E41C2B94AF59002E1164 /* CategorySelectorViewController.swift in Sources */,
 				5EC9E4222B94AF59002E1164 /* OnboardingManagerAssembly.swift in Sources */,
-				5EC9E3F92B94AF59002E1164 /* HabitsPresenter.swift in Sources */,
+				5EC9E3F92B94AF59002E1164 /* StatisticsPresenter.swift in Sources */,
 				5EC9E4142B94AF59002E1164 /* EventsBuilderIO.swift in Sources */,
 				5EC9E40C2B94AF59002E1164 /* BuilderDataProvider.swift in Sources */,
 				5EC9E41B2B94AF59002E1164 /* CategorySelectorAssembly.swift in Sources */,
@@ -718,7 +718,7 @@
 				5EC9E4292B94AF59002E1164 /* OnboardingAssembly.swift in Sources */,
 				5EC9E4052B94AF59002E1164 /* EventsSelectorRouter.swift in Sources */,
 				5EC9E3F72B94AF59002E1164 /* SplashRouter.swift in Sources */,
-				5EC9E3FC2B94AF59002E1164 /* HabitsAssembly.swift in Sources */,
+				5EC9E3FC2B94AF59002E1164 /* StatisticsAssembly.swift in Sources */,
 				5EC9E3F32B94AF59002E1164 /* PrimaryCell.swift in Sources */,
 				5EC9E43C2B94AF59002E1164 /* TrackerRecord.swift in Sources */,
 				5EC9E4042B94AF59002E1164 /* EventsSelectorPresenter.swift in Sources */,
@@ -750,7 +750,7 @@
 				5EC9E4202B94AF59002E1164 /* TrackersAssembly.swift in Sources */,
 				5EC9E42A2B94AF59002E1164 /* TabBarController.swift in Sources */,
 				5EC9E42B2B94AF59002E1164 /* AppDelegate.swift in Sources */,
-				5EC9E3FA2B94AF59002E1164 /* HabitsRouter.swift in Sources */,
+				5EC9E3FA2B94AF59002E1164 /* StatisticsRouter.swift in Sources */,
 				5EC9E4342B94AF59002E1164 /* CoreDataStorage.swift in Sources */,
 				5EC9E3FE2B94AF59002E1164 /* EmojiView.swift in Sources */,
 				5EC9E3FF2B94AF59002E1164 /* TrackersCell.swift in Sources */,
@@ -770,7 +770,7 @@
 				5EC9E4122B94AF59002E1164 /* EventsBuilderPresenter.swift in Sources */,
 				5EC9E4032B94AF59002E1164 /* EventsSelectorAssembly.swift in Sources */,
 				5EC9E3F52B94AF59002E1164 /* SplashViewController.swift in Sources */,
-				5EC9E3FB2B94AF59002E1164 /* HabitsViewController.swift in Sources */,
+				5EC9E3FB2B94AF59002E1164 /* StatisticsViewController.swift in Sources */,
 				5EC9E4262B94AF59002E1164 /* OnboardingRouter.swift in Sources */,
 				5EC9E42F2B94AF59002E1164 /* UIColor+Ext.swift in Sources */,
 				5EC9E40A2B94AF59002E1164 /* EventsScheduleAssembly.swift in Sources */,

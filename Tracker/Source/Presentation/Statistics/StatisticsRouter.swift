@@ -1,5 +1,5 @@
 //
-//  HabitsRouter.swift
+//  StatisticsRouter.swift
 //  Tracker
 //
 //  Created by MAKOVEY Vladislav on 07.01.2024.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol IHabitsRouter { }
+protocol IStatisticsRouter { }
 
-final class HabitsRouter: IHabitsRouter {
+final class StatisticsRouter: IStatisticsRouter {
     // Dependencies
 
     weak var viewController: UIViewController?

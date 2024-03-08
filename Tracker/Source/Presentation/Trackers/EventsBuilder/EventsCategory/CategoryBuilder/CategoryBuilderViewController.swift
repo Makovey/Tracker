@@ -35,7 +35,11 @@ final class CategoryBuilderViewController: UIViewController {
 
         textField.font = .systemFont(ofSize: 17)
         textField.layer.cornerRadius = Constant.baseCornerRadius
-        
+        textField.attributedPlaceholder = NSAttributedString(
+            string: textField.placeholder ?? "",
+            attributes: [NSAttributedString.Key.foregroundColor: Assets.primaryGray.color]
+        )
+
         let paddingView: UIView = .init(frame: .init(
             x: .zero,
             y: .zero,

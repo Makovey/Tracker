@@ -30,7 +30,7 @@ final class EmojiCell: UICollectionViewCell {
     private lazy var hoverBackground: UIView = {
         let view = UIView()
         view.layer.cornerRadius = Constant.baseCornerRadius
-        view.backgroundColor = Assets.primaryElementBackground.color.withAlphaComponent(1)
+        view.backgroundColor = Assets.primaryLightGray.color
         view.isHidden = true
         
         return view.forAutolayout()

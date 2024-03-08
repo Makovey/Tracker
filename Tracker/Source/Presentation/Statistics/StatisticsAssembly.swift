@@ -1,5 +1,5 @@
 //
-//  HabitsAssembly.swift
+//  StatisticsAssembly.swift
 //  Tracker
 //
 //  Created by MAKOVEY Vladislav on 07.01.2024.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class HabitsAssembly {
+final class StatisticsAssembly {
     // MARK: - Public
     
     static func assemble() -> UIViewController {
-        let router = HabitsRouter()
-        let presenter = HabitsPresenter(router: router)
-        let view = HabitsViewController(presenter: presenter)
+        let router = StatisticsRouter()
+        let presenter = StatisticsPresenter(router: router)
+        let view = StatisticsViewController(presenter: presenter)
 
         router.viewController = view
         presenter.view = view

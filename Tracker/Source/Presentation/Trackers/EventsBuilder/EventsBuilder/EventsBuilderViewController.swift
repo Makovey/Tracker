@@ -102,6 +102,10 @@ final class EventsBuilderViewController: UIViewController {
         textField.placeholder = .loc.Events.Builder.TextField.placeholder
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
+        textField.attributedPlaceholder = NSAttributedString(
+            string: textField.placeholder ?? "",
+            attributes: [NSAttributedString.Key.foregroundColor: Assets.primaryGray.color]
+        )
 
         textField.font = .systemFont(ofSize: 17)
         textField.layer.cornerRadius = Constant.baseCornerRadius

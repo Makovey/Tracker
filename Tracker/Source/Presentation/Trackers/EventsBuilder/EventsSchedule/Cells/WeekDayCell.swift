@@ -15,6 +15,7 @@ protocol IWeekDayCellDelegate: AnyObject {
 final class WeekDayCell: UITableViewCell {
     private enum Constant {
         static let baseInset: CGFloat = 16
+        static let baseSwitcherRadius: CGFloat = 16
         static let baseFontSize: CGFloat = 17
     }
 
@@ -34,8 +35,10 @@ final class WeekDayCell: UITableViewCell {
     private lazy var switcher: UISwitch = {
         let switcher = UISwitch()
         switcher.onTintColor = Assets.optionState.color
+        switcher.backgroundColor = Assets.primaryLightGray.color
         switcher.addTarget(self, action: #selector(switcherValueChanged), for: .valueChanged)
-        
+        switcher.layer.cornerRadius = Constant.baseSwitcherRadius
+
         return switcher.forAutolayout()
     }()
     

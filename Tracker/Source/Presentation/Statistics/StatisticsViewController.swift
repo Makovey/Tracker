@@ -1,5 +1,5 @@
 //
-//  HabitsViewController.swift
+//  StatisticsViewController.swift
 //  Tracker
 //
 //  Created by MAKOVEY Vladislav on 07.01.2024.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol IHabitsView: AnyObject { }
+protocol IStatisticsView: AnyObject { }
 
-final class HabitsViewController: UIViewController {
+final class StatisticsViewController: UIViewController {
     // Dependencies
 
-    private let presenter: any IHabitsPresenter
+    private let presenter: any IStatisticsPresenter
 
     // MARK: - Lifecycle
 
-    init(presenter: some IHabitsPresenter) {
+    init(presenter: some IStatisticsPresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,4 +40,4 @@ final class HabitsViewController: UIViewController {
 
 // MARK: - IHabitsView
 
-extension HabitsViewController: IHabitsView { }
+extension StatisticsViewController: IStatisticsView { }

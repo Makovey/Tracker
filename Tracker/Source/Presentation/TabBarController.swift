@@ -31,13 +31,13 @@ final class TabBarController: UITabBarController {
             image: .init(systemName: Constant.trackersImageName),
             title: .loc.Main.Title.trackers
         )
-        let habits = prepareViewController(
-            HabitsAssembly.assemble(),
+        let statistics = prepareViewController(
+            StatisticsAssembly.assemble(),
             image: .init(systemName: Constant.habitsImageName),
             title: .loc.Main.Title.statistics
         )
         
-        viewControllers = [trackers, habits]
+        viewControllers = [trackers, statistics]
     }
     
     private func prepareViewController(
