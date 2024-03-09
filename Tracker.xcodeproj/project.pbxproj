@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3476751D1CE823F3290BE58F /* libPods-Tracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1036B466D69FECD5171BEA /* libPods-Tracker.a */; };
+		5E4107DE2B9B29B7000DA449 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107DD2B9B29B7000DA449 /* Secrets.swift */; };
+		5E4107E42B9C3BFA000DA449 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E32B9C3BFA000DA449 /* AnalyticsManager.swift */; };
 		5EBD0F5C2B94C179004E1D25 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5A2B94C179004E1D25 /* Localization.swift */; };
 		5EBD0F5D2B94C179004E1D25 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5B2B94C179004E1D25 /* Assets.swift */; };
 		5EC9E3EE2B94AF59002E1164 /* TrackerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E37F2B94AF59002E1164 /* TrackerRepository.swift */; };
@@ -96,6 +98,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E4107DD2B9B29B7000DA449 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		5E4107E32B9C3BFA000DA449 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		5E69F00D2B73CA1800637095 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E69F00F2B73CA2500637095 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E78417C2B4A92F500062777 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +215,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5E4107E22B9C3BFA000DA449 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				5E4107E32B9C3BFA000DA449 /* AnalyticsManager.swift */,
+			);
+			name = Analytics;
+			path = Source/Analytics;
+			sourceTree = "<group>";
+		};
 		5E69F0072B73C9B400637095 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +255,7 @@
 		5E78417E2B4A92F500062777 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				5E4107E22B9C3BFA000DA449 /* Analytics */,
 				5EC9E3842B94AF59002E1164 /* Components */,
 				5EC9E3DF2B94AF59002E1164 /* CoreData */,
 				5EC9E3E32B94AF59002E1164 /* Models */,
@@ -281,6 +295,7 @@
 		5EC9E3812B94AF59002E1164 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5E4107DD2B9B29B7000DA449 /* Secrets.swift */,
 				5EC9E3822B94AF59002E1164 /* Binding.swift */,
 				5EC9E3832B94AF59002E1164 /* WeekDayTransformer.swift */,
 			);
@@ -589,6 +604,7 @@
 				5E7841792B4A92F500062777 /* Frameworks */,
 				5EC9E44B2B94B868002E1164 /* Resources */,
 				5EC9E4512B94BB8A002E1164 /* ShellScript */,
+				C6F0F1BC66C61A7F031A74BF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -687,6 +703,23 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi \n";
 		};
+		C6F0F1BC66C61A7F031A74BF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tracker/Pods-Tracker-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tracker/Pods-Tracker-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tracker/Pods-Tracker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -705,6 +738,7 @@
 				5EC9E43A2B94AF59002E1164 /* TrackerCategoryStore.swift in Sources */,
 				5EC9E4322B94AF59002E1164 /* String+Ext.swift in Sources */,
 				5EC9E3FD2B94AF59002E1164 /* TrackersLayoutProvider.swift in Sources */,
+				5E4107E42B9C3BFA000DA449 /* AnalyticsManager.swift in Sources */,
 				5EC9E43E2B94AF59002E1164 /* SceneDelegate.swift in Sources */,
 				5EC9E41C2B94AF59002E1164 /* CategorySelectorViewController.swift in Sources */,
 				5EC9E4222B94AF59002E1164 /* OnboardingManagerAssembly.swift in Sources */,
@@ -745,6 +779,7 @@
 				5EC9E4372B94AF59002E1164 /* WeekDay.swift in Sources */,
 				5EC9E4172B94AF59002E1164 /* CategoryBuilderAssembly.swift in Sources */,
 				5EC9E4152B94AF59002E1164 /* EventsBuilderAssembly.swift in Sources */,
+				5E4107DE2B9B29B7000DA449 /* Secrets.swift in Sources */,
 				5EBD0F5C2B94C179004E1D25 /* Localization.swift in Sources */,
 				5EC9E3F62B94AF59002E1164 /* SplashPresenter.swift in Sources */,
 				5EC9E4202B94AF59002E1164 /* TrackersAssembly.swift in Sources */,

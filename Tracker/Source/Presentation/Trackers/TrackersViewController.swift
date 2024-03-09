@@ -134,6 +134,16 @@ final class TrackersViewController: UIViewController {
         setupInitialState()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.viewDidAppear()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        presenter.viewDidDisappear()
+    }
+
     // MARK: - Private
 
     private func setupUI() {
@@ -316,7 +326,7 @@ extension TrackersViewController: ITrackersCellDelegate {
     ) {
         if state {
             let trackerRecord = TrackerRecord(id: .init(), trackerId: trackerId, endDate: datePicker.date)
-            presenter.saveCategoryRecord(trackerRecord)
+            presenter.doneButtonTapped(with: trackerRecord)
             completedTrackers.append(trackerRecord)
         } else {
             let id = presenter.deleteCategoryRecord(id: recordId)

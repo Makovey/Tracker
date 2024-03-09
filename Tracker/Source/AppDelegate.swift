@@ -5,6 +5,7 @@
 //  Created by MAKOVEY Vladislav on 07.01.2024.
 //
 
+import AppMetricaCore
 import UIKit
 
 @main
@@ -13,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         WeekDayTransformer.register()
+        AppMetrica.activate(with: .init(apiKey: Secrets.apiKey)!)
         return true
     }
 

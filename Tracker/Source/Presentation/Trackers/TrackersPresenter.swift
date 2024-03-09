@@ -9,6 +9,8 @@ import Foundation
 
 protocol ITrackersPresenter {
     func viewDidLoad()
+    func viewDidAppear()
+    func viewDidDisappear()
     func addTrackerButtonTapped()
     func isEditingAvailableForThisDay(date: Date) -> Bool
     func isTrackerCompletedForThisDay(
@@ -17,7 +19,7 @@ protocol ITrackersPresenter {
         id: UUID
     ) -> Bool
 
-    func saveCategoryRecord(_ record: TrackerRecord)
+    func doneButtonTapped(with record: TrackerRecord)
     func deleteCategoryRecord(id: UUID?) -> UUID?
 }
 
@@ -27,16 +29,19 @@ final class TrackersPresenter: ITrackersPresenter {
     weak var view: (any ITrackersView)?
     private let router: any ITrackersRouter
     private let trackerRepository: any ITrackerRepository
+    private let analyticsManager: any IAnalyticsManager
     private var todaysId: UUID?
 
     // MARK: - Lifecycle
 
     init(
         router: some ITrackersRouter,
-        trackerRepository: some ITrackerRepository
+        trackerRepository: some ITrackerRepository,
+        analyticsManager: some IAnalyticsManager
     ) {
         self.router = router
         self.trackerRepository = trackerRepository
+        self.analyticsManager = analyticsManager
     }
     
     // MARK: - Public
@@ -46,7 +51,16 @@ final class TrackersPresenter: ITrackersPresenter {
         view?.updateTrackerList(with: trackerRepository.fetchCategories())
     }
 
+    func viewDidAppear() {
+        analyticsManager.sendEvent(.open)
+    }
+
+    func viewDidDisappear() {
+        analyticsManager.sendEvent(.close)
+    }
+
     func addTrackerButtonTapped() {
+        analyticsManager.sendTapEvent(.addTrack)
         router.openEventsSelectorScreen(builderOutput: self)
     }
     
@@ -63,7 +77,9 @@ final class TrackersPresenter: ITrackersPresenter {
         return Calendar.current.compare(date, to: record.endDate, toGranularity: .day) == .orderedSame
     }
 
-    func saveCategoryRecord(_ record: TrackerRecord) {
+    func doneButtonTapped(with record: TrackerRecord) {
+        analyticsManager.sendTapEvent(.track)
+
         todaysId = record.id
         trackerRepository.save(record: record)
     }
