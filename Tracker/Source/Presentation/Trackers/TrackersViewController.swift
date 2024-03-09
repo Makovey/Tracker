@@ -85,19 +85,13 @@ final class TrackersViewController: UIViewController {
         return collectionView.forAutolayout()
     }()
     
-    private lazy var emptyStateView: UIStackView = {
-        let imageView = UIImageView()
-        imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
-        
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-
-        let stackView = UIStackView(arrangedSubviews: [imageView, label])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = .init(integerLiteral: 8)
-        
-        return stackView.forAutolayout()
+    private lazy var statusView: StatusView = {
+        StatusView(
+            model: .init(
+                labelText: .loc.Trackers.EmptyState.title,
+                image: Assets.emptyTrackerImage.image
+            )
+        ).forAutolayout()
     }()
     
     private lazy var datePicker: UIDatePicker = {
@@ -169,38 +163,29 @@ final class TrackersViewController: UIViewController {
     }
     
     private func showEmptyState() {
-        let image: UIImage
-        let title: String
-        
+        let statusViewModel: StatusView.Model
+
         switch emptyState {
         case .date:
-            title = .loc.Trackers.EmptyState.title
-            image = Assets.emptyTrackerImage.image
+            statusViewModel = StatusView.Model(
+                labelText: .loc.Trackers.EmptyState.title,
+                image: Assets.emptyTrackerImage.image
+            )
         case .text:
-            title = .loc.Trackers.NotFoundState.title
-            image = Assets.notFoundTrackerImage.image
+            statusViewModel = StatusView.Model(
+                labelText: .loc.Trackers.NotFoundState.title,
+                image: Assets.notFoundTrackerImage.image
+            )
         }
         
-        emptyStateView.arrangedSubviews.forEach {
-            switch $0 {
-            case let imageView as UIImageView:
-                imageView.image = image
-            case let label as UILabel:
-                label.text = title
-            default: break
-            }
-        }
-        
-        emptyStateView.placedOn(collectionView)
-
-        NSLayoutConstraint.activate([
-            emptyStateView.centerX.constraint(equalTo: collectionView.centerX),
-            emptyStateView.centerY.constraint(equalTo: collectionView.centerY)
-        ])
+        statusView.update(with: statusViewModel)
+        statusView
+            .placedOn(collectionView)
+            .pinToCenter(of: collectionView)
     }
     
     private func hideEmptyState() {
-        emptyStateView.removeFromSuperview()
+        statusView.removeFromSuperview()
     }
 
     private func reloadSnapshot() {

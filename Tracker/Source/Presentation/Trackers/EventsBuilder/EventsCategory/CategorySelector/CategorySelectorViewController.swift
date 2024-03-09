@@ -56,22 +56,13 @@ final class CategorySelectorViewController: UIViewController {
         return button.forAutolayout()
     }()
     
-    private lazy var emptyStateView: UIStackView = {
-        let imageView = UIImageView(image: Assets.emptyTrackerImage.image)
-        imageView.frame = .init(x: 0, y: 0, width: 80, height: 80)
-        
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        label.text = .loc.Category.Selector.EmptyState.title
-        label.font = .systemFont(ofSize: 12)
-
-        let stackView = UIStackView(arrangedSubviews: [imageView, label])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = .init(integerLiteral: 8)
-        
-        return stackView.forAutolayout()
+    private lazy var emptyStateView: StatusView = {
+        StatusView(
+            model: .init(
+                labelText: .loc.Category.Selector.EmptyState.title,
+                image: Assets.emptyTrackerImage.image
+            )
+        ).forAutolayout()
     }()
 
     // MARK: - Lifecycle

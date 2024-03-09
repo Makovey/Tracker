@@ -13,7 +13,7 @@ protocol IAnalyticsManager {
 }
 
 struct AnalyticsManager: IAnalyticsManager {
-    enum Constant {
+    private enum Constant {
         static let event = "event"
         static let screen = "screen"
         static let item = "item"
