@@ -11,6 +11,7 @@
 		5E4107DE2B9B29B7000DA449 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107DD2B9B29B7000DA449 /* Secrets.swift */; };
 		5E4107E42B9C3BFA000DA449 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E32B9C3BFA000DA449 /* AnalyticsManager.swift */; };
 		5E4107E62B9C3D5E000DA449 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E52B9C3D5E000DA449 /* StatusView.swift */; };
+		5E4107E82B9C7239000DA449 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E72B9C7239000DA449 /* StatisticsCell.swift */; };
 		5EBD0F5C2B94C179004E1D25 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5A2B94C179004E1D25 /* Localization.swift */; };
 		5EBD0F5D2B94C179004E1D25 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5B2B94C179004E1D25 /* Assets.swift */; };
 		5EC9E3EE2B94AF59002E1164 /* TrackerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E37F2B94AF59002E1164 /* TrackerRepository.swift */; };
@@ -102,6 +103,7 @@
 		5E4107DD2B9B29B7000DA449 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		5E4107E32B9C3BFA000DA449 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		5E4107E52B9C3D5E000DA449 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		5E4107E72B9C7239000DA449 /* StatisticsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		5E69F00D2B73CA1800637095 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E69F00F2B73CA2500637095 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E78417C2B4A92F500062777 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,6 +322,7 @@
 			children = (
 				5EC9E3862B94AF59002E1164 /* PrimarySupplementaryHeader.swift */,
 				5EC9E3872B94AF59002E1164 /* PrimaryCell.swift */,
+				5E4107E72B9C7239000DA449 /* StatisticsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				5EC9E3F52B94AF59002E1164 /* SplashViewController.swift in Sources */,
 				5EC9E3FB2B94AF59002E1164 /* StatisticsViewController.swift in Sources */,
 				5EC9E4262B94AF59002E1164 /* OnboardingRouter.swift in Sources */,
+				5E4107E82B9C7239000DA449 /* StatisticsCell.swift in Sources */,
 				5EC9E42F2B94AF59002E1164 /* UIColor+Ext.swift in Sources */,
 				5EC9E40A2B94AF59002E1164 /* EventsScheduleAssembly.swift in Sources */,
 				5EC9E4112B94AF59002E1164 /* EventsBuilderRouter.swift in Sources */,

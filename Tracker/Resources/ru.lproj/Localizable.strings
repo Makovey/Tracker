@@ -57,3 +57,9 @@ weekday.sunday.shortTitle = "Вс";
 onboarding.first.title = "Отслеживайте только то, что хотите";
 onboarding.second.title = "Даже если это не литры воды и йога";
 onboarding.primaryButton.title = "Вот это технологии!";
+
+statistics.emptyState.title = "Анализировать пока нечего";
+statistics.bestPeriod.title = "Лучший период";
+statistics.idealDays.title = "Идеальные дни";
+statistics.trackersCompleted.title = "Трекеров завершено";
+statistics.averageValue.title = "Среднее значение";

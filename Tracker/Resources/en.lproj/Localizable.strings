@@ -57,3 +57,9 @@ weekday.sunday.shortTitle = "Sun";
 onboarding.first.title = "Track only what you want";
 onboarding.second.title = "Even if it's not liters of water and yoga";
 onboarding.primaryButton.title = "This is technology!";
+
+statistics.emptyState.title = "There is nothing to analyze yet";
+statistics.bestPeriod.title = "Best period";
+statistics.idealDays.title = "Ideal days";
+statistics.trackersCompleted.title = "Trackers completed";
+statistics.averageValue.title = "Average value";

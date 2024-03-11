@@ -10,7 +10,7 @@ import UIKit
 protocol IStatisticsRouter { }
 
 final class StatisticsRouter: IStatisticsRouter {
-    // Dependencies
+    // MARK: - Properties
 
     weak var viewController: UIViewController?
 

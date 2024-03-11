@@ -11,8 +11,14 @@ final class StatisticsAssembly {
     // MARK: - Public
     
     static func assemble() -> UIViewController {
+        let storage: IPersistenceStorage = CoreDataStorage()
+        let repository: ITrackerRepository = TrackerRepository(storage: storage)
+
         let router = StatisticsRouter()
-        let presenter = StatisticsPresenter(router: router)
+        let presenter = StatisticsPresenter(
+            router: router,
+            trackerRepository: repository
+        )
         let view = StatisticsViewController(presenter: presenter)
 
         router.viewController = view
