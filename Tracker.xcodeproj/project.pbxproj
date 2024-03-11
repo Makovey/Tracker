@@ -12,6 +12,12 @@
 		5E4107E42B9C3BFA000DA449 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E32B9C3BFA000DA449 /* AnalyticsManager.swift */; };
 		5E4107E62B9C3D5E000DA449 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E52B9C3D5E000DA449 /* StatusView.swift */; };
 		5E4107E82B9C7239000DA449 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4107E72B9C7239000DA449 /* StatisticsCell.swift */; };
+		5EA3FE002B9F8A8D00A8811A /* FilterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FDFB2B9F8A8D00A8811A /* FilterPresenter.swift */; };
+		5EA3FE012B9F8A8D00A8811A /* FilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FDFC2B9F8A8D00A8811A /* FilterRouter.swift */; };
+		5EA3FE022B9F8A8D00A8811A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FDFD2B9F8A8D00A8811A /* FilterViewController.swift */; };
+		5EA3FE032B9F8A8D00A8811A /* FilterAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FDFE2B9F8A8D00A8811A /* FilterAssembly.swift */; };
+		5EA3FE052B9F904800A8811A /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FE042B9F904800A8811A /* FilterType.swift */; };
+		5EA3FE072B9F93D100A8811A /* FilterIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FE062B9F93D100A8811A /* FilterIO.swift */; };
 		5EBD0F5C2B94C179004E1D25 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5A2B94C179004E1D25 /* Localization.swift */; };
 		5EBD0F5D2B94C179004E1D25 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5B2B94C179004E1D25 /* Assets.swift */; };
 		5EC9E3EE2B94AF59002E1164 /* TrackerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E37F2B94AF59002E1164 /* TrackerRepository.swift */; };
@@ -107,6 +113,12 @@
 		5E69F00D2B73CA1800637095 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E69F00F2B73CA2500637095 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E78417C2B4A92F500062777 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA3FDFB2B9F8A8D00A8811A /* FilterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPresenter.swift; sourceTree = "<group>"; };
+		5EA3FDFC2B9F8A8D00A8811A /* FilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRouter.swift; sourceTree = "<group>"; };
+		5EA3FDFD2B9F8A8D00A8811A /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		5EA3FDFE2B9F8A8D00A8811A /* FilterAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAssembly.swift; sourceTree = "<group>"; };
+		5EA3FE042B9F904800A8811A /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
+		5EA3FE062B9F93D100A8811A /* FilterIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterIO.swift; sourceTree = "<group>"; };
 		5EBD0F5A2B94C179004E1D25 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		5EBD0F5B2B94C179004E1D25 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		5EC9E3742B93C156002E1164 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -277,6 +289,18 @@
 			path = Tracker;
 			sourceTree = "<group>";
 		};
+		5EA3FDF92B9F8A7400A8811A /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				5EA3FDFE2B9F8A8D00A8811A /* FilterAssembly.swift */,
+				5EA3FDFB2B9F8A8D00A8811A /* FilterPresenter.swift */,
+				5EA3FDFC2B9F8A8D00A8811A /* FilterRouter.swift */,
+				5EA3FDFD2B9F8A8D00A8811A /* FilterViewController.swift */,
+				5EA3FE062B9F93D100A8811A /* FilterIO.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
 		5EC9E3792B94AEA8002E1164 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +398,7 @@
 		5EC9E3952B94AF59002E1164 /* Trackers */ = {
 			isa = PBXGroup;
 			children = (
+				5EA3FDF92B9F8A7400A8811A /* Filters */,
 				5EC9E39C2B94AF59002E1164 /* EventsBuilder */,
 				5EC9E3962B94AF59002E1164 /* Cells */,
 				5EC9E39A2B94AF59002E1164 /* TrackersRouter.swift */,
@@ -575,6 +600,7 @@
 				5EC9E3E62B94AF59002E1164 /* Stores */,
 				5EC9E3EA2B94AF59002E1164 /* Tracker.swift */,
 				5EC9E3EB2B94AF59002E1164 /* TrackerRecord.swift */,
+				5EA3FE042B9F904800A8811A /* FilterType.swift */,
 			);
 			name = Models;
 			path = Source/Models;
@@ -766,8 +792,12 @@
 				5EC9E4002B94AF59002E1164 /* TrackersRouter.swift in Sources */,
 				5EC9E40B2B94AF59002E1164 /* EventsScheduleIO.swift in Sources */,
 				5EC9E42D2B94AF59002E1164 /* UICollectionView+Ext.swift in Sources */,
+				5EA3FE032B9F8A8D00A8811A /* FilterAssembly.swift in Sources */,
+				5EA3FE002B9F8A8D00A8811A /* FilterPresenter.swift in Sources */,
+				5EA3FE052B9F904800A8811A /* FilterType.swift in Sources */,
 				5EC9E4392B94AF59002E1164 /* TrackerStore.swift in Sources */,
 				5EC9E43B2B94AF59002E1164 /* Tracker.swift in Sources */,
+				5EA3FE012B9F8A8D00A8811A /* FilterRouter.swift in Sources */,
 				5EC9E4072B94AF59002E1164 /* WeekDayCell.swift in Sources */,
 				5EC9E41A2B94AF59002E1164 /* CategoryBuilderIO.swift in Sources */,
 				5EC9E3F82B94AF59002E1164 /* SplashAssembly.swift in Sources */,
@@ -788,6 +818,7 @@
 				5E4107DE2B9B29B7000DA449 /* Secrets.swift in Sources */,
 				5EBD0F5C2B94C179004E1D25 /* Localization.swift in Sources */,
 				5EC9E3F62B94AF59002E1164 /* SplashPresenter.swift in Sources */,
+				5EA3FE022B9F8A8D00A8811A /* FilterViewController.swift in Sources */,
 				5EC9E4202B94AF59002E1164 /* TrackersAssembly.swift in Sources */,
 				5EC9E42A2B94AF59002E1164 /* TabBarController.swift in Sources */,
 				5EC9E42B2B94AF59002E1164 /* AppDelegate.swift in Sources */,
@@ -796,6 +827,7 @@
 				5EC9E3FE2B94AF59002E1164 /* EmojiView.swift in Sources */,
 				5EC9E3FF2B94AF59002E1164 /* TrackersCell.swift in Sources */,
 				5EC9E4252B94AF59002E1164 /* OnboardingManagerRouter.swift in Sources */,
+				5EA3FE072B9F93D100A8811A /* FilterIO.swift in Sources */,
 				5EC9E4192B94AF59002E1164 /* CategoryBuilderViewController.swift in Sources */,
 				5EC9E4062B94AF59002E1164 /* EventsScheduleRouter.swift in Sources */,
 				5EC9E4442B94B4C9002E1164 /* Bundle+Ext.swift in Sources */,

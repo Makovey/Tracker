@@ -16,6 +16,7 @@ trackers.searchBar.placeholder = "Поиск";
 trackers.emptyState.title = "Что будем отслеживать?";
 trackers.notFoundState.title = "Ничего не найдено";
 trackers.cell.subtitle = "дней";
+trackers.filter.title = "Фильтры";
 
 events.selector.habitButton.title = "Привычка";
 events.selector.irregularEventButton.title = "Нерегулярное событие";
@@ -63,3 +64,8 @@ statistics.bestPeriod.title = "Лучший период";
 statistics.idealDays.title = "Идеальные дни";
 statistics.trackersCompleted.title = "Трекеров завершено";
 statistics.averageValue.title = "Среднее значение";
+
+filters.all.title = "Все трекеры";
+filters.todays.title = "Трекеры на сегодня";
+filters.ended.title = "Завершенные";
+filters.inProgress.title = "Не завершенные";

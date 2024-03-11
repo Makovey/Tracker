@@ -18,6 +18,9 @@ protocol ITrackersView: AnyObject {
 final class TrackersViewController: UIViewController {
     private enum Constant {
         static let baseInset: CGFloat = 16
+
+        static let filterWidth: CGFloat = 114
+        static let filterHeight: CGFloat = 50
     }
     
     private enum EmptyViewError {
@@ -103,6 +106,13 @@ final class TrackersViewController: UIViewController {
         return datePicker.forAutolayout()
     }()
 
+    private lazy var filterButton: PrimaryButton = {
+        let button = PrimaryButton(style: .option, text: .loc.Trackers.Filter.title)
+        button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
+
+        return button.forAutolayout()
+    }()
+
     // MARK: - Lifecycle
 
     init(
@@ -154,6 +164,14 @@ final class TrackersViewController: UIViewController {
             collectionView.left.constraint(equalTo: view.left),
             collectionView.right.constraint(equalTo: view.right),
             collectionView.bottom.constraint(equalTo: view.safeBottom)
+        ])
+
+        filterButton.placedOn(view)
+        NSLayoutConstraint.activate([
+            filterButton.width.constraint(equalToConstant: Constant.filterWidth),
+            filterButton.height.constraint(equalToConstant: Constant.filterHeight),
+            filterButton.centerX.constraint(equalTo: view.centerX),
+            filterButton.bottom.constraint(equalTo: view.safeBottom, constant: -Constant.baseInset)
         ])
     }
     
@@ -276,6 +294,11 @@ final class TrackersViewController: UIViewController {
     func datePickerValueChanged(_ sender: UIDatePicker) {
         emptyState = .date
         updateVisibilityCategories()
+    }
+
+    @objc
+    private func filterButtonTapped() {
+        presenter.filterButtonTapped()
     }
 }
 

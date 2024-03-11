@@ -20,7 +20,7 @@ final class EventsScheduleViewController: UIViewController {
 
     private let weekDays = WeekDay.allCases
     private let presenter: any IEventsSchedulePresenter
-    private var selectedDays =  Set<WeekDay>()
+    private var selectedDays = Set<WeekDay>()
     
     // MARK: - UI
     

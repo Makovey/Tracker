@@ -57,7 +57,6 @@ final class OnboardingViewController: UIViewController {
 
     required init?(coder: NSCoder) { nil }
 
-    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()

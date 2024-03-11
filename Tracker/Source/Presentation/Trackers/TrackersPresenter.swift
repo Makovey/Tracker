@@ -21,6 +21,7 @@ protocol ITrackersPresenter {
 
     func doneButtonTapped(with record: TrackerRecord)
     func deleteCategoryRecord(id: UUID?) -> UUID?
+    func filterButtonTapped()
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -31,6 +32,7 @@ final class TrackersPresenter: ITrackersPresenter {
     private let trackerRepository: any ITrackerRepository
     private let analyticsManager: any IAnalyticsManager
     private var todaysId: UUID?
+    private var filterTypeSelected: FilterType?
 
     // MARK: - Lifecycle
 
@@ -90,6 +92,13 @@ final class TrackersPresenter: ITrackersPresenter {
         trackerRepository.deleteRecordById(safeId)
         return safeId
     }
+
+    func filterButtonTapped() {
+        router.openFilterScreen(
+            filterModuleOutput: self,
+            selectedFilter: filterTypeSelected
+        )
+    }
 }
 
 // MARK: - IEventsBuilderOutput
@@ -97,5 +106,15 @@ final class TrackersPresenter: ITrackersPresenter {
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
         view?.updateTrackerList(with: trackerRepository.fetchCategories())
+    }
+}
+
+// MARK: - IFilterOutput
+
+extension TrackersPresenter: IFilterOutput {
+    func filterSelected(_ filter: FilterType) {
+        filterTypeSelected = filter
+
+        print(filter)
     }
 }
