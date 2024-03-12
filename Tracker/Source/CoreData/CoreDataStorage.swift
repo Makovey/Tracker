@@ -12,7 +12,9 @@ protocol IPersistenceStorage {
     func fetchRecords() -> [TrackerRecord]
     func save(record: TrackerRecord)
     func deleteRecordById(_ id: UUID)
-    
+    func deleteRecordsByTrackerIds(_ ids: [UUID])
+    func deleteTrackerById(_ id: UUID)
+
     func fetchCategories() -> [TrackerCategory]
     func save(trackerCategory: TrackerCategory)
     func replaceCategory(from existedCategory: TrackerCategory, to category: TrackerCategory)
@@ -67,7 +69,23 @@ final class CoreDataStorage: IPersistenceStorage {
             assertionFailure("Can't delete record with -> \(id) cause: \(error)")
         }
     }
-    
+
+    func deleteRecordsByTrackerIds(_ ids: [UUID]) {
+        do {
+            try ids.forEach{ try trackerRecordStore.deleteByTrackerId($0) }
+        } catch {
+            assertionFailure("Can't delete records with -> \(ids) cause: \(error)")
+        }
+    }
+
+    func deleteTrackerById(_ id: UUID) {
+        do {
+            try trackerStore.deleteById(id)
+        } catch {
+            assertionFailure("Can't delete tracker with -> \(id) cause: \(error)")
+        }
+    }
+
     func fetchCategories() -> [TrackerCategory] {
         do {
             return try trackerCategoryStore.fetchCategories().sorted(by: { $0.header < $1.header })

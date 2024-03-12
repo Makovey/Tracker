@@ -18,6 +18,7 @@
 		5EA3FE032B9F8A8D00A8811A /* FilterAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FDFE2B9F8A8D00A8811A /* FilterAssembly.swift */; };
 		5EA3FE052B9F904800A8811A /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FE042B9F904800A8811A /* FilterType.swift */; };
 		5EA3FE072B9F93D100A8811A /* FilterIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FE062B9F93D100A8811A /* FilterIO.swift */; };
+		5EA3FE0B2BA0AC5500A8811A /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA3FE0A2BA0AC5500A8811A /* Array+Ext.swift */; };
 		5EBD0F5C2B94C179004E1D25 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5A2B94C179004E1D25 /* Localization.swift */; };
 		5EBD0F5D2B94C179004E1D25 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBD0F5B2B94C179004E1D25 /* Assets.swift */; };
 		5EC9E3EE2B94AF59002E1164 /* TrackerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC9E37F2B94AF59002E1164 /* TrackerRepository.swift */; };
@@ -119,6 +120,7 @@
 		5EA3FDFE2B9F8A8D00A8811A /* FilterAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAssembly.swift; sourceTree = "<group>"; };
 		5EA3FE042B9F904800A8811A /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		5EA3FE062B9F93D100A8811A /* FilterIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterIO.swift; sourceTree = "<group>"; };
+		5EA3FE0A2BA0AC5500A8811A /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		5EBD0F5A2B94C179004E1D25 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		5EBD0F5B2B94C179004E1D25 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		5EC9E3742B93C156002E1164 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -566,6 +568,7 @@
 				5EC9E3DC2B94AF59002E1164 /* NSManagedObjectContext+Ext.swift */,
 				5EC9E3DD2B94AF59002E1164 /* String+Ext.swift */,
 				5EC9E4432B94B4C9002E1164 /* Bundle+Ext.swift */,
+				5EA3FE0A2BA0AC5500A8811A /* Array+Ext.swift */,
 			);
 			name = Extensions;
 			path = Source/Extensions;
@@ -774,6 +777,7 @@
 				5EC9E4002B94AF59002E1164 /* TrackersRouter.swift in Sources */,
 				5EC9E40B2B94AF59002E1164 /* EventsScheduleIO.swift in Sources */,
 				5EC9E42D2B94AF59002E1164 /* UICollectionView+Ext.swift in Sources */,
+				5EA3FE0B2BA0AC5500A8811A /* Array+Ext.swift in Sources */,
 				5EA3FE032B9F8A8D00A8811A /* FilterAssembly.swift in Sources */,
 				5EA3FE002B9F8A8D00A8811A /* FilterPresenter.swift in Sources */,
 				5EA3FE052B9F904800A8811A /* FilterType.swift in Sources */,

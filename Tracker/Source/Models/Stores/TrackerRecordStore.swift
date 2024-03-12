@@ -12,12 +12,14 @@ protocol ITrackerRecordStore {
     func fetchRecords() throws -> [TrackerRecord]
     func save(record: TrackerRecord) throws
     func deleteById(_ id: UUID) throws
+    func deleteByTrackerId(_ id: UUID) throws
 }
 
 final class TrackerRecordStore: ITrackerRecordStore {
     private enum Constant {
         static let recordEntityName = "TrackerRecordCD"
         static let recordId = "id"
+        static let trackerId = "trackerId"
     }
     // MARK: - Properties
 
@@ -60,6 +62,20 @@ final class TrackerRecordStore: ITrackerRecordStore {
             id as CVarArg
         )
         
+        let records = try context.fetch(request)
+        guard let record = records.first else { return }
+
+        context.delete(record)
+        context.safeSave()
+    }
+
+    func deleteByTrackerId(_ id: UUID) throws {
+        let request = NSFetchRequest<TrackerRecordCD>(entityName: Constant.recordEntityName)
+        request.predicate = NSPredicate(
+            format: "\(Constant.trackerId) == %@",
+            id as CVarArg
+        )
+
         let records = try context.fetch(request)
         guard let record = records.first else { return }
 

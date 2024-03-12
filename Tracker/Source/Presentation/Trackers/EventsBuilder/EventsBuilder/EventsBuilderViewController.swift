@@ -262,7 +262,8 @@ final class EventsBuilderViewController: UIViewController {
             name: trackerName,
             color: selectedColor,
             emoji: selectedEmoji,
-            schedule: schedule
+            schedule: schedule,
+            isPinned: false
         )
         
         presenter.createButtonTapped(with: tracker)

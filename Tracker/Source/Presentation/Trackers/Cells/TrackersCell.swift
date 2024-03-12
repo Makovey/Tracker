@@ -22,7 +22,7 @@ final class TrackersCell: UICollectionViewCell {
         static let addButtonSize: CGFloat = 34
         static let baseFontSize: CGFloat = 12
         static let baseInset: CGFloat = 12
-        static let emojiSize: CGFloat = 24
+        static let iconSize: CGFloat = 24
     }
     
     struct Model {
@@ -46,7 +46,7 @@ final class TrackersCell: UICollectionViewCell {
     
     // MARK: - UI
 
-    private lazy var backgroundCardView: UIView = {
+    private(set) lazy var backgroundCardView: UIView = {
         let background = UIView()
         background.layer.borderWidth = 1
         background.layer.borderColor = Assets.transparent.color.cgColor
@@ -86,7 +86,11 @@ final class TrackersCell: UICollectionViewCell {
         
         return button.forAutolayout()
     }()
-    
+
+    private lazy var pinImageView: UIImageView = {
+        UIImageView(image: Assets.pin.image).forAutolayout()
+    }()
+
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -126,7 +130,15 @@ final class TrackersCell: UICollectionViewCell {
             backgroundCardView.right.constraint(equalTo: contentView.right),
             backgroundCardView.height.constraint(equalToConstant: Constant.backgroundCardHeight)
         ])
-        
+
+        pinImageView.placedOn(backgroundCardView)
+        NSLayoutConstraint.activate([
+            pinImageView.top.constraint(equalTo: backgroundCardView.top, constant: Constant.baseInset),
+            pinImageView.right.constraint(equalTo: backgroundCardView.right, constant: -4),
+            pinImageView.width.constraint(equalToConstant: Constant.iconSize),
+            pinImageView.height.constraint(equalToConstant: Constant.iconSize)
+        ])
+
         titleLabel.placedOn(backgroundCardView)
         NSLayoutConstraint.activate([
             titleLabel.left.constraint(equalTo: backgroundCardView.left, constant: Constant.baseInset),
@@ -138,8 +150,8 @@ final class TrackersCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             emojiView.top.constraint(equalTo: backgroundCardView.top, constant: Constant.baseInset),
             emojiView.left.constraint(equalTo: backgroundCardView.left, constant: Constant.baseInset),
-            emojiView.width.constraint(equalToConstant: Constant.emojiSize),
-            emojiView.height.constraint(equalToConstant: Constant.emojiSize)
+            emojiView.width.constraint(equalToConstant: Constant.iconSize),
+            emojiView.height.constraint(equalToConstant: Constant.iconSize)
         ])
         
         dateLabel.placedOn(contentView)
@@ -162,7 +174,8 @@ final class TrackersCell: UICollectionViewCell {
         titleLabel.text = model.tracker.name
         addButton.backgroundColor = model.tracker.color
         emojiView.set(emoji: model.tracker.emoji)
-        
+        pinImageView.isHidden = !model.tracker.isPinned
+
         model.isCompletedForToday ? makeTappedButtonState() : makeNormalButtonState()
     }
     

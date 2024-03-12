@@ -52,6 +52,7 @@ final class TrackerCategoryStore: ITrackerCategoryStore {
                 trackerCD.color = $0.color.toHex()
                 trackerCD.emoji = $0.emoji
                 trackerCD.schedule = $0.schedule as? NSObject
+                trackerCD.isPinned = $0.isPinned
                 return trackerCD
             }
         
@@ -87,7 +88,8 @@ final class TrackerCategoryStore: ITrackerCategoryStore {
                 name: $0.name ?? "",
                 color: .init(hex: $0.color) ?? UIColor.clear,
                 emoji: $0.emoji ?? "",
-                schedule: $0.schedule as? Set<WeekDay>
+                schedule: $0.schedule as? Set<WeekDay>,
+                isPinned: $0.isPinned ?? false
             )
         }
         

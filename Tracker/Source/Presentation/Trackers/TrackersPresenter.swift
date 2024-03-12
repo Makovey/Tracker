@@ -23,6 +23,10 @@ protocol ITrackersPresenter {
     func deleteCategoryRecord(id: UUID?) -> UUID?
     func filterButtonTapped()
     func setAllFilter()
+
+    func pinActionTapped(tracker: Tracker)
+    func editActionTapped()
+    func deleteActionTapped(trackerId: UUID)
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -51,7 +55,7 @@ final class TrackersPresenter: ITrackersPresenter {
     
     func viewDidLoad() {
         view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
-        view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+        assembleTrackerList()
         view?.setFilterType(filterType: filterTypeSelected)
     }
 
@@ -107,13 +111,56 @@ final class TrackersPresenter: ITrackersPresenter {
     func setAllFilter() {
         filterTypeSelected = .all
     }
+
+    func pinActionTapped(tracker: Tracker) {
+        let newTracker = Tracker(
+            id: tracker.id,
+            name: tracker.name,
+            color: tracker.color,
+            emoji: tracker.emoji,
+            schedule: tracker.schedule,
+            isPinned: !tracker.isPinned
+        )
+
+        trackerRepository.replaceTracker(newTracker)
+        assembleTrackerList()
+    }
+
+    func editActionTapped() {
+        analyticsManager.sendTapEvent(.edit)
+        
+        print(#function)
+    }
+
+    func deleteActionTapped(trackerId: UUID) {
+        analyticsManager.sendTapEvent(.delete)
+
+        trackerRepository.deleteTrackerById(trackerId)
+        assembleTrackerList()
+    }
+
+    private func assembleTrackerList() {
+        let allCategories = trackerRepository.fetchAllCategories()
+        let allPinnedTrackers = allCategories.flatMap { $0.trackers.filter { $0.isPinned } }
+
+        let category = TrackerCategory(header: "Pin", trackers: allPinnedTrackers) // TODO
+        let categoryWithoutPinnedTrackers = allCategories
+            .map { TrackerCategory(
+                header: $0.header,
+                trackers: $0.trackers.filter { !$0.isPinned })
+            }
+
+        let final = [category] + categoryWithoutPinnedTrackers
+
+        view?.updateTrackerList(with: final)
+    }
 }
 
 // MARK: - IEventsBuilderOutput
 
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
-        view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+        assembleTrackerList()
     }
 }
 
@@ -125,12 +172,12 @@ extension TrackersPresenter: IFilterOutput {
 
         switch filter {
         case .all:
-            view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+            assembleTrackerList()
             view?.setFilterType(filterType: filterTypeSelected)
         case .today:
             view?.setFilterType(filterType: filterTypeSelected)
             view?.setCurrentDate()
-            view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+            assembleTrackerList()
         case .completed:
             let ids = trackerRepository.fetchRecords().map { $0.trackerId }
 

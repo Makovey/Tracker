@@ -82,7 +82,8 @@ final class TrackersViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider.layout())
-        
+        collectionView.delegate = self
+
         collectionView.register(TrackersCell.self)
         collectionView.register(
             PrimarySupplementaryHeader.self,
@@ -368,5 +369,62 @@ extension TrackersViewController: ITrackersCellDelegate {
             let id = presenter.deleteCategoryRecord(id: recordId)
             completedTrackers = completedTrackers.filter { $0.id != id }
         }
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension TrackersViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration
+    ) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: indexPath) as? TrackersCell
+        else { return nil }
+
+        return .init(view: cell.backgroundCardView)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        guard let model = visibleCategoryList[safe: indexPath.section]?.trackers[safe: indexPath.row] else { return nil }
+
+        return .init(identifier: indexPath as NSCopying, actionProvider:  { _ in
+            UIMenu(children: [
+                self.makePinAction(tracker: model),
+                self.makeEditAction(),
+                self.makeDeleteAction(trackerId: model.id)
+            ])
+        })
+    }
+
+    private func makePinAction(tracker: Tracker) -> UIAction {
+        .init(
+            title: tracker.isPinned ? "Открепить" : "Закрепить", // TODO
+            handler: { [weak self] _ in
+                self?.presenter.pinActionTapped(tracker: tracker)
+            }
+        )
+    }
+    private func makeEditAction() -> UIAction {
+        .init(
+            title: "Редактриовать", // TODO
+            handler: { [weak self] _ in
+                self?.presenter.editActionTapped()
+            }
+        )
+    }
+    private func makeDeleteAction(trackerId: UUID) -> UIAction {
+        .init(
+            title: "Удалить", // TODO
+            attributes: .destructive,
+            handler: { [weak self] _ in
+                self?.presenter.deleteActionTapped(trackerId: trackerId)
+            }
+        )
     }
 }
