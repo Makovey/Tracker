@@ -5,7 +5,7 @@ inhibit_all_warnings!
 
 target 'Tracker' do
   pod 'SwiftGen'
-  pod 'AppMetricaAnalytics', '~> 5.0.0'
+  pod 'YandexMobileMetrica'
 end
 
 post_install do |installer|

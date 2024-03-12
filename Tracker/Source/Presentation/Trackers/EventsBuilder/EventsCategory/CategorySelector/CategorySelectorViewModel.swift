@@ -24,7 +24,7 @@ final class CategorySelectorViewModel: ICategorySelectorViewModel {
     weak var output: (any ICategorySelectorOutput)?
 
     var categoriesNamesBinding: Binding<[String]>? {
-        didSet { categoriesNamesBinding?(trackerRepository.fetchCategories().map { $0.header }) }
+        didSet { categoriesNamesBinding?(trackerRepository.fetchAllCategories().map { $0.header }) }
     }
 
     var selectedCategoryBinding: Binding<String?>? {
@@ -71,6 +71,6 @@ final class CategorySelectorViewModel: ICategorySelectorViewModel {
 extension CategorySelectorViewModel: ICategoryBuilderOutput {
     func didBuildNewCategory(_ category: String) {
         trackerRepository.saveAllCategories([category])
-        categoriesNamesBinding?(trackerRepository.fetchCategories().map { $0.header })
+        categoriesNamesBinding?(trackerRepository.fetchAllCategories().map { $0.header })
     }
 }

@@ -12,7 +12,7 @@ enum TrackerCategoryRepositoryError: Error {
 }
 
 protocol ITrackerRepository {
-    func fetchCategories() -> [TrackerCategory]
+    func fetchAllCategories() -> [TrackerCategory]
     func fetchSelectedCategoryName() -> String?
     func saveSelectedCategoryName(_ categoryName: String)
     func saveAllCategories(_ categories: [String])
@@ -38,7 +38,7 @@ final class TrackerRepository: ITrackerRepository {
     
     // MARK: - Public
     
-    func fetchCategories() -> [TrackerCategory] {
+    func fetchAllCategories() -> [TrackerCategory] {
         storage.fetchCategories()
     }
     

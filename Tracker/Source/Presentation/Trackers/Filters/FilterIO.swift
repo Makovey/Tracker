@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IFilterInput {
-    func setSelectedFilter(filter: FilterType?)
+    func setSelectedFilter(filter: FilterType)
 }
 
 protocol IFilterOutput: AnyObject {

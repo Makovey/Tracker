@@ -5,7 +5,7 @@
 //  Created by MAKOVEY Vladislav on 08.03.2024.
 //
 
-import AppMetricaCore
+import YandexMobileMetrica
 
 protocol IAnalyticsManager {
     func sendEvent(_ name: EventName)
@@ -19,9 +19,18 @@ struct AnalyticsManager: IAnalyticsManager {
         static let item = "item"
     }
 
+    static func register() {
+        guard let configuration = YMMYandexMetricaConfiguration(apiKey: Secrets.apiKey) else {
+            assertionFailure("Can't configure analytics manager with api key \(Secrets.apiKey)")
+            return
+        }
+
+        YMMYandexMetrica.activate(with: configuration)
+    }
+
     func sendEvent(_ name: EventName) {
-        AppMetrica.reportEvent(
-            name: Constant.event,
+        YMMYandexMetrica.reportEvent(
+            Constant.event,
             parameters: [
                 Constant.event: name.rawValue,
                 Constant.screen: ScreenName.Main.rawValue
@@ -30,8 +39,8 @@ struct AnalyticsManager: IAnalyticsManager {
     }
     
     func sendTapEvent(_ name: TapEvent) {
-        AppMetrica.reportEvent(
-            name: Constant.event,
+        YMMYandexMetrica.reportEvent(
+            Constant.event,
             parameters: [
                 Constant.event: EventName.click.rawValue,
                 Constant.screen: ScreenName.Main.rawValue,

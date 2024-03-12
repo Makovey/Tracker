@@ -11,7 +11,7 @@ protocol ITrackersRouter {
     func openEventsSelectorScreen(builderOutput: some IEventsBuilderOutput)
     func openFilterScreen(
         filterModuleOutput: some IFilterOutput,
-        selectedFilter: FilterType?
+        selectedFilter: FilterType
     )
 }
 
@@ -29,7 +29,7 @@ final class TrackersRouter: ITrackersRouter {
 
     func openFilterScreen(
         filterModuleOutput: some IFilterOutput,
-        selectedFilter: FilterType?
+        selectedFilter: FilterType
     ) {
         let filterController = FilterAssembly.assemble(output: filterModuleOutput)
         let destination = UINavigationController(rootViewController: filterController)

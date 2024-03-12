@@ -102,10 +102,6 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(
-            at: indexPath
-        ) as? PrimaryCell else { return }
-
         presenter.filterSelected(filterType: filters[indexPath.row])
     }
 }
@@ -113,7 +109,7 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - IFilterInput
 
 extension FilterViewController: IFilterInput {
-    func setSelectedFilter(filter: FilterType?) {
+    func setSelectedFilter(filter: FilterType) {
         selectedFilter = filter
     }
 }

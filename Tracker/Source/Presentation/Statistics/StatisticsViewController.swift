@@ -79,16 +79,20 @@ final class StatisticsViewController: UIViewController {
             tableView.right.constraint(equalTo: view.right, constant: -Constant.sideInset),
             tableView.bottom.constraint(equalTo: view.bottom, constant: -Constant.extraSideInset),
         ])
-    }
 
-    private func showStatusView() {
         statusView
             .placedOn(view)
             .pinToCenter(of: view)
     }
 
+    private func showStatusView() {
+        statusView.isHidden = false
+        tableView.isHidden = true
+    }
+
     private func hideStatusView() {
-        statusView.removeFromSuperview()
+        statusView.isHidden = true
+        tableView.isHidden = false
     }
 }
 

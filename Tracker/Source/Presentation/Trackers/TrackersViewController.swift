@@ -13,10 +13,13 @@ typealias TrackersDataSource = UICollectionViewDiffableDataSource<String, Tracke
 protocol ITrackersView: AnyObject {
     func updateTrackerList(with trackers: [TrackerCategory])
     func updateTrackerRecordList(with records: [TrackerRecord])
+    func setCurrentDate()
+    func setFilterType(filterType: FilterType)
 }
 
 final class TrackersViewController: UIViewController {
     private enum Constant {
+        static let additionContentInset: CGFloat = 50
         static let baseInset: CGFloat = 16
 
         static let filterWidth: CGFloat = 114
@@ -38,6 +41,7 @@ final class TrackersViewController: UIViewController {
     }
     private var completedTrackers = [TrackerRecord]()
     private var emptyState: EmptyViewError = .date
+    private var filterType: FilterType = .all
 
     private lazy var dataSource: TrackersDataSource = {
         let dataSource = TrackersDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, tracker in
@@ -84,7 +88,14 @@ final class TrackersViewController: UIViewController {
             PrimarySupplementaryHeader.self,
             of: UICollectionView.elementKindSectionHeader
         )
-        
+
+        collectionView.contentInset = .init(
+            top: .zero,
+            left: .zero,
+            bottom: Constant.additionContentInset,
+            right: .zero
+        )
+
         return collectionView.forAutolayout()
     }()
     
@@ -214,7 +225,14 @@ final class TrackersViewController: UIViewController {
             snapshot.appendItems($0.trackers, toSection: $0.header)
         }
 
-        snapshot.numberOfItems == .zero ? showEmptyState() : hideEmptyState()
+        if snapshot.numberOfItems == .zero {
+            filterButton.isHidden = true
+            showEmptyState()
+        } else {
+            filterButton.isHidden = false
+            hideEmptyState()
+        }
+
         dataSource.apply(snapshot)
     }
     
@@ -294,6 +312,8 @@ final class TrackersViewController: UIViewController {
     func datePickerValueChanged(_ sender: UIDatePicker) {
         emptyState = .date
         updateVisibilityCategories()
+
+        if filterType == .today { presenter.setAllFilter() }
     }
 
     @objc
@@ -305,6 +325,14 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
+    func setFilterType(filterType: FilterType) {
+        self.filterType = filterType
+    }
+    
+    func setCurrentDate() {
+        datePicker.date = Date()
+    }
+    
     func updateTrackerRecordList(with records: [TrackerRecord]) {
         completedTrackers = records
     }

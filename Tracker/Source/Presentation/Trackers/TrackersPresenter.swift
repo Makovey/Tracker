@@ -22,6 +22,7 @@ protocol ITrackersPresenter {
     func doneButtonTapped(with record: TrackerRecord)
     func deleteCategoryRecord(id: UUID?) -> UUID?
     func filterButtonTapped()
+    func setAllFilter()
 }
 
 final class TrackersPresenter: ITrackersPresenter {
@@ -32,7 +33,7 @@ final class TrackersPresenter: ITrackersPresenter {
     private let trackerRepository: any ITrackerRepository
     private let analyticsManager: any IAnalyticsManager
     private var todaysId: UUID?
-    private var filterTypeSelected: FilterType?
+    private var filterTypeSelected: FilterType = .all
 
     // MARK: - Lifecycle
 
@@ -50,7 +51,8 @@ final class TrackersPresenter: ITrackersPresenter {
     
     func viewDidLoad() {
         view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
-        view?.updateTrackerList(with: trackerRepository.fetchCategories())
+        view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+        view?.setFilterType(filterType: filterTypeSelected)
     }
 
     func viewDidAppear() {
@@ -94,10 +96,16 @@ final class TrackersPresenter: ITrackersPresenter {
     }
 
     func filterButtonTapped() {
+        analyticsManager.sendTapEvent(.filter)
+
         router.openFilterScreen(
             filterModuleOutput: self,
             selectedFilter: filterTypeSelected
         )
+    }
+
+    func setAllFilter() {
+        filterTypeSelected = .all
     }
 }
 
@@ -105,7 +113,7 @@ final class TrackersPresenter: ITrackersPresenter {
 
 extension TrackersPresenter: IEventsBuilderOutput {
     func didCreateNewTracker() {
-        view?.updateTrackerList(with: trackerRepository.fetchCategories())
+        view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
     }
 }
 
@@ -115,6 +123,39 @@ extension TrackersPresenter: IFilterOutput {
     func filterSelected(_ filter: FilterType) {
         filterTypeSelected = filter
 
-        print(filter)
+        switch filter {
+        case .all:
+            view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+            view?.setFilterType(filterType: filterTypeSelected)
+        case .today:
+            view?.setFilterType(filterType: filterTypeSelected)
+            view?.setCurrentDate()
+            view?.updateTrackerList(with: trackerRepository.fetchAllCategories())
+        case .completed:
+            let ids = trackerRepository.fetchRecords().map { $0.trackerId }
+
+            let completedTrackers = trackerRepository
+                .fetchAllCategories()
+                .map { TrackerCategory(
+                    header: $0.header,
+                    trackers: $0.trackers.filter { ids.contains($0.id) })
+                }
+
+            view?.setFilterType(filterType: filterTypeSelected)
+            view?.updateTrackerList(with: completedTrackers)
+
+        case .inProgress:
+            let ids = trackerRepository.fetchRecords().map { $0.trackerId }
+
+            let inProgressTrackers = trackerRepository
+                .fetchAllCategories()
+                .map { TrackerCategory(
+                    header: $0.header,
+                    trackers: $0.trackers.filter { !ids.contains($0.id) })
+                }
+
+            view?.setFilterType(filterType: filterTypeSelected)
+            view?.updateTrackerList(with: inProgressTrackers)
+        }
     }
 }
