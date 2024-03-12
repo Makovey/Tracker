@@ -74,7 +74,7 @@ final class StatisticsViewController: UIViewController {
     private func setupUI() {
         tableView.placedOn(view)
         NSLayoutConstraint.activate([
-            tableView.top.constraint(equalTo: view.top, constant: Constant.extraSideInset),
+            tableView.top.constraint(equalTo: view.safeTop, constant: Constant.extraSideInset),
             tableView.left.constraint(equalTo: view.left, constant: Constant.sideInset),
             tableView.right.constraint(equalTo: view.right, constant: -Constant.sideInset),
             tableView.bottom.constraint(equalTo: view.bottom, constant: -Constant.extraSideInset),

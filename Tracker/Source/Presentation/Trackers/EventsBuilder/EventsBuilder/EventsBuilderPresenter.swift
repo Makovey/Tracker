@@ -16,6 +16,7 @@ protocol IEventsBuilderPresenter {
         mode: EventType,
         trackerToFill: EventsBuilderViewController.TrackerToFill
     ) -> Bool
+    func saveTracker(tracker: Tracker)
 }
 
 final class EventsBuilderPresenter {
@@ -23,7 +24,11 @@ final class EventsBuilderPresenter {
     
     weak var view: (any IEventsBuilderView)?
     weak var output: (any IEventsBuilderOutput)?
-    
+    var oldEditingCategory: String?
+    var editingTrackerId: UUID? {
+        didSet { setEditingCategory() }
+    }
+
     private let router: any IEventsBuilderRouter
     private let categoryRepository: any ITrackerRepository
     private var selectedDays = Set<WeekDay>()
@@ -41,6 +46,28 @@ final class EventsBuilderPresenter {
     // MARK: - Public
 
     // MARK: - Private
+
+    private func setEditingCategory() {
+        guard let category = categoryRepository
+            .fetchAllCategories()
+            .filter({ $0.trackers.map { $0.id }.contains(editingTrackerId) }).first,
+              let tracker = category.trackers.filter({ $0.id == editingTrackerId }).first
+        else { return }
+
+        oldEditingCategory = category.header
+        categoryRepository.saveSelectedCategoryName(category.header)
+        if let schedule = tracker.schedule {
+            selectedDays = schedule
+        }
+
+        let completedTimes = categoryRepository.fetchRecords().filter { $0.trackerId == tracker.id }.count
+        view?.setEditingTracker(
+            trackerCategory: .init(
+                header: category.header,
+                trackers: [tracker]), 
+            completedText: String.completedDays(completedTimes)
+        )
+    }
 }
 
 // MARK: - IEventsBuilderPresenter
@@ -62,7 +89,16 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
         output?.didCreateNewTracker()
         router.dismissModule()
     }
-    
+
+    func saveTracker(tracker: Tracker) {
+        let isNewCategory = oldEditingCategory != categoryRepository.fetchSelectedCategoryName()
+        categoryRepository.replaceTracker(tracker, isNewCategory: isNewCategory)
+
+
+        output?.didCreateNewTracker()
+        router.dismissModule()
+    }
+
     func scheduleTapped() {
         router.openScheduleScreen(
             scheduleModuleOutput: self,
@@ -75,13 +111,13 @@ extension EventsBuilderPresenter: IEventsBuilderPresenter {
         trackerToFill: EventsBuilderViewController.TrackerToFill
     ) -> Bool {
         switch mode {
-        case .habit:
+        case .habit, .editHabit:
             trackerToFill.trackerName?.isEmpty == false &&
             trackerToFill.categoryName?.isEmpty == false &&
             trackerToFill.schedule?.isEmpty == false &&
             trackerToFill.selectedEmoji?.isEmpty == false &&
             trackerToFill.selectedColor != nil
-        case .event:
+        case .event, .editEvent:
             trackerToFill.trackerName?.isEmpty == false &&
             trackerToFill.categoryName?.isEmpty == false &&
             trackerToFill.selectedEmoji?.isEmpty == false &&

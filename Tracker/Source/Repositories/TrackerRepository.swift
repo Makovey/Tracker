@@ -17,7 +17,7 @@ protocol ITrackerRepository {
     func saveSelectedCategoryName(_ categoryName: String)
     func saveAllCategories(_ categories: [String])
     func createTracker(_ tracker: Tracker) throws
-    func replaceTracker(_ tracker: Tracker)
+    func replaceTracker(_ tracker: Tracker, isNewCategory: Bool)
 
     func fetchRecords() -> [TrackerRecord]
     func save(record: TrackerRecord)
@@ -77,20 +77,29 @@ final class TrackerRepository: ITrackerRepository {
         flush()
     }
 
-    func replaceTracker(_ tracker: Tracker) {
-        guard let category = storage.fetchCategories().first(where: { $0.trackers.contains(where: { $0.id == tracker.id })}) else {
-            assertionFailure("Can't find category for tracker \(tracker)")
-            return
+    func replaceTracker(_ tracker: Tracker, isNewCategory: Bool) {
+        if isNewCategory {
+            do {
+                storage.deleteTrackerById(tracker.id)
+                try createTracker(tracker)
+            } catch {
+                assertionFailure("Firstly need chose category. Temp category is nil")
+            }
+        } else {
+            guard let category = storage.fetchCategories().first(where: { $0.trackers.contains(where: { $0.id == tracker.id })}) else {
+                assertionFailure("Can't find category for tracker \(tracker)")
+                return
+            }
+
+            var newTrackers = category
+                .trackers
+                .filter { $0.id != tracker.id }
+
+            newTrackers.append(tracker)
+
+            storage.deleteTrackerById(tracker.id)
+            saveCategory(category: .init(header: category.header, trackers: newTrackers))
         }
-
-        var newTrackers = category
-            .trackers
-            .filter { $0.id != tracker.id }
-
-        newTrackers.append(tracker)
-
-        storage.deleteTrackerById(tracker.id)
-        saveCategory(category: .init(header: category.header, trackers: newTrackers))
     }
 
     func deleteTrackerById(_ id: UUID) {

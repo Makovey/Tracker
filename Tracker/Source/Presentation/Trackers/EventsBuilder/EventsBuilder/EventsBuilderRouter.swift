@@ -23,7 +23,7 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
 
     // MARK: - Properties
     
-    weak var viewController: UINavigationController?
+    weak var viewController: UIViewController?
 
     // MARK: - Public
     
@@ -35,23 +35,33 @@ final class EventsBuilderRouter: IEventsBuilderRouter {
         categoryModuleOutput: some ICategorySelectorOutput,
         selectedCategory: String?
     ) {
+        guard let navigationController = viewController?.navigationController else {
+            assertionFailure("NavigationController is nil")
+            return
+        }
+
         let destination = CategorySelectorAssembly.assemble(
-            navigationController: viewController,
+            navigationController: navigationController,
             output: categoryModuleOutput
         )
         (destination as? ICategorySelectorInput)?.setSelectedCategory(category: selectedCategory)
-        viewController?.pushViewController(destination, animated: true)
+        navigationController.pushViewController(destination, animated: true)
     }
     
     func openScheduleScreen(
         scheduleModuleOutput: some IEventsScheduleOutput,
         selectedDays: Set<WeekDay>
     ) {
+        guard let navigationController = viewController?.navigationController else {
+            assertionFailure("NavigationController is nil")
+            return
+        }
+
         let destination = EventsScheduleAssembly.assemble(
-            navigationController: viewController,
+            navigationController: navigationController,
             output: scheduleModuleOutput
         )
         (destination as? IEventsScheduleInput)?.setSelectedDays(selectedDays: selectedDays)
-        viewController?.pushViewController(destination, animated: true)
+        navigationController.pushViewController(destination, animated: true)
     }
 }

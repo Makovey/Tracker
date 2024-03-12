@@ -396,7 +396,7 @@ extension TrackersViewController: UICollectionViewDelegate {
         return .init(identifier: indexPath as NSCopying, actionProvider:  { _ in
             UIMenu(children: [
                 self.makePinAction(tracker: model),
-                self.makeEditAction(),
+                self.makeEditAction(tracker: model),
                 self.makeDeleteAction(trackerId: model.id)
             ])
         })
@@ -410,11 +410,11 @@ extension TrackersViewController: UICollectionViewDelegate {
             }
         )
     }
-    private func makeEditAction() -> UIAction {
+    private func makeEditAction(tracker: Tracker) -> UIAction {
         .init(
             title: "Редактриовать", // TODO
             handler: { [weak self] _ in
-                self?.presenter.editActionTapped()
+                self?.presenter.editActionTapped(tracker: tracker)
             }
         )
     }

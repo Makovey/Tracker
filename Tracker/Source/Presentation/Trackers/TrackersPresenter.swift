@@ -25,7 +25,7 @@ protocol ITrackersPresenter {
     func setAllFilter()
 
     func pinActionTapped(tracker: Tracker)
-    func editActionTapped()
+    func editActionTapped(tracker: Tracker)
     func deleteActionTapped(trackerId: UUID)
 }
 
@@ -122,14 +122,15 @@ final class TrackersPresenter: ITrackersPresenter {
             isPinned: !tracker.isPinned
         )
 
-        trackerRepository.replaceTracker(newTracker)
+        trackerRepository.replaceTracker(newTracker, isNewCategory: false)
         assembleTrackerList()
     }
 
-    func editActionTapped() {
+    func editActionTapped(tracker: Tracker) { // TODO
         analyticsManager.sendTapEvent(.edit)
         
-        print(#function)
+        let eventType: EventType = tracker.schedule == nil ? .editEvent : .editHabit
+        router.openEditScreen(output: self, trackerId: tracker.id, with: eventType)
     }
 
     func deleteActionTapped(trackerId: UUID) {

@@ -13,6 +13,11 @@ protocol ITrackersRouter {
         filterModuleOutput: some IFilterOutput,
         selectedFilter: FilterType
     )
+    func openEditScreen(
+        output: some IEventsBuilderOutput,
+        trackerId: UUID,
+        with event: EventType
+    )
 }
 
 final class TrackersRouter: ITrackersRouter {
@@ -34,6 +39,21 @@ final class TrackersRouter: ITrackersRouter {
         let filterController = FilterAssembly.assemble(output: filterModuleOutput)
         let destination = UINavigationController(rootViewController: filterController)
         (filterController as? IFilterInput)?.setSelectedFilter(filter: selectedFilter)
+        viewController?.present(destination, animated: true)
+    }
+
+    func openEditScreen(
+        output: some IEventsBuilderOutput,
+        trackerId: UUID,
+        with event: EventType
+    ) {
+        let builderModule = EventsBuilderAssembly.assemble(
+            with: event,
+            output: output,
+            trackerId: trackerId
+        )
+
+        let destination = UINavigationController(rootViewController: builderModule)
         viewController?.present(destination, animated: true)
     }
 

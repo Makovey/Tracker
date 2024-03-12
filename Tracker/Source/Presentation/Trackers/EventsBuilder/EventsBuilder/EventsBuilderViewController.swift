@@ -13,13 +13,17 @@ typealias BuilderDataSource = UICollectionViewDiffableDataSource<BuilderSection,
 protocol IEventsBuilderView: AnyObject {
     func updateCategoryField(with category: String)
     func updateScheduleField(with schedule: Set<WeekDay>)
+
+    func setEditingTracker(trackerCategory: TrackerCategory, completedText: String)
 }
 
 final class EventsBuilderViewController: UIViewController {
     private enum Constant {
         static let baseInset: CGFloat = 16
         static let baseCornerRadius: CGFloat = 16
-        
+        static let extraInset: CGFloat = 24
+        static let extraLargeInset: CGFloat = 40
+
         static let cellsHeight: CGFloat = 75
     }
     
@@ -61,7 +65,8 @@ final class EventsBuilderViewController: UIViewController {
     private let presenter: any IEventsBuilderPresenter
     private var navigationItems: [NavigationItem] = [.category]
     private let mode: EventType
-    
+    private var editingTrackerId: UUID?
+
     private lazy var dataSource: BuilderDataSource = {
         let dataSource = BuilderDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
             guard let self else { fatalError("\(EventsBuilderViewController.self) is nil") }
@@ -145,7 +150,15 @@ final class EventsBuilderViewController: UIViewController {
     }()
     
     private lazy var createButton: PrimaryButton = {
-        let createButton = PrimaryButton(style: .disabled, text: .loc.Events.Builder.CreateButton.title)
+        let buttonText: String
+        switch mode {
+        case .habit, .event:
+            buttonText = .loc.Events.Builder.CreateButton.title
+        case .editHabit, .editEvent:
+            buttonText = "Сохранить"
+        }
+
+        let createButton = PrimaryButton(style: .disabled, text: buttonText)
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         
         return createButton
@@ -158,6 +171,14 @@ final class EventsBuilderViewController: UIViewController {
         stackView.distribution = .fillEqually
         
         return stackView.forAutolayout()
+    }()
+
+    private lazy var completedDaysLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 32, weight: .bold)
+        label.textAlignment = .center
+
+        return label.forAutolayout()
     }()
 
     // MARK: - Lifecycle
@@ -179,6 +200,8 @@ final class EventsBuilderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        navigationItem.setHidesBackButton(true, animated: true)
 
         setupUI()
         setupInitialState()
@@ -187,20 +210,40 @@ final class EventsBuilderViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-        navigationItem.setHidesBackButton(true, animated: true)
-
         switch mode {
         case .habit:
             title = .loc.Events.Builder.HabitScreen.title
             navigationItems.append(.schedule)
         case .event:
             title = .loc.Events.Builder.IrregularEventScreen.title
+        case .editHabit:
+            title = "Редактирование привычки" // TODO
+            navigationItems.append(.schedule)
+        case .editEvent:
+            title = "Редактирование нерегулярного события" // TODO
         }
-        
+
+        var textFieldTopConstraint = view.safeTop
+        var textFieldTopInset = Constant.extraInset
+
+        switch mode {
+        case .habit, .event: break
+        case .editHabit, .editEvent:
+            completedDaysLabel.placedOn(view)
+
+            NSLayoutConstraint.activate([
+                completedDaysLabel.top.constraint(equalTo: view.safeTop, constant: Constant.extraInset),
+                completedDaysLabel.left.constraint(equalTo: view.left, constant: Constant.baseInset),
+                completedDaysLabel.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
+            ])
+
+            textFieldTopConstraint = completedDaysLabel.bottom
+            textFieldTopInset = Constant.extraLargeInset
+        }
+
         textField.placedOn(view)
         NSLayoutConstraint.activate([
-            textField.top.constraint(equalTo: view.safeTop, constant: 24),
+            textField.top.constraint(equalTo: textFieldTopConstraint, constant: textFieldTopInset),
             textField.left.constraint(equalTo: view.left, constant: Constant.baseInset),
             textField.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
             textField.height.constraint(equalToConstant: Constant.cellsHeight)
@@ -250,23 +293,40 @@ final class EventsBuilderViewController: UIViewController {
     
     @objc
     private func createButtonTapped() {
-        guard 
+        guard
             let trackerName,
             categoryName != nil,
             let selectedEmoji,
             let selectedColor
         else { return }
 
-        let tracker = Tracker(
-            id: .init(), 
-            name: trackerName,
-            color: selectedColor,
-            emoji: selectedEmoji,
-            schedule: schedule,
-            isPinned: false
-        )
-        
-        presenter.createButtonTapped(with: tracker)
+        switch mode {
+        case .habit, .event:
+            let tracker = Tracker(
+                id: .init(),
+                name: trackerName,
+                color: selectedColor,
+                emoji: selectedEmoji,
+                schedule: schedule,
+                isPinned: false
+            )
+
+            presenter.createButtonTapped(with: tracker)
+        case .editHabit, .editEvent:
+            guard let editingTrackerId else {
+                assertionFailure("Editing tracker id is nil")
+                return
+            }
+            let tracker = Tracker(
+                id: editingTrackerId,
+                name: trackerName,
+                color: selectedColor,
+                emoji: selectedEmoji,
+                schedule: schedule,
+                isPinned: false
+            )
+            presenter.saveTracker(tracker: tracker)
+        }
     }
     
     private func checkAvailability() {
@@ -293,6 +353,26 @@ final class EventsBuilderViewController: UIViewController {
 // MARK: - IEventsBuilderView
 
 extension EventsBuilderViewController: IEventsBuilderView {
+    func setEditingTracker(trackerCategory: TrackerCategory, completedText: String) {
+        guard let tracker = trackerCategory.trackers[safe: .zero] else { return }
+        editingTrackerId = tracker.id
+
+        textField.text = tracker.name
+        trackerName = tracker.name
+
+        categoryName = trackerCategory.header
+        selectedEmoji = tracker.emoji
+        selectedColor = tracker.color
+        completedDaysLabel.text = completedText
+
+        if let schedule = trackerCategory.trackers[safe: .zero]?.schedule {
+            self.schedule = schedule
+        }
+
+        tableView.reloadData()
+        collectionView.reloadData()
+    }
+    
     func updateCategoryField(with category: String) {
         categoryName = category
         tableView.reloadData()
@@ -405,10 +485,20 @@ extension EventsBuilderViewController {
         if let colorItem = UIColor(hex: item) {
             let cell: ColorCell = collectionView.dequeueCell(for: indexPath)
             cell.configure(color: colorItem)
+            if selectedColor == colorItem { 
+                cell.didSelect()
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .bottom)
+            }
+
             return cell
         } else {
             let cell: EmojiCell = collectionView.dequeueCell(for: indexPath)
             cell.configure(emoji: item)
+            if selectedEmoji == item { 
+                cell.didSelect()
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .bottom)
+            }
+
             return cell
         }
     }

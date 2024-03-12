@@ -25,26 +25,18 @@ final class EventsSelectorRouter: IEventsSelectorRouter {
     // MARK: - Public
     
     func openEventBuilderScreenWithHabit() {
-        guard let navigationController = viewController?.navigationController else {
-            fatalError("NavigationController is missing")
-        }
-
         let destination = EventsBuilderAssembly.assemble(
             with: .habit,
-            navigationController: navigationController,
+            navigationController: viewController,
             output: output
         )
         viewController?.navigationController?.pushViewController(destination, animated: true)
     }
     
     func openEventBuilderScreenWithIrregularEvent() {
-        guard let navigationController = viewController?.navigationController else {
-            fatalError("NavigationController is missing")
-        }
-
         let destination = EventsBuilderAssembly.assemble(
             with: .event,
-            navigationController: navigationController,
+            navigationController: viewController,
             output: output
         )
         viewController?.navigationController?.pushViewController(destination, animated: true)
