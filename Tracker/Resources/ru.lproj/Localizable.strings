@@ -17,6 +17,14 @@ trackers.emptyState.title = "Что будем отслеживать?";
 trackers.notFoundState.title = "Ничего не найдено";
 trackers.cell.subtitle = "дней";
 trackers.filter.title = "Фильтры";
+trackers.category.pin = "Закрепленные";
+trackers.context.pin = "Закрепить";
+trackers.context.unpin = "Открепить";
+trackers.context.edit = "Редактировать";
+trackers.context.delete = "Удалить";
+trackers.alert.title = "Уверены что хотите удалить трекер?";
+trackers.alert.deleteAction.title = "Удалить";
+trackers.alert.cancelAction.title = "Отменить";
 
 events.selector.habitButton.title = "Привычка";
 events.selector.irregularEventButton.title = "Нерегулярное событие";
@@ -27,6 +35,8 @@ events.builder.textField.placeholder = "Введите название трек
 events.builder.cancelButton.title = "Отменить";
 events.builder.createButton.title = "Создать";
 events.builder.categoryCell.title = "Категория";
+events.builder.habitScreen.edit.title = "Редактирование привычки";
+events.builder.irregularEventScreen.edit.title = "Редактирование нерегулярного события";
 
 events.builder.categorySection.First.title = "Emojis";
 events.builder.categorySection.Second.title = "Цвет";

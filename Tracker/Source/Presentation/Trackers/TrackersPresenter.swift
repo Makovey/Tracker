@@ -26,6 +26,7 @@ protocol ITrackersPresenter {
 
     func pinActionTapped(tracker: Tracker)
     func editActionTapped(tracker: Tracker)
+    func intentDeleteTracker(with id: UUID)
     func deleteActionTapped(trackerId: UUID)
 }
 
@@ -56,7 +57,6 @@ final class TrackersPresenter: ITrackersPresenter {
     func viewDidLoad() {
         view?.updateTrackerRecordList(with: trackerRepository.fetchRecords())
         assembleTrackerList()
-        view?.setFilterType(filterType: filterTypeSelected)
     }
 
     func viewDidAppear() {
@@ -126,7 +126,7 @@ final class TrackersPresenter: ITrackersPresenter {
         assembleTrackerList()
     }
 
-    func editActionTapped(tracker: Tracker) { // TODO
+    func editActionTapped(tracker: Tracker) {
         analyticsManager.sendTapEvent(.edit)
         
         let eventType: EventType = tracker.schedule == nil ? .editEvent : .editHabit
@@ -140,11 +140,15 @@ final class TrackersPresenter: ITrackersPresenter {
         assembleTrackerList()
     }
 
+    func intentDeleteTracker(with id: UUID) {
+        view?.showAlert(trackerId: id)
+    }
+
     private func assembleTrackerList() {
         let allCategories = trackerRepository.fetchAllCategories()
         let allPinnedTrackers = allCategories.flatMap { $0.trackers.filter { $0.isPinned } }
 
-        let category = TrackerCategory(header: "Pin", trackers: allPinnedTrackers) // TODO
+        let category = TrackerCategory(header: .loc.Trackers.Category.pin, trackers: allPinnedTrackers)
         let categoryWithoutPinnedTrackers = allCategories
             .map { TrackerCategory(
                 header: $0.header,

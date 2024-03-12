@@ -217,10 +217,10 @@ final class EventsBuilderViewController: UIViewController {
         case .event:
             title = .loc.Events.Builder.IrregularEventScreen.title
         case .editHabit:
-            title = "Редактирование привычки" // TODO
+            title = .loc.Events.Builder.HabitScreen.Edit.title
             navigationItems.append(.schedule)
         case .editEvent:
-            title = "Редактирование нерегулярного события" // TODO
+            title =  .loc.Events.Builder.IrregularEventScreen.Edit.title
         }
 
         var textFieldTopConstraint = view.safeTop

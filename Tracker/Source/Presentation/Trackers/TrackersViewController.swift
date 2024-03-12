@@ -15,6 +15,7 @@ protocol ITrackersView: AnyObject {
     func updateTrackerRecordList(with records: [TrackerRecord])
     func setCurrentDate()
     func setFilterType(filterType: FilterType)
+    func showAlert(trackerId: UUID)
 }
 
 final class TrackersViewController: UIViewController {
@@ -326,8 +327,34 @@ final class TrackersViewController: UIViewController {
 // MARK: - ITrackerView
 
 extension TrackersViewController: ITrackersView {
+    func showAlert(trackerId: UUID) {
+        let alertController = UIAlertController(
+            title: .loc.Trackers.Alert.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let deleteAction = UIAlertAction(
+            title: .loc.Trackers.Alert.DeleteAction.title,
+            style: .destructive,
+            handler: { [weak self] _ in
+                self?.presenter.deleteActionTapped(trackerId: trackerId)
+            }
+        )
+
+        let cancelAction = UIAlertAction(
+            title: .loc.Trackers.Alert.CancelAction.title,
+            style: .cancel
+        )
+
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
     func setFilterType(filterType: FilterType) {
         self.filterType = filterType
+        emptyState = .text
     }
     
     func setCurrentDate() {
@@ -404,7 +431,7 @@ extension TrackersViewController: UICollectionViewDelegate {
 
     private func makePinAction(tracker: Tracker) -> UIAction {
         .init(
-            title: tracker.isPinned ? "Открепить" : "Закрепить", // TODO
+            title: tracker.isPinned ? .loc.Trackers.Context.unpin : .loc.Trackers.Context.pin,
             handler: { [weak self] _ in
                 self?.presenter.pinActionTapped(tracker: tracker)
             }
@@ -412,7 +439,7 @@ extension TrackersViewController: UICollectionViewDelegate {
     }
     private func makeEditAction(tracker: Tracker) -> UIAction {
         .init(
-            title: "Редактриовать", // TODO
+            title: .loc.Trackers.Context.edit,
             handler: { [weak self] _ in
                 self?.presenter.editActionTapped(tracker: tracker)
             }
@@ -420,10 +447,10 @@ extension TrackersViewController: UICollectionViewDelegate {
     }
     private func makeDeleteAction(trackerId: UUID) -> UIAction {
         .init(
-            title: "Удалить", // TODO
+            title: .loc.Trackers.Context.delete,
             attributes: .destructive,
             handler: { [weak self] _ in
-                self?.presenter.deleteActionTapped(trackerId: trackerId)
+                self?.presenter.intentDeleteTracker(with: trackerId)
             }
         )
     }

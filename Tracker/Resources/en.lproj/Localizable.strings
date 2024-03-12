@@ -17,6 +17,14 @@ trackers.emptyState.title = "What we'll track?";
 trackers.notFoundState.title = "Nothing found";
 trackers.cell.subtitle = "days";
 trackers.filter.title = "Filters";
+trackers.category.pin = "Pinned";
+trackers.context.pin = "Pin";
+trackers.context.unpin = "Открепить";
+trackers.context.edit = "Unpin";
+trackers.context.delete = "Delete";
+trackers.alert.title = "Are you sure you want to delete the tracker?";
+trackers.alert.deleteAction.title = "Delete";
+trackers.alert.cancelAction.title = "Cancel";
 
 events.selector.habitButton.title = "Habit";
 events.selector.irregularEventButton.title = "Irregular event";
@@ -27,6 +35,8 @@ events.builder.textField.placeholder = "Enter tracker name";
 events.builder.cancelButton.title = "Cancel";
 events.builder.createButton.title = "Create";
 events.builder.categoryCell.title = "Category";
+events.builder.habitScreen.edit.title = "Editing a habit";
+events.builder.irregularEventScreen.edit.title = "Editing an irregular event";
 
 events.builder.categorySection.First.title = "Emojis";
 events.builder.categorySection.Second.title = "Color";
