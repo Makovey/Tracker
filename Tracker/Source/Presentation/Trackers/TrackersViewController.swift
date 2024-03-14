@@ -228,10 +228,8 @@ final class TrackersViewController: UIViewController {
         }
 
         if snapshot.numberOfItems == .zero {
-            filterButton.isHidden = true
             showEmptyState()
         } else {
-            filterButton.isHidden = false
             hideEmptyState()
         }
 
@@ -315,7 +313,8 @@ final class TrackersViewController: UIViewController {
         emptyState = .date
         updateVisibilityCategories()
 
-        if filterType == .today { presenter.setAllFilter() }
+        if filterType == .today { presenter.updateIfNeeded(with: .all) }
+        presenter.setChosenDate(date: sender.date)
     }
 
     @objc
@@ -396,6 +395,7 @@ extension TrackersViewController: ITrackersCellDelegate {
             let id = presenter.deleteCategoryRecord(id: recordId)
             completedTrackers = completedTrackers.filter { $0.id != id }
         }
+        presenter.updateIfNeeded(with: filterType)
     }
 }
 

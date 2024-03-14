@@ -30,7 +30,7 @@ final class FilterPresenter {
     // MARK: - Public
 
     func filterSelected(filterType: FilterType) {
-        output?.filterSelected(filterType)
+        output?.selectAndUpdate(filterType)
         router.popScreen()
     }
 

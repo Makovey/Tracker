@@ -19,10 +19,11 @@ protocol ITrackersPresenter {
         id: UUID
     ) -> Bool
 
+    func setChosenDate(date: Date)
     func doneButtonTapped(with record: TrackerRecord)
     func deleteCategoryRecord(id: UUID?) -> UUID?
     func filterButtonTapped()
-    func setAllFilter()
+    func updateIfNeeded(with filterType: FilterType)
 
     func pinActionTapped(tracker: Tracker)
     func editActionTapped(tracker: Tracker)
@@ -37,8 +38,10 @@ final class TrackersPresenter: ITrackersPresenter {
     private let router: any ITrackersRouter
     private let trackerRepository: any ITrackerRepository
     private let analyticsManager: any IAnalyticsManager
+
     private var todaysId: UUID?
     private var filterTypeSelected: FilterType = .all
+    private var chosenDate = Date()
 
     // MARK: - Lifecycle
 
@@ -72,6 +75,10 @@ final class TrackersPresenter: ITrackersPresenter {
         router.openEventsSelectorScreen(builderOutput: self)
     }
     
+    func setChosenDate(date: Date) {
+        chosenDate = date
+    }
+
     func isEditingAvailableForThisDay(date: Date) -> Bool {
         Calendar.current.compare(date, to: Date(), toGranularity: .day) != .orderedDescending
     }
@@ -108,8 +115,13 @@ final class TrackersPresenter: ITrackersPresenter {
         )
     }
 
-    func setAllFilter() {
-        filterTypeSelected = .all
+    func updateIfNeeded(with filterType: FilterType) {
+        switch filterType {
+        case .all, .today:
+            filterTypeSelected = filterType
+        case .inProgress, .completed:
+            selectAndUpdate(filterType)
+        }
     }
 
     func pinActionTapped(tracker: Tracker) {
@@ -146,18 +158,20 @@ final class TrackersPresenter: ITrackersPresenter {
 
     private func assembleTrackerList() {
         let allCategories = trackerRepository.fetchAllCategories()
-        let allPinnedTrackers = allCategories.flatMap { $0.trackers.filter { $0.isPinned } }
+        view?.updateTrackerList(with: addedPinCategory(to: allCategories))
+    }
 
-        let category = TrackerCategory(header: .loc.Trackers.Category.pin, trackers: allPinnedTrackers)
-        let categoryWithoutPinnedTrackers = allCategories
+    private func addedPinCategory(to categories: [TrackerCategory]) -> [TrackerCategory] {
+        let allPinnedTrackers = categories.flatMap { $0.trackers.filter { $0.isPinned } }
+
+        let pinCategory = TrackerCategory(header: .loc.Trackers.Category.pin, trackers: allPinnedTrackers)
+        let categoryWithoutPinnedTrackers = categories
             .map { TrackerCategory(
                 header: $0.header,
                 trackers: $0.trackers.filter { !$0.isPinned })
             }
 
-        let final = [category] + categoryWithoutPinnedTrackers
-
-        view?.updateTrackerList(with: final)
+        return [pinCategory] + categoryWithoutPinnedTrackers
     }
 }
 
@@ -172,13 +186,13 @@ extension TrackersPresenter: IEventsBuilderOutput {
 // MARK: - IFilterOutput
 
 extension TrackersPresenter: IFilterOutput {
-    func filterSelected(_ filter: FilterType) {
+    func selectAndUpdate(_ filter: FilterType) {
         filterTypeSelected = filter
 
         switch filter {
         case .all:
-            assembleTrackerList()
             view?.setFilterType(filterType: filterTypeSelected)
+            assembleTrackerList()
         case .today:
             view?.setFilterType(filterType: filterTypeSelected)
             view?.setCurrentDate()
@@ -194,7 +208,7 @@ extension TrackersPresenter: IFilterOutput {
                 }
 
             view?.setFilterType(filterType: filterTypeSelected)
-            view?.updateTrackerList(with: completedTrackers)
+            view?.updateTrackerList(with: addedPinCategory(to: completedTrackers))
 
         case .inProgress:
             let ids = trackerRepository.fetchRecords().map { $0.trackerId }
@@ -207,7 +221,7 @@ extension TrackersPresenter: IFilterOutput {
                 }
 
             view?.setFilterType(filterType: filterTypeSelected)
-            view?.updateTrackerList(with: inProgressTrackers)
+            view?.updateTrackerList(with: addedPinCategory(to: inProgressTrackers))
         }
     }
 }

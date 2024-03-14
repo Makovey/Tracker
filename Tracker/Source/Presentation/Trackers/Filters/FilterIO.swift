@@ -12,5 +12,5 @@ protocol IFilterInput {
 }
 
 protocol IFilterOutput: AnyObject {
-    func filterSelected(_ filter: FilterType)
+    func selectAndUpdate(_ filter: FilterType)
 }
